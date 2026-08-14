@@ -1,0 +1,71 @@
+@import "tailwindcss";
+
+@theme {
+  /* Font */
+  --font-serif: "Instrument Serif", serif;
+  --font-sans: "Work Sans", sans-serif;
+
+  /* Base */
+  --color-header: #F3ECDE;
+  --color-bg: #F2F1EC;
+  --color-ink: #2F2A21;
+
+  /* Hero */
+  --color-hero-corona: #7C644A;
+  --color-hero-nastro: #E6DEC7;
+
+  /* Sezioni */
+  --color-section-drink: #F5F5EA;
+  --color-card-bg: #EFE6D4;
+  --color-section-bar: #E6DEC7;
+
+  /* Footer */
+  --color-footer-bg: #26221C;
+  --color-footer-text-lg: #F3EEE5;
+  --color-footer-text-sm: #C8BDAD;
+  --color-icon: #AD9060;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  margin: 0;
+  width: 100%;
+}
+
+body {
+  background: var(--color-bg);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-serif);
+  font-weight: 400;
+}
+
+.nav-tabs {
+  scrollbar-width: none;
+}
+
+.nav-tabs::-webkit-scrollbar {
+  display: none;
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-12.5%);
+  }
+}
