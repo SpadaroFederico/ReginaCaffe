@@ -26,40 +26,94 @@
   --color-icon: #AD9060;
 }
 
-* {
-  box-sizing: border-box;
+:root {
+  /*
+   * Altezza effettiva dell'header mobile.
+   * I breakpoint sotto mantengono il valore
+   * sincronizzato con Header.jsx.
+   */
+  --site-header-height: 48px;
+  --anchor-spacing: 12px;
 }
 
-html,
-body,
-#root {
-  margin: 0;
+html {
   width: 100%;
+  min-width: 100%;
+
+  margin: 0;
+  padding: 0;
+
+  scroll-behavior: smooth;
 }
 
 body {
+  width: 100%;
+  min-width: 100%;
+  min-height: 100vh;
+
+  margin: 0;
+  padding: 0;
+
   background: var(--color-bg);
   color: var(--color-ink);
+
   font-family: var(--font-sans);
+
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-h1,
-h2,
-h3 {
-  font-family: var(--font-serif);
-  font-weight: 400;
+#root {
+  width: 100%;
+  min-width: 100%;
+  max-width: none;
+  min-height: 100vh;
+
+  margin: 0;
+  padding: 0;
 }
 
-.nav-tabs {
-  scrollbar-width: none;
+img,
+svg {
+  display: block;
+  max-width: 100%;
 }
 
-.nav-tabs::-webkit-scrollbar {
-  display: none;
+/*
+ * Evita che l'intestazione sticky copra
+ * il punto di arrivo delle ancore.
+ */
+section[id],
+nav[id],
+footer[id] {
+  scroll-margin-top: calc(
+    var(--site-header-height) +
+    var(--anchor-spacing)
+  );
 }
 
+/* Header da 56px */
+@media (min-width: 640px) {
+  :root {
+    --site-header-height: 56px;
+  }
+}
+
+/* Header tablet da 64px */
+@media (min-width: 768px) {
+  :root {
+    --site-header-height: 64px;
+  }
+}
+
+/* Header desktop da 68px */
+@media (min-width: 1024px) {
+  :root {
+    --site-header-height: 68px;
+  }
+}
+
+/* Marquee */
 @keyframes marquee {
   from {
     transform: translateX(0);
@@ -67,5 +121,11 @@ h3 {
 
   to {
     transform: translateX(-12.5%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
   }
 }

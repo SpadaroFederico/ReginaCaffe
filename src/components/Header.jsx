@@ -1,8 +1,28 @@
-import { Menu } from "lucide-react";
+import {
+  useEffect,
+  useRef,
+  useState,
+} from "react";
+
+import {
+  Menu,
+  X,
+} from "lucide-react";
+
 import { useLanguage } from "../i18n/LanguageContext";
 
 export default function Header() {
-  const { language, setLanguage, t } = useLanguage();
+  const {
+    language,
+    setLanguage,
+    t,
+  } = useLanguage();
+
+  const [isMobileMenuOpen, setIsMobileMenuOpen] =
+    useState(false);
+
+  const toggleButtonRef = useRef(null);
+  const firstMobileLinkRef = useRef(null);
 
   const navLinks = [
     {
@@ -23,230 +43,810 @@ export default function Header() {
     },
   ];
 
+  useEffect(() => {
+    if (!isMobileMenuOpen) {
+      return undefined;
+    }
+
+    const previousOverflow =
+      document.body.style.overflow;
+
+    document.body.style.overflow = "hidden";
+
+    const focusTimer = window.setTimeout(() => {
+      firstMobileLinkRef.current?.focus();
+    }, 320);
+
+    const handleKeyDown = (event) => {
+      if (event.key !== "Escape") {
+        return;
+      }
+
+      setIsMobileMenuOpen(false);
+
+      window.setTimeout(() => {
+        toggleButtonRef.current?.focus();
+      }, 0);
+    };
+
+    const handleResize = () => {
+      if (window.innerWidth >= 768) {
+        setIsMobileMenuOpen(false);
+      }
+    };
+
+    document.addEventListener(
+      "keydown",
+      handleKeyDown
+    );
+
+    window.addEventListener(
+      "resize",
+      handleResize
+    );
+
+    return () => {
+      window.clearTimeout(focusTimer);
+
+      document.body.style.overflow =
+        previousOverflow;
+
+      document.removeEventListener(
+        "keydown",
+        handleKeyDown
+      );
+
+      window.removeEventListener(
+        "resize",
+        handleResize
+      );
+    };
+  }, [isMobileMenuOpen]);
+
+  const navigateToSection = (
+    event,
+    href,
+    fromMobileMenu = false
+  ) => {
+    const target = document.querySelector(href);
+
+    if (!target) {
+      if (fromMobileMenu) {
+        setIsMobileMenuOpen(false);
+      }
+
+      return;
+    }
+
+    event.preventDefault();
+
+    const prefersReducedMotion =
+      window.matchMedia?.(
+        "(prefers-reduced-motion: reduce)"
+      ).matches;
+
+    const performScroll = () => {
+      target.scrollIntoView({
+        behavior: prefersReducedMotion
+          ? "auto"
+          : "smooth",
+        block: "start",
+      });
+
+      window.history.pushState(
+        null,
+        "",
+        href
+      );
+    };
+
+    if (fromMobileMenu) {
+      setIsMobileMenuOpen(false);
+
+      /*
+       * Aspetta che il pannello inizi a chiudersi
+       * e che venga ripristinato lo scroll del body.
+       */
+      window.setTimeout(
+        performScroll,
+        prefersReducedMotion ? 0 : 380
+      );
+
+      return;
+    }
+
+    performScroll();
+  };
+
   return (
-    <header
-      className="
-        sticky
-        top-0
-        z-50
-        w-full
-        border-b
-        border-[#D8CFBA]/60
-        bg-[#F3EDDE]
-      "
-    >
-      <div
+    <>
+      <header
         className="
-          mx-auto
-          grid
-          h-[48px]
+          sticky
+          top-0
+          z-50
           w-full
-          max-w-[1280px]
-          grid-cols-[1fr_auto]
-          items-center
-          px-[16px]
 
-          sm:h-[56px]
-          sm:px-6
+          border-b
+          border-[#D8CFBA]/60
 
-          lg:h-[68px]
-          lg:grid-cols-[1fr_auto_1fr]
-          lg:px-10
-
-          xl:px-12
+          bg-[#F3EDDE]
         "
       >
-        <a
-          href="/"
-          aria-label={t("header.homeAria")}
+        <div
           className="
-            flex
+            mx-auto
+            grid
+            h-[48px]
+            w-full
+            max-w-[1280px]
+            grid-cols-[1fr_auto]
             items-center
-            justify-self-start
+
+            px-[16px]
+
+            sm:h-[56px]
+            sm:px-6
+
+            md:h-[64px]
+            md:grid-cols-[1fr_auto_1fr]
+            md:px-8
+
+            lg:h-[68px]
+            lg:px-10
+
+            xl:px-12
           "
         >
-          <img
-            src="/logo.svg"
-            alt="Regina Caffè"
+          {/* Logo */}
+          <a
+            href="/"
+            aria-label={t("header.homeAria")}
             className="
-              h-[26px]
-              w-auto
-              object-contain
-
-              sm:h-[29px]
-              lg:h-[60px]
+              flex
+              items-center
+              justify-self-start
             "
-          />
-        </a>
-
-        <nav
-          aria-label="Navigazione principale"
-          className="
-            hidden
-            items-center
-            justify-center
-            gap-[30px]
-
-            lg:flex
-            xl:gap-[38px]
-          "
-        >
-          {navLinks.map((item) => (
-            <a
-              key={item.href}
-              href={item.href}
+          >
+            <img
+              src="/logo.svg"
+              alt="Regina Caffè"
               className="
-                group
-                relative
-                flex
-                flex-col
-                items-center
+                h-[26px]
+                w-auto
+                object-contain
 
-                font-serif
-                text-[19px]
-                font-normal
-                leading-none
-                text-[#2F2A21]
-                no-underline
+                sm:h-[29px]
 
-                transition-all
-                duration-300
+                md:h-[50px]
 
-                hover:-translate-y-[1px]
-                hover:text-[#635B4E]
-
-                xl:text-[20px]
+                lg:h-[60px]
               "
-            >
-              {item.label}
+            />
+          </a>
 
-              <span
-                aria-hidden="true"
+          {/* Navigazione tablet / desktop */}
+          <nav
+            aria-label={t(
+              "header.navigationAria"
+            )}
+            className="
+              hidden
+              items-center
+              justify-center
+
+              md:flex
+              md:gap-[18px]
+
+              lg:gap-[30px]
+
+              xl:gap-[38px]
+            "
+          >
+            {navLinks.map((item) => (
+              <a
+                key={item.href}
+                href={item.href}
+                onClick={(event) =>
+                  navigateToSection(
+                    event,
+                    item.href
+                  )
+                }
                 className="
-                  absolute
-                  -bottom-[9px]
+                  group
+                  relative
 
-                  h-[3px]
-                  w-[3px]
-                  rounded-full
-                  bg-[#7C644A]
+                  flex
+                  flex-col
+                  items-center
 
-                  opacity-0
+                  font-serif
+                  font-normal
+                  leading-none
+                  text-[#2F2A21]
+                  no-underline
 
                   transition-all
                   duration-300
+                  ease-out
 
-                  group-hover:opacity-100
+                  hover:-translate-y-[1px]
+                  hover:text-[#635B4E]
+
+                  md:text-[17px]
+
+                  lg:text-[19px]
+
+                  xl:text-[20px]
                 "
-              />
+              >
+                {item.label}
+
+                <span
+                  aria-hidden="true"
+                  className="
+                    absolute
+                    -bottom-[9px]
+
+                    h-[3px]
+                    w-[3px]
+                    rounded-full
+
+                    bg-[#7C644A]
+
+                    opacity-0
+
+                    transition-opacity
+                    duration-300
+
+                    group-hover:opacity-100
+                  "
+                />
+              </a>
+            ))}
+          </nav>
+
+          {/* Pulsante mobile */}
+          <button
+            ref={toggleButtonRef}
+            type="button"
+            aria-expanded={isMobileMenuOpen}
+            aria-controls="mobile-navigation"
+            aria-label={
+              isMobileMenuOpen
+                ? t("header.closeMenuAria")
+                : t("header.openMenuAria")
+            }
+            onClick={() =>
+              setIsMobileMenuOpen(
+                (current) => !current
+              )
+            }
+            className="
+              relative
+
+              flex
+              h-[32px]
+              w-[32px]
+              items-center
+              justify-center
+              justify-self-end
+
+              border-0
+              bg-transparent
+              p-0
+
+              text-[#635B4E]
+
+              transition-opacity
+              duration-200
+
+              hover:opacity-60
+
+              md:hidden
+            "
+          >
+            <Menu
+              strokeWidth={1.5}
+              className={`
+                absolute
+                h-[20px]
+                w-[20px]
+
+                transition-all
+                duration-300
+                ease-out
+
+                ${
+                  isMobileMenuOpen
+                    ? "rotate-90 scale-75 opacity-0"
+                    : "rotate-0 scale-100 opacity-100"
+                }
+              `}
+            />
+
+            <X
+              strokeWidth={1.35}
+              className={`
+                absolute
+                h-[21px]
+                w-[21px]
+
+                transition-all
+                duration-300
+                ease-out
+
+                ${
+                  isMobileMenuOpen
+                    ? "rotate-0 scale-100 opacity-100"
+                    : "-rotate-90 scale-75 opacity-0"
+                }
+              `}
+            />
+          </button>
+
+          {/* Controlli tablet / desktop */}
+          <div
+            className="
+              hidden
+              items-center
+              justify-self-end
+
+              md:flex
+            "
+          >
+            <a
+              href="#menu"
+              onClick={(event) =>
+                navigateToSection(
+                  event,
+                  "#menu"
+                )
+              }
+              className="
+                font-serif
+                font-normal
+                text-[#2F2A21]
+                no-underline
+
+                transition-colors
+                duration-200
+
+                hover:text-[#635B4E]
+
+                md:text-[18px]
+
+                lg:text-[20px]
+
+                xl:text-[21px]
+              "
+            >
+              {t("header.menu")}
             </a>
-          ))}
-        </nav>
 
-        <button
-          type="button"
-          aria-label={t("header.openMenuAria")}
+            <span
+              aria-hidden="true"
+              className="
+                h-[18px]
+                w-px
+                bg-[#BEB29A]
+
+                md:mx-[14px]
+
+                lg:mx-[18px]
+                lg:h-[20px]
+
+                xl:mx-[22px]
+              "
+            />
+
+            <div
+              aria-label={t(
+                "header.languageAria"
+              )}
+              className="
+                flex
+                items-center
+
+                font-sans
+                font-medium
+                tracking-[0.20em]
+
+                md:gap-[7px]
+                md:text-[9px]
+
+                lg:gap-[9px]
+                lg:text-[10px]
+
+                xl:text-[11px]
+              "
+            >
+              <button
+                type="button"
+                onClick={() =>
+                  setLanguage("it")
+                }
+                aria-pressed={
+                  language === "it"
+                }
+                className={`
+                  cursor-pointer
+                  border-0
+                  bg-transparent
+                  p-0
+
+                  transition-opacity
+                  duration-200
+
+                  ${
+                    language === "it"
+                      ? "text-[#2F2A21]"
+                      : "text-[#8E8371] opacity-55 hover:opacity-100"
+                  }
+                `}
+              >
+                IT
+              </button>
+
+              <span
+                aria-hidden="true"
+                className="text-[#9E927D]"
+              >
+                /
+              </span>
+
+              <button
+                type="button"
+                onClick={() =>
+                  setLanguage("en")
+                }
+                aria-pressed={
+                  language === "en"
+                }
+                className={`
+                  cursor-pointer
+                  border-0
+                  bg-transparent
+                  p-0
+
+                  transition-opacity
+                  duration-200
+
+                  ${
+                    language === "en"
+                      ? "text-[#2F2A21]"
+                      : "text-[#8E8371] opacity-55 hover:opacity-100"
+                  }
+                `}
+              >
+                EN
+              </button>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      {/* Menu mobile */}
+      <div
+        id="mobile-navigation"
+        role="dialog"
+        aria-modal="true"
+        aria-label={t(
+          "header.navigationAria"
+        )}
+        aria-hidden={!isMobileMenuOpen}
+        className={`
+          fixed
+          inset-x-0
+          bottom-0
+          top-[48px]
+          z-40
+
+          overflow-hidden
+
+          border-t
+          border-[#D8CFBA]/70
+
+          bg-[#F3EDDE]
+
+          transition-[transform,opacity]
+          duration-[520ms]
+          [transition-timing-function:cubic-bezier(0.22,1,0.36,1)]
+
+          motion-reduce:transition-none
+
+          sm:top-[56px]
+
+          md:hidden
+
+          ${
+            isMobileMenuOpen
+              ? "translate-y-0 opacity-100"
+              : "-translate-y-full pointer-events-none opacity-0"
+          }
+        `}
+      >
+        {/* Logo decorativo */}
+        <img
+          src="/logo.svg"
+          alt=""
+          aria-hidden="true"
           className="
-            flex
-            h-[32px]
-            w-[32px]
-            items-center
-            justify-center
-            justify-self-end
+            pointer-events-none
+            absolute
+            left-1/2
+            top-1/2
 
-            border-0
-            bg-transparent
-            p-0
+            w-[290px]
+            max-w-none
 
-            text-[#635B4E]
+            -translate-x-1/2
+            -translate-y-1/2
 
-            transition-opacity
-            duration-200
-
-            hover:opacity-60
-
-            lg:hidden
+            opacity-[0.045]
           "
-        >
-          <Menu
-            size={20}
-            strokeWidth={1.5}
-          />
-        </button>
+        />
 
         <div
           className="
-            hidden
-            items-center
-            justify-self-end
+            relative
+            z-10
 
-            lg:flex
+            flex
+            h-full
+            flex-col
+            items-center
+            justify-center
+
+            px-8
+            pb-10
           "
         >
+          <p
+            className={`
+              font-sans
+              text-[9px]
+              font-medium
+              uppercase
+              tracking-[0.34em]
+              text-[#635B4E]
+
+              transition-[opacity,transform]
+              duration-500
+              ease-out
+
+              ${
+                isMobileMenuOpen
+                  ? "translate-y-0 opacity-100"
+                  : "-translate-y-3 opacity-0"
+              }
+            `}
+            style={{
+              transitionDelay:
+                isMobileMenuOpen
+                  ? "100ms"
+                  : "0ms",
+            }}
+          >
+            {t("header.mobileMenuLabel")}
+          </p>
+
+          <nav
+            aria-label={t(
+              "header.navigationAria"
+            )}
+            className="
+              mt-[30px]
+
+              flex
+              flex-col
+              items-center
+              gap-[18px]
+            "
+          >
+            {navLinks.map(
+              (item, index) => (
+                <a
+                  ref={
+                    index === 0
+                      ? firstMobileLinkRef
+                      : undefined
+                  }
+                  key={item.href}
+                  href={item.href}
+                  tabIndex={
+                    isMobileMenuOpen
+                      ? 0
+                      : -1
+                  }
+                  onClick={(event) =>
+                    navigateToSection(
+                      event,
+                      item.href,
+                      true
+                    )
+                  }
+                  className={`
+                    group
+                    relative
+
+                    font-serif
+                    text-[36px]
+                    font-normal
+                    leading-none
+                    text-[#2F2A21]
+                    no-underline
+
+                    transition-[opacity,transform,color]
+                    duration-500
+
+                    [transition-timing-function:cubic-bezier(0.22,1,0.36,1)]
+
+                    hover:text-[#635B4E]
+
+                    ${
+                      isMobileMenuOpen
+                        ? "translate-y-0 opacity-100"
+                        : "-translate-y-5 opacity-0"
+                    }
+                  `}
+                  style={{
+                    transitionDelay:
+                      isMobileMenuOpen
+                        ? `${
+                            150 +
+                            index * 65
+                          }ms`
+                        : "0ms",
+                  }}
+                >
+                  {item.label}
+
+                  <span
+                    aria-hidden="true"
+                    className="
+                      absolute
+                      -bottom-[8px]
+                      left-1/2
+
+                      h-[3px]
+                      w-[3px]
+                      rounded-full
+
+                      -translate-x-1/2
+
+                      bg-[#7C644A]
+
+                      opacity-0
+
+                      transition-opacity
+                      duration-300
+
+                      group-hover:opacity-100
+                    "
+                  />
+                </a>
+              )
+            )}
+          </nav>
+
+          <div
+            aria-hidden="true"
+            className={`
+              my-[26px]
+              h-px
+              w-[54px]
+              bg-[#BEB29A]
+
+              transition-[opacity,transform]
+              duration-500
+
+              ${
+                isMobileMenuOpen
+                  ? "scale-x-100 opacity-100"
+                  : "scale-x-0 opacity-0"
+              }
+            `}
+            style={{
+              transitionDelay:
+                isMobileMenuOpen
+                  ? "420ms"
+                  : "0ms",
+            }}
+          />
+
           <a
             href="#menu"
-            className="
+            tabIndex={
+              isMobileMenuOpen ? 0 : -1
+            }
+            onClick={(event) =>
+              navigateToSection(
+                event,
+                "#menu",
+                true
+              )
+            }
+            className={`
               font-serif
-              text-[20px]
-              font-normal
+              text-[25px]
               text-[#2F2A21]
               no-underline
 
-              transition-colors
-              duration-200
+              transition-[opacity,transform,color]
+              duration-500
+              ease-out
 
               hover:text-[#635B4E]
 
-              xl:text-[21px]
-            "
+              ${
+                isMobileMenuOpen
+                  ? "translate-y-0 opacity-100"
+                  : "-translate-y-4 opacity-0"
+              }
+            `}
+            style={{
+              transitionDelay:
+                isMobileMenuOpen
+                  ? "450ms"
+                  : "0ms",
+            }}
           >
             {t("header.menu")}
           </a>
 
-          <span
-            aria-hidden="true"
-            className="
-              mx-[18px]
-              h-[20px]
-              w-px
-              bg-[#BEB29A]
-
-              xl:mx-[22px]
-            "
-          />
-
           <div
-            className="
+            className={`
+              mt-[24px]
+
               flex
               items-center
-              gap-[9px]
+              gap-[12px]
 
               font-sans
-              text-[10px]
+              text-[11px]
               font-medium
-              tracking-[0.20em]
+              tracking-[0.22em]
 
-              xl:text-[11px]
-            "
-            aria-label={t("header.languageAria")}
+              transition-[opacity,transform]
+              duration-500
+              ease-out
+
+              ${
+                isMobileMenuOpen
+                  ? "translate-y-0 opacity-100"
+                  : "-translate-y-3 opacity-0"
+              }
+            `}
+            style={{
+              transitionDelay:
+                isMobileMenuOpen
+                  ? "500ms"
+                  : "0ms",
+            }}
           >
             <button
               type="button"
-              onClick={() => setLanguage("it")}
-              aria-pressed={language === "it"}
+              tabIndex={
+                isMobileMenuOpen ? 0 : -1
+              }
+              onClick={() =>
+                setLanguage("it")
+              }
+              aria-pressed={
+                language === "it"
+              }
               className={`
                 cursor-pointer
                 border-0
                 bg-transparent
                 p-0
 
-                transition-opacity
-                duration-200
-
                 ${
                   language === "it"
                     ? "text-[#2F2A21]"
-                    : "text-[#8E8371] opacity-60"
+                    : "text-[#8E8371] opacity-55"
                 }
               `}
             >
@@ -262,21 +862,25 @@ export default function Header() {
 
             <button
               type="button"
-              onClick={() => setLanguage("en")}
-              aria-pressed={language === "en"}
+              tabIndex={
+                isMobileMenuOpen ? 0 : -1
+              }
+              onClick={() =>
+                setLanguage("en")
+              }
+              aria-pressed={
+                language === "en"
+              }
               className={`
                 cursor-pointer
                 border-0
                 bg-transparent
                 p-0
 
-                transition-opacity
-                duration-200
-
                 ${
                   language === "en"
                     ? "text-[#2F2A21]"
-                    : "text-[#8E8371] opacity-60"
+                    : "text-[#8E8371] opacity-55"
                 }
               `}
             >
@@ -285,6 +889,6 @@ export default function Header() {
           </div>
         </div>
       </div>
-    </header>
+    </>
   );
 }

@@ -104,21 +104,12 @@ export default function Hero() {
             w-[205px]
 
             sm:right-[28px]
-            sm:top-[10px]
-            sm:w-[270px]
+            sm:top-[-3px]
+            sm:w-[250px]
 
-            md:right-[6%]
-            md:top-[14px]
-            md:w-[330px]
-
-            lg:right-[50%]
-            lg:top-[-2%]
-            lg:w-[325px]
-            lg:hidden
-
-            xl:right-[48%]
-            xl:top-[-2%]
-            xl:w-[350px]
+            md:right-[10%]
+            md:top-[-0px]
+            md:w-[280px]
           "
         />
 
