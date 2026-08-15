@@ -1,12 +1,29 @@
+import {
+  useEffect,
+  useState,
+} from "react";
+
 import { ArrowUpRight } from "lucide-react";
 import { useLanguage } from "../i18n/LanguageContext";
 
 export default function Hero() {
   const { t } = useLanguage();
+  const [isReady, setIsReady] = useState(false);
+
+  useEffect(() => {
+    const frame = requestAnimationFrame(() => {
+      setIsReady(true);
+    });
+
+    return () => {
+      cancelAnimationFrame(frame);
+    };
+  }, []);
 
   return (
     <section
       className="
+        group/hero
         relative
         overflow-hidden
         bg-bg
@@ -49,6 +66,7 @@ export default function Hero() {
 
             hidden
             w-[54%]
+            overflow-hidden
 
             lg:block
             xl:w-[56%]
@@ -58,7 +76,7 @@ export default function Hero() {
             src="/bancon.webp"
             alt=""
             aria-hidden="true"
-            className="
+            className={`
               h-full
               w-full
 
@@ -68,7 +86,23 @@ export default function Hero() {
               brightness-[0.91]
               saturate-[0.92]
               contrast-[1.03]
-            "
+
+              transition-[opacity,transform,filter]
+              duration-[1200ms]
+
+              [transition-timing-function:cubic-bezier(0.22,1,0.36,1)]
+
+              motion-reduce:transition-none
+
+              lg:group-hover/hero:scale-[1.018]
+              lg:group-hover/hero:brightness-[0.94]
+
+              ${
+                isReady
+                  ? "scale-100 opacity-100"
+                  : "scale-[1.035] opacity-0"
+              }
+            `}
             style={{
               WebkitMaskImage:
                 "linear-gradient(to right, rgba(0,0,0,0.58) 0%, rgba(0,0,0,0.82) 6%, black 15%, black 100%)",
@@ -82,7 +116,13 @@ export default function Hero() {
             className="
               absolute
               inset-0
+
               bg-[#2F2A21]/[0.025]
+
+              transition-colors
+              duration-700
+
+              group-hover/hero:bg-[#2F2A21]/[0.01]
             "
           />
         </div>
@@ -91,13 +131,12 @@ export default function Hero() {
           src="/logo.svg"
           alt=""
           aria-hidden="true"
-          className="
+          className={`
             pointer-events-none
             absolute
             z-[1]
             max-w-none
             object-contain
-            opacity-[0.17]
 
             right-[8px]
             top-[2px]
@@ -110,7 +149,22 @@ export default function Hero() {
             md:right-[10%]
             md:top-[-0px]
             md:w-[280px]
-          "
+
+            transition-[opacity,transform]
+            duration-[1000ms]
+
+            delay-100
+
+            [transition-timing-function:cubic-bezier(0.22,1,0.36,1)]
+
+            motion-reduce:transition-none
+
+            ${
+              isReady
+                ? "translate-y-0 opacity-[0.17]"
+                : "translate-y-[10px] opacity-0"
+            }
+          `}
         />
 
         <div
@@ -140,28 +194,61 @@ export default function Hero() {
               xl:text-[82px]
             "
           >
-            <span className="block text-[#2F2A21]">
+            <span
+              className={`
+                block
+                text-[#2F2A21]
+
+                transition-[opacity,transform]
+                duration-[800ms]
+
+                [transition-timing-function:cubic-bezier(0.22,1,0.36,1)]
+
+                motion-reduce:transition-none
+
+                ${
+                  isReady
+                    ? "translate-y-0 opacity-100"
+                    : "translate-y-[16px] opacity-0"
+                }
+              `}
+            >
               Regina
             </span>
 
             <span
-              className="
+              className={`
                 ml-[23px]
                 block
                 italic
                 text-[#635B4E]
 
+                transition-[opacity,transform]
+                duration-[850ms]
+
+                delay-[70ms]
+
+                [transition-timing-function:cubic-bezier(0.22,1,0.36,1)]
+
+                motion-reduce:transition-none
+
                 sm:ml-[30px]
                 md:ml-[34px]
                 lg:ml-[40px]
-              "
+
+                ${
+                  isReady
+                    ? "translate-y-0 opacity-100"
+                    : "translate-y-[18px] opacity-0"
+                }
+              `}
             >
               Caffè
             </span>
           </h1>
 
           <p
-            className="
+            className={`
               mt-[20px]
               max-w-[245px]
 
@@ -170,6 +257,15 @@ export default function Hero() {
               font-normal
               leading-[22px]
               text-[#2F2A21]
+
+              transition-[opacity,transform]
+              duration-[850ms]
+
+              delay-[150ms]
+
+              [transition-timing-function:cubic-bezier(0.22,1,0.36,1)]
+
+              motion-reduce:transition-none
 
               sm:mt-[25px]
               sm:max-w-[340px]
@@ -184,14 +280,23 @@ export default function Hero() {
               lg:max-w-[420px]
               lg:text-[18px]
               lg:leading-[29px]
-            "
+
+              ${
+                isReady
+                  ? "translate-y-0 opacity-100"
+                  : "translate-y-[14px] opacity-0"
+              }
+            `}
           >
             {t("hero.description")}
           </p>
 
           <a
             href="#menu"
-            className="
+            className={`
+              group/hero-cta
+              relative
+
               mt-[20px]
               inline-flex
               w-[144px]
@@ -209,10 +314,22 @@ export default function Hero() {
               text-[#2F2A21]
               no-underline
 
-              transition-opacity
-              duration-200
+              transition-[opacity,transform,color,border-color]
+              duration-[850ms]
 
-              hover:opacity-60
+              delay-[240ms]
+
+              [transition-timing-function:cubic-bezier(0.22,1,0.36,1)]
+
+              hover:-translate-y-[1px]
+              hover:border-[#7C644A]/45
+              hover:text-[#635B4E]
+
+              focus-visible:-translate-y-[1px]
+              focus-visible:text-[#635B4E]
+              focus-visible:outline-none
+
+              motion-reduce:transition-none
 
               sm:mt-[25px]
               sm:w-[165px]
@@ -220,7 +337,13 @@ export default function Hero() {
 
               lg:w-[180px]
               lg:text-[23px]
-            "
+
+              ${
+                isReady
+                  ? "translate-y-0 opacity-100"
+                  : "translate-y-[12px] opacity-0"
+              }
+            `}
           >
             <span>{t("hero.menu")}</span>
 
@@ -231,8 +354,44 @@ export default function Hero() {
                 w-[16px]
                 shrink-0
 
+                transition-transform
+                duration-400
+
+                [transition-timing-function:cubic-bezier(0.22,1,0.36,1)]
+
+                group-hover/hero-cta:-translate-y-[2px]
+                group-hover/hero-cta:translate-x-[2px]
+
+                group-focus-visible/hero-cta:-translate-y-[2px]
+                group-focus-visible/hero-cta:translate-x-[2px]
+
                 sm:h-[18px]
                 sm:w-[18px]
+              "
+            />
+
+            <span
+              aria-hidden="true"
+              className="
+                absolute
+                -bottom-px
+                left-0
+
+                h-px
+                w-full
+
+                origin-left
+                scale-x-0
+
+                bg-[#7C644A]
+
+                transition-transform
+                duration-500
+
+                [transition-timing-function:cubic-bezier(0.22,1,0.36,1)]
+
+                group-hover/hero-cta:scale-x-100
+                group-focus-visible/hero-cta:scale-x-100
               "
             />
           </a>

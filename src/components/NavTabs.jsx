@@ -27,7 +27,10 @@ const tabs = [
   },
 ];
 
-function TabGroup({ hidden = false, t }) {
+function TabGroup({
+  hidden = false,
+  t,
+}) {
   return (
     <div
       aria-hidden={hidden ? "true" : undefined}
@@ -63,16 +66,38 @@ function TabGroup({ hidden = false, t }) {
             href={`#${tab.id}`}
             tabIndex={hidden ? -1 : undefined}
             className="
+              relative
               shrink-0
               whitespace-nowrap
 
               text-[#635B4E]
               no-underline
 
-              transition-opacity
-              duration-200
+              transition-[color,transform]
+              duration-300
 
-              hover:opacity-60
+              [transition-timing-function:cubic-bezier(0.22,1,0.36,1)]
+
+              after:absolute
+              after:-bottom-[7px]
+              after:left-0
+              after:h-px
+              after:w-full
+              after:origin-center
+              after:scale-x-0
+              after:bg-[#7C644A]/70
+              after:transition-transform
+              after:duration-400
+              after:[transition-timing-function:cubic-bezier(0.22,1,0.36,1)]
+
+              hover:-translate-y-[1px]
+              hover:text-[#2F2A21]
+              hover:after:scale-x-100
+
+              focus-visible:-translate-y-[1px]
+              focus-visible:text-[#2F2A21]
+              focus-visible:outline-none
+              focus-visible:after:scale-x-100
             "
           >
             {t(tab.key)}
@@ -107,7 +132,9 @@ export default function NavTabs() {
     <nav
       id="menu"
       className="
+        group/ticker
         relative
+
         flex
         h-[58px]
         w-full
@@ -140,6 +167,9 @@ export default function NavTabs() {
 
           animate-[marquee_22s_linear_infinite]
 
+          group-hover/ticker:[animation-play-state:paused]
+          focus-within:[animation-play-state:paused]
+
           sm:animate-[marquee_25s_linear_infinite]
 
           lg:animate-[marquee_28s_linear_infinite]
@@ -147,13 +177,15 @@ export default function NavTabs() {
           motion-reduce:animate-none
         "
       >
-        {Array.from({ length: 8 }).map((_, index) => (
-          <TabGroup
-            key={index}
-            hidden={index !== 0}
-            t={t}
-          />
-        ))}
+        {Array.from({ length: 8 }).map(
+          (_, index) => (
+            <TabGroup
+              key={index}
+              hidden={index !== 0}
+              t={t}
+            />
+          )
+        )}
       </div>
     </nav>
   );

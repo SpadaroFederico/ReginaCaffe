@@ -2,53 +2,103 @@ import { ArrowUpRight } from "lucide-react";
 import { useLanguage } from "../../i18n/LanguageContext";
 
 function getLocale(language) {
-  return language === "en" ? "en-GB" : "it-IT";
+  return language === "en"
+    ? "en-GB"
+    : "it-IT";
 }
 
-function formatDay(dateString, language) {
-  return new Intl.DateTimeFormat(getLocale(language), {
-    day: "2-digit",
-    timeZone: "Europe/Rome",
-  }).format(new Date(dateString));
+function formatDay(
+  dateString,
+  language
+) {
+  return new Intl.DateTimeFormat(
+    getLocale(language),
+    {
+      day: "2-digit",
+      timeZone: "Europe/Rome",
+    }
+  ).format(new Date(dateString));
 }
 
-function formatMonth(dateString, language) {
-  return new Intl.DateTimeFormat(getLocale(language), {
-    month: "short",
-    timeZone: "Europe/Rome",
-  })
+function formatMonth(
+  dateString,
+  language
+) {
+  return new Intl.DateTimeFormat(
+    getLocale(language),
+    {
+      month: "short",
+      timeZone: "Europe/Rome",
+    }
+  )
     .format(new Date(dateString))
     .replace(".", "")
     .toUpperCase();
 }
 
-function formatTime(dateString, language) {
-  return new Intl.DateTimeFormat(getLocale(language), {
-    hour: "2-digit",
-    minute: "2-digit",
-    hour12: false,
-    timeZone: "Europe/Rome",
-  }).format(new Date(dateString));
+function formatTime(
+  dateString,
+  language
+) {
+  return new Intl.DateTimeFormat(
+    getLocale(language),
+    {
+      hour: "2-digit",
+      minute: "2-digit",
+      hour12: false,
+      timeZone: "Europe/Rome",
+    }
+  ).format(new Date(dateString));
 }
 
-function getLocalizedValue(value, language) {
+function getLocalizedValue(
+  value,
+  language
+) {
   if (typeof value === "string") {
     return value;
   }
 
-  return value?.[language] ?? value?.it ?? "";
+  return (
+    value?.[language] ??
+    value?.it ??
+    ""
+  );
 }
 
-export default function EventRow({ event }) {
-  const { language, t } = useLanguage();
+export default function EventRow({
+  event,
+}) {
+  const {
+    language,
+    t,
+  } = useLanguage();
 
-  const day = formatDay(event.startsAt, language);
-  const month = formatMonth(event.startsAt, language);
+  const day = formatDay(
+    event.startsAt,
+    language
+  );
 
-  const startTime = formatTime(event.startsAt, language);
-  const endTime = formatTime(event.endsAt, language);
+  const month = formatMonth(
+    event.startsAt,
+    language
+  );
 
-  const title = getLocalizedValue(event.title, language);
+  const startTime = formatTime(
+    event.startsAt,
+    language
+  );
+
+  const endTime = formatTime(
+    event.endsAt,
+    language
+  );
+
+  const title = getLocalizedValue(
+    event.title,
+    language
+  );
+
   const description = getLocalizedValue(
     event.description,
     language
@@ -57,8 +107,9 @@ export default function EventRow({ event }) {
   return (
     <article
       className="
-        group
+        group/event
         relative
+        overflow-hidden
 
         grid
         min-h-[144px]
@@ -71,8 +122,13 @@ export default function EventRow({ event }) {
         px-[22px]
         py-[27px]
 
-        transition-colors
-        duration-300
+        transition-[background-color,box-shadow]
+        duration-500
+
+        [transition-timing-function:cubic-bezier(0.22,1,0.36,1)]
+
+        hover:bg-[#ECEAE3]/65
+        focus-within:bg-[#ECEAE3]/65
 
         md:block
         md:min-h-[225px]
@@ -81,7 +137,7 @@ export default function EventRow({ event }) {
 
         md:odd:border-r
 
-        md:hover:bg-[#ECEAE3]
+        md:hover:shadow-[inset_0_0_0_1px_rgba(173,144,96,0.18)]
 
         lg:min-h-[235px]
         lg:px-[32px]
@@ -110,6 +166,17 @@ export default function EventRow({ event }) {
             font-normal
             leading-[0.88]
 
+            transition-[transform,color]
+            duration-500
+
+            [transition-timing-function:cubic-bezier(0.22,1,0.36,1)]
+
+            group-hover/event:-translate-y-[2px]
+            group-hover/event:text-[#2F2A21]
+
+            group-focus-within/event:-translate-y-[2px]
+            group-focus-within/event:text-[#2F2A21]
+
             md:text-[46px]
 
             lg:text-[50px]
@@ -128,6 +195,12 @@ export default function EventRow({ event }) {
             uppercase
             tracking-[0.20em]
 
+            transition-colors
+            duration-400
+
+            group-hover/event:text-[#7C644A]
+            group-focus-within/event:text-[#7C644A]
+
             md:mt-[14px]
             md:text-[10px]
 
@@ -143,6 +216,14 @@ export default function EventRow({ event }) {
         className="
           min-w-0
 
+          transition-transform
+          duration-500
+
+          [transition-timing-function:cubic-bezier(0.22,1,0.36,1)]
+
+          group-hover/event:translate-x-[2px]
+          group-focus-within/event:translate-x-[2px]
+
           md:mt-[28px]
           md:pr-[34px]
 
@@ -156,6 +237,12 @@ export default function EventRow({ event }) {
             font-normal
             leading-[1]
             text-[#2F2A21]
+
+            transition-colors
+            duration-400
+
+            group-hover/event:text-[#635B4E]
+            group-focus-within/event:text-[#635B4E]
 
             md:text-[29px]
 
@@ -202,23 +289,39 @@ export default function EventRow({ event }) {
 
       <a
         href={`/eventi/${event.slug}`}
-        aria-label={`${t("events.discover")} ${title}`}
+        aria-label={`${t(
+          "events.discover"
+        )} ${title}`}
         className="
+          group/event-arrow
+
           mt-[2px]
 
           flex
-          h-[26px]
-          w-[26px]
-          items-start
-          justify-end
+          h-[30px]
+          w-[30px]
+          items-center
+          justify-center
+
+          rounded-full
 
           text-[#635B4E]
 
-          transition-transform
-          duration-300
+          transition-[transform,background-color,color]
+          duration-400
 
-          group-hover:-translate-y-[2px]
-          group-hover:translate-x-[2px]
+          [transition-timing-function:cubic-bezier(0.22,1,0.36,1)]
+
+          hover:bg-[#DED4C2]/70
+          hover:text-[#2F2A21]
+
+          focus-visible:bg-[#DED4C2]/70
+          focus-visible:text-[#2F2A21]
+          focus-visible:outline-none
+          focus-visible:ring-1
+          focus-visible:ring-[#AD9060]/55
+
+          group-hover/event:-translate-y-[1px]
 
           md:absolute
           md:right-[28px]
@@ -234,11 +337,47 @@ export default function EventRow({ event }) {
             h-[18px]
             w-[18px]
 
+            transition-transform
+            duration-400
+
+            [transition-timing-function:cubic-bezier(0.22,1,0.36,1)]
+
+            group-hover/event-arrow:-translate-y-[2px]
+            group-hover/event-arrow:translate-x-[2px]
+
+            group-focus-visible/event-arrow:-translate-y-[2px]
+            group-focus-visible/event-arrow:translate-x-[2px]
+
             md:h-[20px]
             md:w-[20px]
           "
         />
       </a>
+
+      <span
+        aria-hidden="true"
+        className="
+          pointer-events-none
+          absolute
+          inset-x-0
+          bottom-0
+
+          h-px
+
+          origin-left
+          scale-x-0
+
+          bg-[#AD9060]/65
+
+          transition-transform
+          duration-700
+
+          [transition-timing-function:cubic-bezier(0.22,1,0.36,1)]
+
+          group-hover/event:scale-x-100
+          group-focus-within/event:scale-x-100
+        "
+      />
     </article>
   );
 }

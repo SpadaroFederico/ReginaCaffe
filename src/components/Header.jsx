@@ -58,9 +58,7 @@ export default function Header() {
     }, 320);
 
     const handleKeyDown = (event) => {
-      if (event.key !== "Escape") {
-        return;
-      }
+      if (event.key !== "Escape") return;
 
       setIsMobileMenuOpen(false);
 
@@ -143,10 +141,6 @@ export default function Header() {
     if (fromMobileMenu) {
       setIsMobileMenuOpen(false);
 
-      /*
-       * Aspetta che il pannello inizi a chiudersi
-       * e che venga ripristinato lo scroll del body.
-       */
       window.setTimeout(
         performScroll,
         prefersReducedMotion ? 0 : 380
@@ -180,7 +174,7 @@ export default function Header() {
             h-[48px]
             w-full
             max-w-[1280px]
-            grid-cols-[1fr_auto]
+            grid-cols-[1fr_auto_1fr]
             items-center
 
             px-[16px]
@@ -189,7 +183,6 @@ export default function Header() {
             sm:px-6
 
             md:h-[64px]
-            md:grid-cols-[1fr_auto_1fr]
             md:px-8
 
             lg:h-[68px]
@@ -203,9 +196,19 @@ export default function Header() {
             href="/"
             aria-label={t("header.homeAria")}
             className="
+              group/logo
+
               flex
               items-center
               justify-self-start
+
+              rounded-sm
+
+              focus-visible:outline-none
+              focus-visible:ring-1
+              focus-visible:ring-[#AD9060]/70
+              focus-visible:ring-offset-4
+              focus-visible:ring-offset-[#F3EDDE]
             "
           >
             <img
@@ -215,6 +218,15 @@ export default function Header() {
                 h-[26px]
                 w-auto
                 object-contain
+
+                transition-[transform,filter]
+                duration-500
+
+                [transition-timing-function:cubic-bezier(0.22,1,0.36,1)]
+
+                group-hover/logo:-translate-y-[1px]
+                group-hover/logo:scale-[1.025]
+                group-hover/logo:drop-shadow-[0_5px_8px_rgba(42,36,32,0.08)]
 
                 sm:h-[29px]
 
@@ -254,7 +266,7 @@ export default function Header() {
                   )
                 }
                 className="
-                  group
+                  group/nav
                   relative
 
                   flex
@@ -267,12 +279,17 @@ export default function Header() {
                   text-[#2F2A21]
                   no-underline
 
-                  transition-all
+                  transition-[color,transform]
                   duration-300
-                  ease-out
+
+                  [transition-timing-function:cubic-bezier(0.22,1,0.36,1)]
 
                   hover:-translate-y-[1px]
                   hover:text-[#635B4E]
+
+                  focus-visible:-translate-y-[1px]
+                  focus-visible:text-[#635B4E]
+                  focus-visible:outline-none
 
                   md:text-[17px]
 
@@ -288,26 +305,36 @@ export default function Header() {
                   className="
                     absolute
                     -bottom-[9px]
+                    left-1/2
 
-                    h-[3px]
-                    w-[3px]
-                    rounded-full
+                    h-px
+                    w-[24px]
+
+                    origin-center
+                    -translate-x-1/2
+                    scale-x-0
 
                     bg-[#7C644A]
 
                     opacity-0
 
-                    transition-opacity
-                    duration-300
+                    transition-[transform,opacity]
+                    duration-400
 
-                    group-hover:opacity-100
+                    [transition-timing-function:cubic-bezier(0.22,1,0.36,1)]
+
+                    group-hover/nav:scale-x-100
+                    group-hover/nav:opacity-100
+
+                    group-focus-visible/nav:scale-x-100
+                    group-focus-visible/nav:opacity-100
                   "
                 />
               </a>
             ))}
           </nav>
 
-          {/* Pulsante mobile */}
+          {/* Hamburger mobile al centro */}
           <button
             ref={toggleButtonRef}
             type="button"
@@ -327,22 +354,30 @@ export default function Header() {
               relative
 
               flex
-              h-[32px]
-              w-[32px]
+              h-[34px]
+              w-[34px]
               items-center
               justify-center
-              justify-self-end
+              justify-self-center
 
+              rounded-full
               border-0
               bg-transparent
               p-0
 
               text-[#635B4E]
 
-              transition-opacity
-              duration-200
+              transition-[background-color,color,transform]
+              duration-300
 
-              hover:opacity-60
+              hover:bg-[#E9E0CF]/75
+              hover:text-[#2F2A21]
+
+              active:scale-[0.94]
+
+              focus-visible:outline-none
+              focus-visible:ring-1
+              focus-visible:ring-[#AD9060]/70
 
               md:hidden
             "
@@ -356,7 +391,8 @@ export default function Header() {
 
                 transition-all
                 duration-300
-                ease-out
+
+                [transition-timing-function:cubic-bezier(0.22,1,0.36,1)]
 
                 ${
                   isMobileMenuOpen
@@ -375,7 +411,8 @@ export default function Header() {
 
                 transition-all
                 duration-300
-                ease-out
+
+                [transition-timing-function:cubic-bezier(0.22,1,0.36,1)]
 
                 ${
                   isMobileMenuOpen
@@ -385,6 +422,107 @@ export default function Header() {
               `}
             />
           </button>
+
+          {/* Lingua sempre visibile su mobile */}
+          <div
+            role="group"
+            aria-label={t(
+              "header.languageAria"
+            )}
+            className="
+              flex
+              items-center
+              justify-self-end
+              gap-[6px]
+
+              font-sans
+              text-[9px]
+              font-medium
+              tracking-[0.16em]
+
+              sm:gap-[8px]
+              sm:text-[10px]
+
+              md:hidden
+            "
+          >
+            <button
+              type="button"
+              onClick={() =>
+                setLanguage("it")
+              }
+              aria-pressed={
+                language === "it"
+              }
+              className={`
+                relative
+
+                cursor-pointer
+                border-0
+                bg-transparent
+                p-0
+
+                transition-[color,opacity,transform]
+                duration-300
+
+                hover:-translate-y-[1px]
+                hover:opacity-100
+
+                focus-visible:outline-none
+                focus-visible:text-[#2F2A21]
+
+                ${
+                  language === "it"
+                    ? "text-[#2F2A21]"
+                    : "text-[#8E8371] opacity-55"
+                }
+              `}
+            >
+              IT
+            </button>
+
+            <span
+              aria-hidden="true"
+              className="text-[#9E927D]"
+            >
+              /
+            </span>
+
+            <button
+              type="button"
+              onClick={() =>
+                setLanguage("en")
+              }
+              aria-pressed={
+                language === "en"
+              }
+              className={`
+                relative
+
+                cursor-pointer
+                border-0
+                bg-transparent
+                p-0
+
+                transition-[color,opacity,transform]
+                duration-300
+
+                hover:-translate-y-[1px]
+                hover:opacity-100
+
+                focus-visible:outline-none
+                focus-visible:text-[#2F2A21]
+
+                ${
+                  language === "en"
+                    ? "text-[#2F2A21]"
+                    : "text-[#8E8371] opacity-55"
+                }
+              `}
+            >
+              EN
+            </button>
+          </div>
 
           {/* Controlli tablet / desktop */}
           <div
@@ -405,15 +543,23 @@ export default function Header() {
                 )
               }
               className="
+                group/header-menu
+                relative
+
                 font-serif
                 font-normal
                 text-[#2F2A21]
                 no-underline
 
-                transition-colors
-                duration-200
+                transition-[color,transform]
+                duration-300
 
+                hover:-translate-y-[1px]
                 hover:text-[#635B4E]
+
+                focus-visible:-translate-y-[1px]
+                focus-visible:text-[#635B4E]
+                focus-visible:outline-none
 
                 md:text-[18px]
 
@@ -423,6 +569,31 @@ export default function Header() {
               "
             >
               {t("header.menu")}
+
+              <span
+                aria-hidden="true"
+                className="
+                  absolute
+                  -bottom-[6px]
+                  left-0
+
+                  h-px
+                  w-full
+
+                  origin-left
+                  scale-x-0
+
+                  bg-[#7C644A]
+
+                  transition-transform
+                  duration-400
+
+                  [transition-timing-function:cubic-bezier(0.22,1,0.36,1)]
+
+                  group-hover/header-menu:scale-x-100
+                  group-focus-visible/header-menu:scale-x-100
+                "
+              />
             </a>
 
             <span
@@ -442,6 +613,7 @@ export default function Header() {
             />
 
             <div
+              role="group"
               aria-label={t(
                 "header.languageAria"
               )}
@@ -476,13 +648,19 @@ export default function Header() {
                   bg-transparent
                   p-0
 
-                  transition-opacity
-                  duration-200
+                  transition-[opacity,color,transform]
+                  duration-300
+
+                  hover:-translate-y-[1px]
+                  hover:opacity-100
+
+                  focus-visible:outline-none
+                  focus-visible:text-[#2F2A21]
 
                   ${
                     language === "it"
                       ? "text-[#2F2A21]"
-                      : "text-[#8E8371] opacity-55 hover:opacity-100"
+                      : "text-[#8E8371] opacity-55"
                   }
                 `}
               >
@@ -510,13 +688,19 @@ export default function Header() {
                   bg-transparent
                   p-0
 
-                  transition-opacity
-                  duration-200
+                  transition-[opacity,color,transform]
+                  duration-300
+
+                  hover:-translate-y-[1px]
+                  hover:opacity-100
+
+                  focus-visible:outline-none
+                  focus-visible:text-[#2F2A21]
 
                   ${
                     language === "en"
                       ? "text-[#2F2A21]"
-                      : "text-[#8E8371] opacity-55 hover:opacity-100"
+                      : "text-[#8E8371] opacity-55"
                   }
                 `}
               >
@@ -552,6 +736,7 @@ export default function Header() {
 
           transition-[transform,opacity]
           duration-[520ms]
+
           [transition-timing-function:cubic-bezier(0.22,1,0.36,1)]
 
           motion-reduce:transition-none
@@ -567,7 +752,6 @@ export default function Header() {
           }
         `}
       >
-        {/* Logo decorativo */}
         <img
           src="/logo.svg"
           alt=""
@@ -614,7 +798,8 @@ export default function Header() {
 
               transition-[opacity,transform]
               duration-500
-              ease-out
+
+              [transition-timing-function:cubic-bezier(0.22,1,0.36,1)]
 
               ${
                 isMobileMenuOpen
@@ -668,7 +853,7 @@ export default function Header() {
                     )
                   }
                   className={`
-                    group
+                    group/mobile-link
                     relative
 
                     font-serif
@@ -678,12 +863,16 @@ export default function Header() {
                     text-[#2F2A21]
                     no-underline
 
-                    transition-[opacity,transform,color]
+                    transition-[opacity,transform,color,letter-spacing]
                     duration-500
 
                     [transition-timing-function:cubic-bezier(0.22,1,0.36,1)]
 
                     hover:text-[#635B4E]
+                    hover:tracking-[0.015em]
+
+                    focus-visible:text-[#635B4E]
+                    focus-visible:outline-none
 
                     ${
                       isMobileMenuOpen
@@ -710,20 +899,25 @@ export default function Header() {
                       -bottom-[8px]
                       left-1/2
 
-                      h-[3px]
-                      w-[3px]
-                      rounded-full
+                      h-px
+                      w-[28px]
 
+                      origin-center
                       -translate-x-1/2
+                      scale-x-0
 
                       bg-[#7C644A]
 
                       opacity-0
 
-                      transition-opacity
-                      duration-300
+                      transition-[transform,opacity]
+                      duration-400
 
-                      group-hover:opacity-100
+                      group-hover/mobile-link:scale-x-100
+                      group-hover/mobile-link:opacity-100
+
+                      group-focus-visible/mobile-link:scale-x-100
+                      group-focus-visible/mobile-link:opacity-100
                     "
                   />
                 </a>
@@ -769,6 +963,9 @@ export default function Header() {
               )
             }
             className={`
+              group/mobile-menu-link
+              relative
+
               font-serif
               text-[25px]
               text-[#2F2A21]
@@ -776,9 +973,13 @@ export default function Header() {
 
               transition-[opacity,transform,color]
               duration-500
-              ease-out
+
+              [transition-timing-function:cubic-bezier(0.22,1,0.36,1)]
 
               hover:text-[#635B4E]
+
+              focus-visible:text-[#635B4E]
+              focus-visible:outline-none
 
               ${
                 isMobileMenuOpen
@@ -794,99 +995,30 @@ export default function Header() {
             }}
           >
             {t("header.menu")}
-          </a>
-
-          <div
-            className={`
-              mt-[24px]
-
-              flex
-              items-center
-              gap-[12px]
-
-              font-sans
-              text-[11px]
-              font-medium
-              tracking-[0.22em]
-
-              transition-[opacity,transform]
-              duration-500
-              ease-out
-
-              ${
-                isMobileMenuOpen
-                  ? "translate-y-0 opacity-100"
-                  : "-translate-y-3 opacity-0"
-              }
-            `}
-            style={{
-              transitionDelay:
-                isMobileMenuOpen
-                  ? "500ms"
-                  : "0ms",
-            }}
-          >
-            <button
-              type="button"
-              tabIndex={
-                isMobileMenuOpen ? 0 : -1
-              }
-              onClick={() =>
-                setLanguage("it")
-              }
-              aria-pressed={
-                language === "it"
-              }
-              className={`
-                cursor-pointer
-                border-0
-                bg-transparent
-                p-0
-
-                ${
-                  language === "it"
-                    ? "text-[#2F2A21]"
-                    : "text-[#8E8371] opacity-55"
-                }
-              `}
-            >
-              IT
-            </button>
 
             <span
               aria-hidden="true"
-              className="text-[#9E927D]"
-            >
-              /
-            </span>
+              className="
+                absolute
+                -bottom-[7px]
+                left-0
 
-            <button
-              type="button"
-              tabIndex={
-                isMobileMenuOpen ? 0 : -1
-              }
-              onClick={() =>
-                setLanguage("en")
-              }
-              aria-pressed={
-                language === "en"
-              }
-              className={`
-                cursor-pointer
-                border-0
-                bg-transparent
-                p-0
+                h-px
+                w-full
 
-                ${
-                  language === "en"
-                    ? "text-[#2F2A21]"
-                    : "text-[#8E8371] opacity-55"
-                }
-              `}
-            >
-              EN
-            </button>
-          </div>
+                origin-left
+                scale-x-0
+
+                bg-[#7C644A]
+
+                transition-transform
+                duration-400
+
+                group-hover/mobile-menu-link:scale-x-100
+                group-focus-visible/mobile-menu-link:scale-x-100
+              "
+            />
+          </a>
         </div>
       </div>
     </>

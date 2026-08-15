@@ -91,6 +91,26 @@ export const translations = {
         whatsappTitle: "Scrivici su WhatsApp",
         mapsTitle: "Come arrivare",
     },
+    footer: {
+        navigationAria: "Navigazione del footer",
+
+        addressAria:
+            "Apri l’indirizzo di Regina Caffè su Google Maps",
+
+        phoneAria:
+            "Chiama Regina Caffè",
+
+        cocktails: "Cocktails",
+        vibes: "Vibes",
+        aperitifs: "Aperitivi",
+
+        privacy: "Privacy Policy",
+        cookies: "Cookie Policy",
+
+        digitalProject: "Progetto digitale",
+        vatLabel: "P. IVA",
+        rightsReserved: "Tutti i diritti riservati",
+    },
   },
 
   en: {
@@ -184,6 +204,26 @@ export const translations = {
         facebookTitle: "Follow us on Facebook",
         whatsappTitle: "Message us on WhatsApp",
         mapsTitle: "Get directions",
+    },
+    footer: {
+        navigationAria: "Footer navigation",
+
+        addressAria:
+            "Open Regina Caffè address in Google Maps",
+
+        phoneAria:
+            "Call Regina Caffè",
+
+        cocktails: "Cocktails",
+        vibes: "Vibes",
+        aperitifs: "Aperitifs",
+
+        privacy: "Privacy Policy",
+        cookies: "Cookie Policy",
+
+        digitalProject: "Digital project",
+        vatLabel: "VAT number",
+        rightsReserved: "All rights reserved",
     },
   },
 };

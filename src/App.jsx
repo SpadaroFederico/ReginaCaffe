@@ -7,6 +7,7 @@ import RecommendedSection from "./components/recommended/RecommendedSection";
 import OpeningHoursSection from "./components/hours/OpeningHoursSection";
 import BarSection from "./components/bar/BarSection";
 import SocialSection from "./components/social/SocialSection";
+import Footer from "./components/Footer";
 
 function App() {
   return (
@@ -20,6 +21,8 @@ function App() {
       <OpeningHoursSection />
       <BarSection />
       <SocialSection />
+
+      <Footer />
     </>
   );
 }

@@ -1,6 +1,7 @@
 import EventRow from "./EventRow";
 import { eventsMock } from "../../data/events.mock";
 import { useLanguage } from "../../i18n/LanguageContext";
+import Reveal from "../ui/Reveal";
 
 export default function EventsSection() {
   const events = eventsMock;
@@ -26,7 +27,8 @@ export default function EventsSection() {
           xl:grid-cols-[350px_minmax(0,1fr)]
         "
       >
-        <div
+        <Reveal
+          distance={16}
           className="
             px-[22px]
             pb-[24px]
@@ -129,7 +131,10 @@ export default function EventsSection() {
                 text-[#635B4E]
               "
             >
-              {String(events.length).padStart(2, "0")}
+              {String(events.length).padStart(
+                2,
+                "0"
+              )}
             </span>
 
             <span
@@ -144,9 +149,11 @@ export default function EventsSection() {
               {t("events.count")}
             </span>
           </div>
-        </div>
+        </Reveal>
 
-        <div
+        <Reveal
+          delay={110}
+          distance={14}
           className="
             border-t
             border-[#D8D2C6]
@@ -163,7 +170,7 @@ export default function EventsSection() {
               event={event}
             />
           ))}
-        </div>
+        </Reveal>
       </div>
     </section>
   );

@@ -13,7 +13,9 @@ import {
 import ProductCard from "./ProductCard";
 import { useLanguage } from "../../i18n/LanguageContext";
 
-export default function ProductCarousel({ products }) {
+export default function ProductCarousel({
+  products,
+}) {
   const carouselRef = useRef(null);
 
   const animationFrameRef = useRef(null);
@@ -21,136 +23,139 @@ export default function ProductCarousel({ products }) {
 
   const { t } = useLanguage();
 
-  const [canGoBack, setCanGoBack] = useState(false);
-  const [canGoNext, setCanGoNext] = useState(false);
+  const [canGoBack, setCanGoBack] =
+    useState(false);
 
-  /**
-   * Interrompe un'eventuale animazione in corso.
-   * Viene richiamata anche quando l'utente interagisce
-   * manualmente con touch, mouse o trackpad.
-   */
-  const cancelAnimation = useCallback(() => {
-    if (animationFrameRef.current !== null) {
-      cancelAnimationFrame(animationFrameRef.current);
-      animationFrameRef.current = null;
-    }
+  const [canGoNext, setCanGoNext] =
+    useState(false);
 
-    const carousel = carouselRef.current;
+  const cancelAnimation =
+    useCallback(() => {
+      if (
+        animationFrameRef.current !== null
+      ) {
+        cancelAnimationFrame(
+          animationFrameRef.current
+        );
 
-    if (carousel) {
-      carousel.style.scrollSnapType = "";
-    }
-  }, []);
+        animationFrameRef.current = null;
+      }
 
-  /**
-   * Aggiorna lo stato delle frecce.
-   */
-  const updateControls = useCallback(() => {
-    const carousel = carouselRef.current;
+      const carousel =
+        carouselRef.current;
 
-    if (!carousel) return;
+      if (carousel) {
+        carousel.style.scrollSnapType =
+          "";
+      }
+    }, []);
 
-    const maxScroll = Math.max(
-      0,
-      carousel.scrollWidth - carousel.clientWidth
-    );
+  const updateControls =
+    useCallback(() => {
+      const carousel =
+        carouselRef.current;
 
-    const nextCanGoBack = carousel.scrollLeft > 3;
+      if (!carousel) return;
 
-    const nextCanGoNext =
-      maxScroll > 3 &&
-      carousel.scrollLeft < maxScroll - 3;
-
-    setCanGoBack((current) =>
-      current === nextCanGoBack
-        ? current
-        : nextCanGoBack
-    );
-
-    setCanGoNext((current) =>
-      current === nextCanGoNext
-        ? current
-        : nextCanGoNext
-    );
-  }, []);
-
-  /**
-   * Evita di aggiornare React decine di volte
-   * nello stesso frame durante lo scorrimento.
-   */
-  const requestControlsUpdate = useCallback(() => {
-    if (controlsFrameRef.current !== null) {
-      return;
-    }
-
-    controlsFrameRef.current =
-      requestAnimationFrame(() => {
-        controlsFrameRef.current = null;
-        updateControls();
-      });
-  }, [updateControls]);
-
-  /**
-   * Restituisce tutte le posizioni valide di arresto.
-   * Usa le coordinate reali delle card invece di fare
-   * affidamento su width + gap, evitando errori di
-   * arrotondamento tra i diversi browser.
-   */
-  const getScrollTargets = useCallback(() => {
-    const carousel = carouselRef.current;
-
-    if (!carousel) return [];
-
-    const carouselRect =
-      carousel.getBoundingClientRect();
-
-    const maxScroll = Math.max(
-      0,
-      carousel.scrollWidth - carousel.clientWidth
-    );
-
-    const cardPositions = Array.from(
-      carousel.children
-    ).map((card) => {
-      const cardRect = card.getBoundingClientRect();
-
-      const rawPosition =
-        cardRect.left -
-        carouselRect.left +
-        carousel.scrollLeft;
-
-      return Math.min(
-        maxScroll,
-        Math.max(0, rawPosition)
+      const maxScroll = Math.max(
+        0,
+        carousel.scrollWidth -
+          carousel.clientWidth
       );
-    });
 
-    const positions = [
-      0,
-      ...cardPositions,
-      maxScroll,
-    ].sort((a, b) => a - b);
+      const nextCanGoBack =
+        carousel.scrollLeft > 3;
 
-    /**
-     * Elimina posizioni duplicate, che possono
-     * comparire quando le ultime card vengono
-     * limitate dal maxScroll.
-     */
-    return positions.filter(
-      (position, index, values) =>
-        index === 0 ||
-        Math.abs(position - values[index - 1]) > 1
-    );
-  }, []);
+      const nextCanGoNext =
+        maxScroll > 3 &&
+        carousel.scrollLeft <
+          maxScroll - 3;
 
-  /**
-   * Animazione personalizzata.
-   * L'easing produce una partenza pronta e una
-   * decelerazione molto morbida sul punto finale.
-   */
+      setCanGoBack((current) =>
+        current === nextCanGoBack
+          ? current
+          : nextCanGoBack
+      );
+
+      setCanGoNext((current) =>
+        current === nextCanGoNext
+          ? current
+          : nextCanGoNext
+      );
+    }, []);
+
+  const requestControlsUpdate =
+    useCallback(() => {
+      if (
+        controlsFrameRef.current !== null
+      ) {
+        return;
+      }
+
+      controlsFrameRef.current =
+        requestAnimationFrame(() => {
+          controlsFrameRef.current = null;
+          updateControls();
+        });
+    }, [updateControls]);
+
+  const getScrollTargets =
+    useCallback(() => {
+      const carousel =
+        carouselRef.current;
+
+      if (!carousel) return [];
+
+      const carouselRect =
+        carousel.getBoundingClientRect();
+
+      const maxScroll = Math.max(
+        0,
+        carousel.scrollWidth -
+          carousel.clientWidth
+      );
+
+      const cardPositions = Array.from(
+        carousel.children
+      ).map((card) => {
+        const cardRect =
+          card.getBoundingClientRect();
+
+        const rawPosition =
+          cardRect.left -
+          carouselRect.left +
+          carousel.scrollLeft;
+
+        return Math.min(
+          maxScroll,
+          Math.max(0, rawPosition)
+        );
+      });
+
+      const positions = [
+        0,
+        ...cardPositions,
+        maxScroll,
+      ].sort((a, b) => a - b);
+
+      return positions.filter(
+        (
+          position,
+          index,
+          values
+        ) =>
+          index === 0 ||
+          Math.abs(
+            position -
+              values[index - 1]
+          ) > 1
+      );
+    }, []);
+
   const animateTo = useCallback(
     (requestedTarget) => {
-      const carousel = carouselRef.current;
+      const carousel =
+        carouselRef.current;
 
       if (!carousel) return;
 
@@ -162,18 +167,25 @@ export default function ProductCarousel({ products }) {
           carousel.clientWidth
       );
 
-      const startPosition = carousel.scrollLeft;
+      const startPosition =
+        carousel.scrollLeft;
 
       const targetPosition = Math.min(
         maxScroll,
-        Math.max(0, requestedTarget)
+        Math.max(
+          0,
+          requestedTarget
+        )
       );
 
       const distance =
-        targetPosition - startPosition;
+        targetPosition -
+        startPosition;
 
       if (Math.abs(distance) < 1) {
-        carousel.scrollLeft = targetPosition;
+        carousel.scrollLeft =
+          targetPosition;
+
         requestControlsUpdate();
         return;
       }
@@ -185,44 +197,44 @@ export default function ProductCarousel({ products }) {
         ).matches;
 
       if (prefersReducedMotion) {
-        carousel.scrollLeft = targetPosition;
+        carousel.scrollLeft =
+          targetPosition;
+
         requestControlsUpdate();
         return;
       }
 
-      /**
-       * Durante l'animazione disattiviamo temporaneamente
-       * lo snap nativo, altrimenti alcuni browser possono
-       * cercare di correggere la posizione a ogni frame.
-       */
-      carousel.style.scrollSnapType = "none";
+      carousel.style.scrollSnapType =
+        "none";
 
-      const startTime = performance.now();
+      const startTime =
+        performance.now();
 
-      /**
-       * Durata adattiva:
-       * resta elegante sia su mobile sia su desktop,
-       * senza diventare lenta sulle card più larghe.
-       */
       const duration = Math.min(
         620,
-        Math.max(460, Math.abs(distance) * 1.1)
+        Math.max(
+          460,
+          Math.abs(distance) * 1.1
+        )
       );
 
-      const animate = (currentTime) => {
-        const elapsed = currentTime - startTime;
+      const animate = (
+        currentTime
+      ) => {
+        const elapsed =
+          currentTime - startTime;
 
         const progress = Math.min(
           elapsed / duration,
           1
         );
 
-        /**
-         * Easing equivalente a una curva premium
-         * con forte decelerazione finale.
-         */
         const easedProgress =
-          1 - Math.pow(1 - progress, 4);
+          1 -
+          Math.pow(
+            1 - progress,
+            4
+          );
 
         carousel.scrollLeft =
           startPosition +
@@ -232,21 +244,29 @@ export default function ProductCarousel({ products }) {
 
         if (progress < 1) {
           animationFrameRef.current =
-            requestAnimationFrame(animate);
+            requestAnimationFrame(
+              animate
+            );
 
           return;
         }
 
-        carousel.scrollLeft = targetPosition;
-        carousel.style.scrollSnapType = "";
+        carousel.scrollLeft =
+          targetPosition;
 
-        animationFrameRef.current = null;
+        carousel.style.scrollSnapType =
+          "";
+
+        animationFrameRef.current =
+          null;
 
         requestControlsUpdate();
       };
 
       animationFrameRef.current =
-        requestAnimationFrame(animate);
+        requestAnimationFrame(
+          animate
+        );
     },
     [
       cancelAnimation,
@@ -254,71 +274,93 @@ export default function ProductCarousel({ products }) {
     ]
   );
 
-  /**
-   * Va alla card precedente o successiva,
-   * usando il primo target utile rispetto
-   * alla posizione corrente.
-   */
   const scroll = useCallback(
     (direction) => {
-      const carousel = carouselRef.current;
+      const carousel =
+        carouselRef.current;
 
       if (!carousel) return;
 
-      const targets = getScrollTargets();
+      const targets =
+        getScrollTargets();
 
       if (!targets.length) return;
 
-      const currentPosition = carousel.scrollLeft;
+      const currentPosition =
+        carousel.scrollLeft;
+
       const tolerance = 4;
 
       let targetPosition;
 
       if (direction === "next") {
-        targetPosition = targets.find(
-          (position) =>
-            position >
-            currentPosition + tolerance
-        );
+        targetPosition =
+          targets.find(
+            (position) =>
+              position >
+              currentPosition +
+                tolerance
+          );
 
-        if (targetPosition === undefined) {
+        if (
+          targetPosition ===
+          undefined
+        ) {
           targetPosition =
-            targets[targets.length - 1];
+            targets[
+              targets.length - 1
+            ];
         }
       } else {
-        targetPosition = [...targets]
+        targetPosition = [
+          ...targets,
+        ]
           .reverse()
           .find(
             (position) =>
               position <
-              currentPosition - tolerance
+              currentPosition -
+                tolerance
           );
 
-        if (targetPosition === undefined) {
-          targetPosition = targets[0];
+        if (
+          targetPosition ===
+          undefined
+        ) {
+          targetPosition =
+            targets[0];
         }
       }
 
       animateTo(targetPosition);
     },
-    [animateTo, getScrollTargets]
+    [
+      animateTo,
+      getScrollTargets,
+    ]
   );
 
   useEffect(() => {
-    const carousel = carouselRef.current;
+    const carousel =
+      carouselRef.current;
 
-    if (!carousel) return undefined;
+    if (!carousel) {
+      return undefined;
+    }
 
     updateControls();
 
     const resizeObserver =
-      typeof ResizeObserver !== "undefined"
+      typeof ResizeObserver !==
+      "undefined"
         ? new ResizeObserver(() => {
             requestControlsUpdate();
           })
         : null;
 
-    resizeObserver?.observe(carousel);
+    resizeObserver?.observe(
+      carousel
+    );
 
     const handleResize = () => {
       requestControlsUpdate();
@@ -341,12 +383,16 @@ export default function ProductCarousel({ products }) {
 
       cancelAnimation();
 
-      if (controlsFrameRef.current !== null) {
+      if (
+        controlsFrameRef.current !==
+        null
+      ) {
         cancelAnimationFrame(
           controlsFrameRef.current
         );
 
-        controlsFrameRef.current = null;
+        controlsFrameRef.current =
+          null;
       }
     };
   }, [
@@ -371,12 +417,15 @@ export default function ProductCarousel({ products }) {
         lg:gap-x-[12px]
       "
     >
-      {/* Freccia precedente */}
       <button
         type="button"
-        onClick={() => scroll("prev")}
+        onClick={() =>
+          scroll("prev")
+        }
         disabled={!canGoBack}
-        aria-label={t("recommended.previous")}
+        aria-label={t(
+          "recommended.previous"
+        )}
         className="
           group/previous
 
@@ -388,18 +437,33 @@ export default function ProductCarousel({ products }) {
           items-center
           justify-center
 
+          rounded-full
           border-0
           bg-transparent
           p-0
 
           text-[#2F2A21]
 
-          transition-opacity
+          transition-[opacity,background-color,color,transform]
           duration-300
-          ease-out
+
+          [transition-timing-function:cubic-bezier(0.22,1,0.36,1)]
+
+          hover:-translate-x-[1px]
+          hover:bg-[#E9E0CF]/70
+          hover:text-[#635B4E]
+
+          active:scale-[0.92]
+
+          focus-visible:outline-none
+          focus-visible:ring-1
+          focus-visible:ring-[#AD9060]/60
 
           disabled:cursor-default
           disabled:opacity-20
+          disabled:hover:translate-x-0
+          disabled:hover:bg-transparent
+          disabled:active:scale-100
 
           sm:mt-[clamp(95px,14vw,118px)]
           sm:h-[42px]
@@ -416,7 +480,8 @@ export default function ProductCarousel({ products }) {
 
             transition-transform
             duration-300
-            ease-out
+
+            [transition-timing-function:cubic-bezier(0.22,1,0.36,1)]
 
             group-hover/previous:-translate-x-[2px]
 
@@ -428,14 +493,18 @@ export default function ProductCarousel({ products }) {
         />
       </button>
 
-      {/* Track delle card */}
       <div
         ref={carouselRef}
-        onScroll={requestControlsUpdate}
-        onPointerDown={cancelAnimation}
+        onScroll={
+          requestControlsUpdate
+        }
+        onPointerDown={
+          cancelAnimation
+        }
         onWheel={cancelAnimation}
         className="
           flex
+          cursor-grab
           items-start
 
           snap-x
@@ -445,6 +514,8 @@ export default function ProductCarousel({ products }) {
 
           overflow-x-auto
           overscroll-x-contain
+
+          active:cursor-grabbing
 
           [scroll-behavior:auto]
           [scrollbar-width:none]
@@ -474,17 +545,22 @@ export default function ProductCarousel({ products }) {
               lg:basis-[calc((100%_-_60px)/4)]
             "
           >
-            <ProductCard product={product} />
+            <ProductCard
+              product={product}
+            />
           </div>
         ))}
       </div>
 
-      {/* Freccia successiva */}
       <button
         type="button"
-        onClick={() => scroll("next")}
+        onClick={() =>
+          scroll("next")
+        }
         disabled={!canGoNext}
-        aria-label={t("recommended.next")}
+        aria-label={t(
+          "recommended.next"
+        )}
         className="
           group/next
 
@@ -496,18 +572,33 @@ export default function ProductCarousel({ products }) {
           items-center
           justify-center
 
+          rounded-full
           border-0
           bg-transparent
           p-0
 
           text-[#2F2A21]
 
-          transition-opacity
+          transition-[opacity,background-color,color,transform]
           duration-300
-          ease-out
+
+          [transition-timing-function:cubic-bezier(0.22,1,0.36,1)]
+
+          hover:translate-x-[1px]
+          hover:bg-[#E9E0CF]/70
+          hover:text-[#635B4E]
+
+          active:scale-[0.92]
+
+          focus-visible:outline-none
+          focus-visible:ring-1
+          focus-visible:ring-[#AD9060]/60
 
           disabled:cursor-default
           disabled:opacity-20
+          disabled:hover:translate-x-0
+          disabled:hover:bg-transparent
+          disabled:active:scale-100
 
           sm:mt-[clamp(95px,14vw,118px)]
           sm:h-[42px]
@@ -524,7 +615,8 @@ export default function ProductCarousel({ products }) {
 
             transition-transform
             duration-300
-            ease-out
+
+            [transition-timing-function:cubic-bezier(0.22,1,0.36,1)]
 
             group-hover/next:translate-x-[2px]
 

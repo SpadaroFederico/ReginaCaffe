@@ -10,6 +10,7 @@ import {
 } from "react-icons/fa";
 
 import { useLanguage } from "../../i18n/LanguageContext";
+import Reveal from "../ui/Reveal";
 
 const INSTAGRAM_URL =
   "https://www.instagram.com/reginacaffe_grottaglie/";
@@ -20,7 +21,8 @@ const FACEBOOK_URL =
 const MAPS_URL =
   "https://www.google.com/maps/dir/?api=1&destination=Regina+Caff%C3%A8%2C+Piazza+Regina+Margherita+21%2C+74023+Grottaglie+TA";
 
-const WHATSAPP_NUMBER = "393456836439";
+const WHATSAPP_NUMBER =
+  "393456836439";
 
 function SocialCard({
   href,
@@ -28,7 +30,8 @@ function SocialCard({
   subtitle,
   Icon,
 }) {
-  const isMapIcon = Icon === MapPin;
+  const isMapIcon =
+    Icon === MapPin;
 
   return (
     <a
@@ -37,10 +40,11 @@ function SocialCard({
       rel="noopener noreferrer"
       aria-label={`${title}: ${subtitle}`}
       className="
-        group
+        group/social-card
         relative
 
         flex
+        h-full
         min-h-[88px]
         w-full
         items-center
@@ -61,14 +65,18 @@ function SocialCard({
         no-underline
 
         transition-[transform,border-color,background-color,box-shadow]
-        duration-300
+        duration-500
+
         [transition-timing-function:cubic-bezier(0.22,1,0.36,1)]
 
-        hover:-translate-y-[2px]
+        hover:-translate-y-[3px]
         hover:border-[#AD9060]/80
-        hover:bg-[#F7F2E8]/80
-        hover:shadow-[0_10px_30px_rgba(70,57,42,0.06)]
+        hover:bg-[#F7F2E8]/85
+        hover:shadow-[0_16px_38px_rgba(70,57,42,0.075)]
 
+        focus-visible:-translate-y-[3px]
+        focus-visible:border-[#AD9060]/80
+        focus-visible:bg-[#F7F2E8]/85
         focus-visible:outline-none
         focus-visible:ring-1
         focus-visible:ring-[#AD9060]
@@ -85,7 +93,6 @@ function SocialCard({
         lg:py-[19px]
       "
     >
-      {/* Icona */}
       <div
         className="
           flex
@@ -97,12 +104,6 @@ function SocialCard({
 
           text-[#AD9060]
 
-          transition-transform
-          duration-300
-          [transition-timing-function:cubic-bezier(0.22,1,0.36,1)]
-
-          group-hover:scale-[1.06]
-
           sm:h-[46px]
           sm:w-[46px]
 
@@ -112,27 +113,50 @@ function SocialCard({
       >
         <Icon
           aria-hidden="true"
-          className="
+          className={`
             h-[29px]
             w-[29px]
+
+            will-change-transform
+
+            transition-[transform,color]
+            duration-500
+
+            [transition-timing-function:cubic-bezier(0.22,1,0.36,1)]
+
+            group-hover/social-card:text-[#9C7F51]
+            group-focus-visible/social-card:text-[#9C7F51]
+
+            ${
+              isMapIcon
+                ? "group-hover/social-card:-translate-y-[2px] group-hover/social-card:scale-[1.06] group-focus-visible/social-card:-translate-y-[2px] group-focus-visible/social-card:scale-[1.06]"
+                : "group-hover/social-card:-rotate-[3deg] group-hover/social-card:scale-[1.08] group-focus-visible/social-card:-rotate-[3deg] group-focus-visible/social-card:scale-[1.08]"
+            }
 
             sm:h-[31px]
             sm:w-[31px]
 
             lg:h-[33px]
             lg:w-[33px]
-          "
+          `}
           {...(isMapIcon
             ? { strokeWidth: 1.55 }
             : {})}
         />
       </div>
 
-      {/* Contenuto */}
       <div
         className="
           min-w-0
           flex-1
+
+          transition-transform
+          duration-500
+
+          [transition-timing-function:cubic-bezier(0.22,1,0.36,1)]
+
+          group-hover/social-card:translate-x-[2px]
+          group-focus-visible/social-card:translate-x-[2px]
         "
       >
         <h3
@@ -142,6 +166,12 @@ function SocialCard({
             font-normal
             leading-[1.02]
             text-[#2F2A21]
+
+            transition-colors
+            duration-400
+
+            group-hover/social-card:text-[#635B4E]
+            group-focus-visible/social-card:text-[#635B4E]
 
             sm:text-[23px]
 
@@ -165,6 +195,12 @@ function SocialCard({
             leading-[1.4]
             text-[#635B4E]
 
+            transition-colors
+            duration-400
+
+            group-hover/social-card:text-[#4D463D]
+            group-focus-visible/social-card:text-[#4D463D]
+
             sm:mt-[6px]
             sm:text-[11px]
 
@@ -175,7 +211,6 @@ function SocialCard({
         </p>
       </div>
 
-      {/* Freccia */}
       <ArrowUpRight
         aria-hidden="true"
         strokeWidth={1.15}
@@ -186,12 +221,18 @@ function SocialCard({
 
           text-[#AD9060]
 
-          transition-transform
-          duration-300
+          transition-[transform,color]
+          duration-500
+
           [transition-timing-function:cubic-bezier(0.22,1,0.36,1)]
 
-          group-hover:-translate-y-[2px]
-          group-hover:translate-x-[2px]
+          group-hover/social-card:-translate-y-[3px]
+          group-hover/social-card:translate-x-[3px]
+          group-hover/social-card:text-[#9C7F51]
+
+          group-focus-visible/social-card:-translate-y-[3px]
+          group-focus-visible/social-card:translate-x-[3px]
+          group-focus-visible/social-card:text-[#9C7F51]
 
           sm:h-[19px]
           sm:w-[19px]
@@ -201,7 +242,6 @@ function SocialCard({
         "
       />
 
-      {/* Riflesso hover */}
       <span
         aria-hidden="true"
         className="
@@ -214,16 +254,45 @@ function SocialCard({
 
           -skew-x-12
 
-          bg-white/20
+          bg-white/25
 
           opacity-0
 
           transition-[left,opacity]
-          duration-700
-          ease-out
+          duration-[850ms]
 
-          group-hover:left-[115%]
-          group-hover:opacity-100
+          [transition-timing-function:cubic-bezier(0.22,1,0.36,1)]
+
+          group-hover/social-card:left-[115%]
+          group-hover/social-card:opacity-100
+
+          group-focus-visible/social-card:left-[115%]
+          group-focus-visible/social-card:opacity-100
+        "
+      />
+
+      <span
+        aria-hidden="true"
+        className="
+          pointer-events-none
+          absolute
+          inset-x-[16px]
+          bottom-0
+
+          h-px
+
+          origin-left
+          scale-x-0
+
+          bg-[#AD9060]/60
+
+          transition-transform
+          duration-600
+
+          [transition-timing-function:cubic-bezier(0.22,1,0.36,1)]
+
+          group-hover/social-card:scale-x-100
+          group-focus-visible/social-card:scale-x-100
         "
       />
     </a>
@@ -243,35 +312,49 @@ export default function SocialSection() {
 
   const whatsappUrl =
     `https://wa.me/${WHATSAPP_NUMBER}` +
-    `?text=${encodeURIComponent(whatsappMessage)}`;
+    `?text=${encodeURIComponent(
+      whatsappMessage
+    )}`;
 
   const socialLinks = [
     {
       id: "instagram",
       href: INSTAGRAM_URL,
-      title: t("social.instagramTitle"),
-      subtitle: "@reginacaffe_grottaglie",
+      title: t(
+        "social.instagramTitle"
+      ),
+      subtitle:
+        "@reginacaffe_grottaglie",
       Icon: FaInstagram,
     },
     {
       id: "facebook",
       href: FACEBOOK_URL,
-      title: t("social.facebookTitle"),
-      subtitle: "Regina Caffè Grottaglie",
+      title: t(
+        "social.facebookTitle"
+      ),
+      subtitle:
+        "Regina Caffè Grottaglie",
       Icon: FaFacebookF,
     },
     {
       id: "whatsapp",
       href: whatsappUrl,
-      title: t("social.whatsappTitle"),
-      subtitle: "+39 345 683 6439",
+      title: t(
+        "social.whatsappTitle"
+      ),
+      subtitle:
+        "+39 345 683 6439",
       Icon: FaWhatsapp,
     },
     {
       id: "maps",
       href: MAPS_URL,
-      title: t("social.mapsTitle"),
-      subtitle: "Piazza Regina Margherita, 21",
+      title: t(
+        "social.mapsTitle"
+      ),
+      subtitle:
+        "Piazza Regina Margherita, 21",
       Icon: MapPin,
     },
   ];
@@ -313,8 +396,8 @@ export default function SocialSection() {
           xl:py-[70px]
         "
       >
-        {/* Introduzione */}
-        <div
+        <Reveal
+          distance={16}
           className="
             max-w-[520px]
 
@@ -340,21 +423,33 @@ export default function SocialSection() {
             "
           >
             <span className="block">
-              {t("social.titleLine1")}
+              {t(
+                "social.titleLine1"
+              )}
             </span>
 
-            <span className="block italic text-[#635B4E]">
-              {t("social.titleLine2")}
+            <span
+              className="
+                block
+                italic
+                text-[#635B4E]
+              "
+            >
+              {t(
+                "social.titleLine2"
+              )}
             </span>
           </h2>
 
-          {/* Divisore continuo */}
           <div
             aria-hidden="true"
             className="
               mt-[19px]
               h-px
               w-[245px]
+
+              origin-left
+
               bg-[#B9A37A]
 
               sm:mt-[23px]
@@ -387,11 +482,12 @@ export default function SocialSection() {
               lg:leading-[23px]
             "
           >
-            {t("social.description")}
+            {t(
+              "social.description"
+            )}
           </p>
-        </div>
+        </Reveal>
 
-        {/* Collegamenti */}
         <div
           className="
             mt-[28px]
@@ -409,15 +505,27 @@ export default function SocialSection() {
             lg:gap-[14px]
           "
         >
-          {socialLinks.map((item) => (
-            <SocialCard
-              key={item.id}
-              href={item.href}
-              title={item.title}
-              subtitle={item.subtitle}
-              Icon={item.Icon}
-            />
-          ))}
+          {socialLinks.map(
+            (item, index) => (
+              <Reveal
+                key={item.id}
+                delay={
+                  80 + index * 65
+                }
+                distance={16}
+                className="h-full"
+              >
+                <SocialCard
+                  href={item.href}
+                  title={item.title}
+                  subtitle={
+                    item.subtitle
+                  }
+                  Icon={item.Icon}
+                />
+              </Reveal>
+            )
+          )}
         </div>
       </div>
     </section>

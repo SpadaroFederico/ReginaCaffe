@@ -1,8 +1,9 @@
-import ProductCarousel from "./ProductCarousel";
+import { ArrowUpRight } from "lucide-react";
 
+import ProductCarousel from "./ProductCarousel";
 import { recommendedProducts } from "../../data/recommended.mock";
 import { useLanguage } from "../../i18n/LanguageContext";
-import { ArrowUpRight } from "lucide-react";
+import Reveal from "../ui/Reveal";
 
 function CategoryTitle({
   children,
@@ -12,7 +13,10 @@ function CategoryTitle({
   return (
     <div
       className="
+        group/category-title
+
         mb-[16px]
+
         flex
         items-center
         gap-[14px]
@@ -32,6 +36,11 @@ function CategoryTitle({
           leading-none
           text-[#2F2A21]
 
+          transition-colors
+          duration-400
+
+          group-hover/category-title:text-[#635B4E]
+
           sm:text-[28px]
 
           lg:text-[32px]
@@ -43,7 +52,11 @@ function CategoryTitle({
           </>
         )}
 
-        <span className={italic ? "italic" : ""}>
+        <span
+          className={
+            italic ? "italic" : ""
+          }
+        >
           {children}
         </span>
       </h3>
@@ -54,7 +67,18 @@ function CategoryTitle({
           mt-[4px]
           h-px
           flex-1
+
+          origin-left
+
           bg-[#B9A37A]/70
+
+          transition-[transform,background-color]
+          duration-700
+
+          [transition-timing-function:cubic-bezier(0.22,1,0.36,1)]
+
+          group-hover/category-title:scale-x-[1.01]
+          group-hover/category-title:bg-[#A68F68]
         "
       />
     </div>
@@ -94,8 +118,8 @@ export default function RecommendedSection() {
           xl:py-[64px]
         "
       >
-        {/* Intro */}
-        <div
+        <Reveal
+          distance={16}
           className="
             mb-[28px]
 
@@ -118,11 +142,15 @@ export default function RecommendedSection() {
             "
           >
             <span className="block">
-              {t("recommended.titleLine1")}
+              {t(
+                "recommended.titleLine1"
+              )}
             </span>
 
             <span className="block">
-              {t("recommended.titleLine2")}
+              {t(
+                "recommended.titleLine2"
+              )}
             </span>
           </h2>
 
@@ -148,7 +176,9 @@ export default function RecommendedSection() {
               lg:leading-[22px]
             "
           >
-            {t("recommended.description")}
+            {t(
+              "recommended.description"
+            )}
           </p>
 
           <div
@@ -163,10 +193,11 @@ export default function RecommendedSection() {
               sm:w-[64px]
             "
           />
-        </div>
+        </Reveal>
 
-        {/* Vini */}
-        <div
+        <Reveal
+          delay={70}
+          distance={18}
           className="
             mb-[34px]
 
@@ -180,12 +211,15 @@ export default function RecommendedSection() {
           </CategoryTitle>
 
           <ProductCarousel
-            products={recommendedProducts.wines}
+            products={
+              recommendedProducts.wines
+            }
           />
-        </div>
+        </Reveal>
 
-        {/* Drink signature */}
-        <div
+        <Reveal
+          delay={90}
+          distance={18}
           className="
             mb-[34px]
 
@@ -195,46 +229,61 @@ export default function RecommendedSection() {
           "
         >
           <CategoryTitle
-            regular={t("recommended.signatureRegular")}
+            regular={t(
+              "recommended.signatureRegular"
+            )}
             italic
           >
-            {t("recommended.signatureItalic")}
+            {t(
+              "recommended.signatureItalic"
+            )}
           </CategoryTitle>
 
           <ProductCarousel
-            products={recommendedProducts.signature}
+            products={
+              recommendedProducts.signature
+            }
           />
-        </div>
+        </Reveal>
 
-        {/* Da accompagnare */}
-        <div>
-        <CategoryTitle
-            regular={t("recommended.foodRegular")}
+        <Reveal
+          delay={110}
+          distance={18}
+        >
+          <CategoryTitle
+            regular={t(
+              "recommended.foodRegular"
+            )}
             italic
-        >
-            {t("recommended.foodItalic")}
-        </CategoryTitle>
+          >
+            {t(
+              "recommended.foodItalic"
+            )}
+          </CategoryTitle>
 
-        <ProductCarousel
-            products={recommendedProducts.food}
-        />
+          <ProductCarousel
+            products={
+              recommendedProducts.food
+            }
+          />
 
-        {/* Link centrale al menu */}
-        <div
+          <div
             className="
-            mt-[28px]
-            flex
-            justify-center
+              mt-[28px]
 
-            sm:mt-[34px]
+              flex
+              justify-center
 
-            lg:mt-[42px]
+              sm:mt-[34px]
+
+              lg:mt-[42px]
             "
-        >
+          >
             <a
-            href="#menu"
-            className="
-                group
+              href="#menu"
+              className="
+                group/menu-cta
+                relative
 
                 inline-flex
                 min-w-[166px]
@@ -253,44 +302,85 @@ export default function RecommendedSection() {
                 text-[#2F2A21]
                 no-underline
 
-                transition-colors
-                duration-300
+                transition-[color,transform,border-color]
+                duration-400
 
+                [transition-timing-function:cubic-bezier(0.22,1,0.36,1)]
+
+                hover:-translate-y-[2px]
+                hover:border-[#7C644A]/50
                 hover:text-[#635B4E]
+
+                focus-visible:-translate-y-[2px]
+                focus-visible:text-[#635B4E]
+                focus-visible:outline-none
 
                 sm:min-w-[184px]
                 sm:text-[23px]
 
                 lg:min-w-[200px]
                 lg:text-[25px]
-            "
+              "
             >
-            <span>{t("recommended.menuCta")}</span>
+              <span>
+                {t(
+                  "recommended.menuCta"
+                )}
+              </span>
 
-            <ArrowUpRight
+              <ArrowUpRight
                 strokeWidth={1.2}
                 className="
-                h-[17px]
-                w-[17px]
-                shrink-0
+                  h-[17px]
+                  w-[17px]
+                  shrink-0
 
-                transition-transform
-                duration-300
-                ease-out
+                  transition-transform
+                  duration-400
 
-                group-hover:-translate-y-[2px]
-                group-hover:translate-x-[2px]
+                  [transition-timing-function:cubic-bezier(0.22,1,0.36,1)]
 
-                sm:h-[18px]
-                sm:w-[18px]
+                  group-hover/menu-cta:-translate-y-[2px]
+                  group-hover/menu-cta:translate-x-[2px]
 
-                lg:h-[20px]
-                lg:w-[20px]
+                  group-focus-visible/menu-cta:-translate-y-[2px]
+                  group-focus-visible/menu-cta:translate-x-[2px]
+
+                  sm:h-[18px]
+                  sm:w-[18px]
+
+                  lg:h-[20px]
+                  lg:w-[20px]
                 "
-            />
+              />
+
+              <span
+                aria-hidden="true"
+                className="
+                  absolute
+                  -bottom-px
+                  left-0
+
+                  h-px
+                  w-full
+
+                  origin-left
+                  scale-x-0
+
+                  bg-[#7C644A]
+
+                  transition-transform
+                  duration-500
+
+                  [transition-timing-function:cubic-bezier(0.22,1,0.36,1)]
+
+                  group-hover/menu-cta:scale-x-100
+                  group-focus-visible/menu-cta:scale-x-100
+                "
+              />
             </a>
-        </div>
-        </div>
+          </div>
+        </Reveal>
       </div>
     </section>
   );
