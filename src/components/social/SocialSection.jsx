@@ -9,6 +9,8 @@ import {
   FaWhatsapp,
 } from "react-icons/fa";
 
+import { SiTiktok } from "react-icons/si";
+
 import { useLanguage } from "../../i18n/LanguageContext";
 import Reveal from "../ui/Reveal";
 
@@ -17,6 +19,9 @@ const INSTAGRAM_URL =
 
 const FACEBOOK_URL =
   "https://www.facebook.com/reginacaffegrottaglie/";
+
+const TIKTOK_URL =
+  "https://www.tiktok.com/@reginacaff_grotta";
 
 const MAPS_URL =
   "https://www.google.com/maps/dir/?api=1&destination=Regina+Caff%C3%A8%2C+Piazza+Regina+Margherita+21%2C+74023+Grottaglie+TA";
@@ -171,7 +176,6 @@ function SocialCard({
             duration-400
 
             group-hover/social-card:text-[#635B4E]
-            group-focus-visible/social-card:text-[#635B4E]
 
             sm:text-[23px]
 
@@ -191,15 +195,8 @@ function SocialCard({
 
             font-sans
             text-[10px]
-            font-normal
             leading-[1.4]
             text-[#635B4E]
-
-            transition-colors
-            duration-400
-
-            group-hover/social-card:text-[#4D463D]
-            group-focus-visible/social-card:text-[#4D463D]
 
             sm:mt-[6px]
             sm:text-[11px]
@@ -229,10 +226,6 @@ function SocialCard({
           group-hover/social-card:-translate-y-[3px]
           group-hover/social-card:translate-x-[3px]
           group-hover/social-card:text-[#9C7F51]
-
-          group-focus-visible/social-card:-translate-y-[3px]
-          group-focus-visible/social-card:translate-x-[3px]
-          group-focus-visible/social-card:text-[#9C7F51]
 
           sm:h-[19px]
           sm:w-[19px]
@@ -265,9 +258,6 @@ function SocialCard({
 
           group-hover/social-card:left-[115%]
           group-hover/social-card:opacity-100
-
-          group-focus-visible/social-card:left-[115%]
-          group-focus-visible/social-card:opacity-100
         "
       />
 
@@ -289,10 +279,7 @@ function SocialCard({
           transition-transform
           duration-600
 
-          [transition-timing-function:cubic-bezier(0.22,1,0.36,1)]
-
           group-hover/social-card:scale-x-100
-          group-focus-visible/social-card:scale-x-100
         "
       />
     </a>
@@ -327,6 +314,7 @@ export default function SocialSection() {
         "@reginacaffe_grottaglie",
       Icon: FaInstagram,
     },
+
     {
       id: "facebook",
       href: FACEBOOK_URL,
@@ -337,6 +325,18 @@ export default function SocialSection() {
         "Regina Caffè Grottaglie",
       Icon: FaFacebookF,
     },
+
+    {
+      id: "tiktok",
+      href: TIKTOK_URL,
+      title: t(
+        "social.tiktokTitle"
+      ),
+      subtitle:
+        "@reginacaff_grotta",
+      Icon: SiTiktok,
+    },
+
     {
       id: "whatsapp",
       href: whatsappUrl,
@@ -347,6 +347,7 @@ export default function SocialSection() {
         "+39 345 683 6439",
       Icon: FaWhatsapp,
     },
+
     {
       id: "maps",
       href: MAPS_URL,
@@ -447,9 +448,6 @@ export default function SocialSection() {
               mt-[19px]
               h-px
               w-[245px]
-
-              origin-left
-
               bg-[#B9A37A]
 
               sm:mt-[23px]
@@ -467,7 +465,6 @@ export default function SocialSection() {
 
               font-sans
               text-[12px]
-              font-normal
               leading-[18px]
               text-[#635B4E]
 
@@ -501,8 +498,10 @@ export default function SocialSection() {
             sm:gap-[12px]
 
             lg:mt-[44px]
-            lg:grid-cols-4
+            lg:grid-cols-3
             lg:gap-[14px]
+
+            xl:grid-cols-5
           "
         >
           {socialLinks.map(
@@ -510,9 +509,9 @@ export default function SocialSection() {
               <Reveal
                 key={item.id}
                 delay={
-                  80 + index * 65
+                  70 + index * 55
                 }
-                distance={16}
+                distance={15}
                 className="h-full"
               >
                 <SocialCard

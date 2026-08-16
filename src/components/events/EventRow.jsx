@@ -66,6 +66,41 @@ function getLocalizedValue(
   );
 }
 
+/*
+ * Accetta esclusivamente URL esterni
+ * HTTP/HTTPS.
+ *
+ * Il database applica già lo stesso
+ * vincolo, ma manteniamo una seconda
+ * verifica anche nel frontend prima
+ * di utilizzare il valore in href.
+ */
+function getSafeExternalUrl(value) {
+  if (
+    typeof value !== "string" ||
+    !value.trim()
+  ) {
+    return "";
+  }
+
+  try {
+    const url = new URL(
+      value.trim()
+    );
+
+    if (
+      url.protocol !== "https:" &&
+      url.protocol !== "http:"
+    ) {
+      return "";
+    }
+
+    return url.toString();
+  } catch {
+    return "";
+  }
+}
+
 export default function EventRow({
   event,
 }) {
@@ -103,6 +138,11 @@ export default function EventRow({
     event.description,
     language
   );
+
+  const externalUrl =
+    getSafeExternalUrl(
+      event.externalUrl
+    );
 
   return (
     <article
@@ -287,72 +327,92 @@ export default function EventRow({
         </div>
       </div>
 
-      <a
-        href={`/eventi/${event.slug}`}
-        aria-label={`${t(
-          "events.discover"
-        )} ${title}`}
-        className="
-          group/event-arrow
-
-          mt-[2px]
-
-          flex
-          h-[30px]
-          w-[30px]
-          items-center
-          justify-center
-
-          rounded-full
-
-          text-[#635B4E]
-
-          transition-[transform,background-color,color]
-          duration-400
-
-          [transition-timing-function:cubic-bezier(0.22,1,0.36,1)]
-
-          hover:bg-[#DED4C2]/70
-          hover:text-[#2F2A21]
-
-          focus-visible:bg-[#DED4C2]/70
-          focus-visible:text-[#2F2A21]
-          focus-visible:outline-none
-          focus-visible:ring-1
-          focus-visible:ring-[#AD9060]/55
-
-          group-hover/event:-translate-y-[1px]
-
-          md:absolute
-          md:right-[28px]
-          md:top-[28px]
-
-          lg:right-[32px]
-          lg:top-[32px]
-        "
-      >
-        <ArrowUpRight
-          strokeWidth={1.2}
+      {externalUrl ? (
+        <a
+          href={externalUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label={`${t(
+            "events.discover"
+          )} ${title}`}
           className="
-            h-[18px]
-            w-[18px]
+            group/event-arrow
 
-            transition-transform
+            mt-[2px]
+
+            flex
+            h-[30px]
+            w-[30px]
+            items-center
+            justify-center
+
+            rounded-full
+
+            text-[#635B4E]
+
+            transition-[transform,background-color,color]
             duration-400
 
             [transition-timing-function:cubic-bezier(0.22,1,0.36,1)]
 
-            group-hover/event-arrow:-translate-y-[2px]
-            group-hover/event-arrow:translate-x-[2px]
+            hover:bg-[#DED4C2]/70
+            hover:text-[#2F2A21]
 
-            group-focus-visible/event-arrow:-translate-y-[2px]
-            group-focus-visible/event-arrow:translate-x-[2px]
+            focus-visible:bg-[#DED4C2]/70
+            focus-visible:text-[#2F2A21]
+            focus-visible:outline-none
+            focus-visible:ring-1
+            focus-visible:ring-[#AD9060]/55
 
-            md:h-[20px]
-            md:w-[20px]
+            group-hover/event:-translate-y-[1px]
+
+            md:absolute
+            md:right-[28px]
+            md:top-[28px]
+
+            lg:right-[32px]
+            lg:top-[32px]
+          "
+        >
+          <ArrowUpRight
+            strokeWidth={1.2}
+            className="
+              h-[18px]
+              w-[18px]
+
+              transition-transform
+              duration-400
+
+              [transition-timing-function:cubic-bezier(0.22,1,0.36,1)]
+
+              group-hover/event-arrow:-translate-y-[2px]
+              group-hover/event-arrow:translate-x-[2px]
+
+              group-focus-visible/event-arrow:-translate-y-[2px]
+              group-focus-visible/event-arrow:translate-x-[2px]
+
+              md:h-[20px]
+              md:w-[20px]
+            "
+          />
+        </a>
+      ) : (
+        /*
+         * Su mobile manteniamo soltanto
+         * lo spazio della terza colonna.
+         *
+         * Da tablet in poi il layout è
+         * block e il placeholder non serve.
+         */
+        <span
+          aria-hidden="true"
+          className="
+            h-[30px]
+            w-[30px]
+            md:hidden
           "
         />
-      </a>
+      )}
 
       <span
         aria-hidden="true"

@@ -292,7 +292,7 @@ export default function Hero() {
           </p>
 
           <a
-            href="#menu"
+            href="/menu"
             className={`
               group/hero-cta
               relative
