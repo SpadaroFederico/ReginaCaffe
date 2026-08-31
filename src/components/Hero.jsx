@@ -5,10 +5,42 @@ import {
 
 import { ArrowUpRight } from "lucide-react";
 import { useLanguage } from "../i18n/LanguageContext";
+import { useImageRotation } from "../lib/useImageRotation";
+import { pagePath } from "../lib/navigation";
+
+/*
+ * =======================================================
+ * IMMAGINI DELL'HERO
+ * =======================================================
+ *
+ * Si alternano nello stesso riquadro a
+ * destra, in dissolvenza incrociata.
+ *
+ * La transizione riusa esattamente la stessa
+ * animazione con cui l'immagine entra al
+ * primo caricamento: stessa durata, stessa
+ * curva e stessa combinazione scala+opacità
+ * già impiegata nel resto della pagina.
+ */
+const HERO_IMAGES = [
+  "/heroimg1.webp",
+  "/heroimg2.webp",
+  "/heroimg3.webp",
+];
+
+const HERO_ROTATION_MS = 6000;
+
+const HERO_MASK =
+  "linear-gradient(to right, rgba(0,0,0,0.58) 0%, rgba(0,0,0,0.82) 6%, black 15%, black 100%)";
 
 export default function Hero() {
   const { t } = useLanguage();
   const [isReady, setIsReady] = useState(false);
+
+  const activeImage = useImageRotation(
+    HERO_IMAGES.length,
+    HERO_ROTATION_MS
+  );
 
   useEffect(() => {
     const frame = requestAnimationFrame(() => {
@@ -19,6 +51,7 @@ export default function Hero() {
       cancelAnimationFrame(frame);
     };
   }, []);
+
 
   return (
     <section
@@ -72,44 +105,58 @@ export default function Hero() {
             xl:w-[56%]
           "
         >
-          <img
-            src="/bancon.webp"
-            alt=""
-            aria-hidden="true"
-            className={`
-              h-full
-              w-full
+          {HERO_IMAGES.map(
+            (source, index) => (
+              <img
+                key={source}
+                src={source}
+                alt=""
+                aria-hidden="true"
+                decoding="async"
+                fetchPriority={
+                  index === 0
+                    ? "high"
+                    : "low"
+                }
+                className={`
+                  absolute
+                  inset-0
 
-              object-cover
-              object-center
+                  h-full
+                  w-full
 
-              brightness-[0.91]
-              saturate-[0.92]
-              contrast-[1.03]
+                  object-cover
+                  object-center
 
-              transition-[opacity,transform,filter]
-              duration-[1200ms]
+                  brightness-[0.91]
+                  saturate-[0.92]
+                  contrast-[1.03]
 
-              [transition-timing-function:cubic-bezier(0.22,1,0.36,1)]
+                  transition-[opacity,transform,filter]
+                  duration-[1200ms]
 
-              motion-reduce:transition-none
+                  [transition-timing-function:cubic-bezier(0.22,1,0.36,1)]
 
-              lg:group-hover/hero:scale-[1.018]
-              lg:group-hover/hero:brightness-[0.94]
+                  motion-reduce:transition-none
 
-              ${
-                isReady
-                  ? "scale-100 opacity-100"
-                  : "scale-[1.035] opacity-0"
-              }
-            `}
-            style={{
-              WebkitMaskImage:
-                "linear-gradient(to right, rgba(0,0,0,0.58) 0%, rgba(0,0,0,0.82) 6%, black 15%, black 100%)",
-              maskImage:
-                "linear-gradient(to right, rgba(0,0,0,0.58) 0%, rgba(0,0,0,0.82) 6%, black 15%, black 100%)",
-            }}
-          />
+                  lg:group-hover/hero:scale-[1.018]
+                  lg:group-hover/hero:brightness-[0.94]
+
+                  ${
+                    isReady &&
+                    index === activeImage
+                      ? "scale-100 opacity-100"
+                      : "scale-[1.035] opacity-0"
+                  }
+                `}
+                style={{
+                  WebkitMaskImage:
+                    HERO_MASK,
+                  maskImage: HERO_MASK,
+                }}
+              />
+            )
+          )}
 
           <div
             aria-hidden="true"
@@ -292,7 +339,7 @@ export default function Hero() {
           </p>
 
           <a
-            href="/menu"
+            href={pagePath("/menu")}
             className={`
               group/hero-cta
               relative

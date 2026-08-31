@@ -1,18 +1,16 @@
 import { ArrowUpRight } from "lucide-react";
 import { useLanguage } from "../../i18n/LanguageContext";
-
-function getLocale(language) {
-  return language === "en"
-    ? "en-GB"
-    : "it-IT";
-}
+import {
+  getIntlLocale,
+  getLocalizedValue,
+} from "../../i18n/localize";
 
 function formatDay(
   dateString,
   language
 ) {
   return new Intl.DateTimeFormat(
-    getLocale(language),
+    getIntlLocale(language),
     {
       day: "2-digit",
       timeZone: "Europe/Rome",
@@ -25,7 +23,7 @@ function formatMonth(
   language
 ) {
   return new Intl.DateTimeFormat(
-    getLocale(language),
+    getIntlLocale(language),
     {
       month: "short",
       timeZone: "Europe/Rome",
@@ -41,7 +39,7 @@ function formatTime(
   language
 ) {
   return new Intl.DateTimeFormat(
-    getLocale(language),
+    getIntlLocale(language),
     {
       hour: "2-digit",
       minute: "2-digit",
@@ -49,21 +47,6 @@ function formatTime(
       timeZone: "Europe/Rome",
     }
   ).format(new Date(dateString));
-}
-
-function getLocalizedValue(
-  value,
-  language
-) {
-  if (typeof value === "string") {
-    return value;
-  }
-
-  return (
-    value?.[language] ??
-    value?.it ??
-    ""
-  );
 }
 
 /*

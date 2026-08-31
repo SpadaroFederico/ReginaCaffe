@@ -287,15 +287,11 @@ function SocialCard({
 }
 
 export default function SocialSection() {
-  const {
-    language,
-    t,
-  } = useLanguage();
+  const { t } = useLanguage();
 
-  const whatsappMessage =
-    language === "en"
-      ? "Hi Regina Caffè, I would like some more information."
-      : "Ciao Regina Caffè, vorrei ricevere maggiori informazioni.";
+  const whatsappMessage = t(
+    "social.whatsappMessage"
+  );
 
   const whatsappUrl =
     `https://wa.me/${WHATSAPP_NUMBER}` +

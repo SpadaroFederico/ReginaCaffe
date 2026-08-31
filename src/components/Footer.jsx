@@ -14,9 +14,13 @@ import {
 import { SiTiktok } from "react-icons/si";
 
 import { useLanguage } from "../i18n/LanguageContext";
+import {
+  scrollToSection,
+  pagePath,
+  sectionHref,
+} from "../lib/navigation";
 import { useLegal } from "../legal/LegalContext";
 
-const HOME_URL = import.meta.env.BASE_URL;
 const LOGO_URL = `${import.meta.env.BASE_URL}logo.svg`;
 
 const MAPS_URL =
@@ -436,10 +440,7 @@ function LegalAction({
 }
 
 export default function Footer() {
-  const {
-    language,
-    t,
-  } = useLanguage();
+  const { t } = useLanguage();
 
   const {
     openPrivacy,
@@ -450,10 +451,9 @@ export default function Footer() {
   const currentYear =
     new Date().getFullYear();
 
-  const whatsappMessage =
-    language === "en"
-      ? "Hi Regina Caffè, I would like some more information."
-      : "Ciao Regina Caffè, vorrei ricevere maggiori informazioni.";
+  const whatsappMessage = t(
+    "social.whatsappMessage"
+  );
 
   const whatsappUrl =
     `https://wa.me/${WHATSAPP_NUMBER}` +
@@ -463,23 +463,25 @@ export default function Footer() {
 
   const navigation = [
     {
-      href: "#eventi",
+      href: sectionHref("eventi"),
       label: t("header.events"),
     },
     {
-      href: "#consigliati",
+      href: sectionHref(
+        "consigliati"
+      ),
       label: t("header.recommended"),
     },
     {
-      href: "#orari",
+      href: sectionHref("orari"),
       label: t("header.hours"),
     },
     {
-      href: "#social",
+      href: sectionHref("social"),
       label: t("header.social"),
     },
     {
-      href: "#menu",
+      href: pagePath("/menu"),
       label: t("header.menu"),
     },
   ];
@@ -488,30 +490,7 @@ export default function Footer() {
     event,
     href
   ) => {
-    const target =
-      document.querySelector(href);
-
-    if (!target) return;
-
-    event.preventDefault();
-
-    const prefersReducedMotion =
-      window.matchMedia?.(
-        "(prefers-reduced-motion: reduce)"
-      ).matches;
-
-    target.scrollIntoView({
-      behavior: prefersReducedMotion
-        ? "auto"
-        : "smooth",
-      block: "start",
-    });
-
-    window.history.pushState(
-      null,
-      "",
-      href
-    );
+    scrollToSection(event, href);
   };
 
   return (
@@ -571,7 +550,7 @@ export default function Footer() {
           {/* Brand */}
           <div>
             <a
-              href={HOME_URL}
+              href={pagePath("/")}
               aria-label={t(
                 "header.homeAria"
               )}

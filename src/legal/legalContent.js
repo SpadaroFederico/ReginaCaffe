@@ -19,6 +19,7 @@ export const LEGAL_CONFIG = {
   lastUpdated: {
     it: "16 agosto 2026",
     en: "16 August 2026",
+    fr: "16 août 2026",
   },
 
   controller: {
@@ -74,6 +75,7 @@ export const LEGAL_CONFIG = {
     region: {
       it: "West EU (Irlanda)",
       en: "West EU (Ireland)",
+      fr: "West EU (Irlande)",
     },
   },
 
@@ -86,7 +88,7 @@ export const LEGAL_CONFIG = {
    * i font in locale, imposteremo false.
    */
   googleFonts: {
-    enabled: true,
+    enabled: false,
   },
 };
 
@@ -686,10 +688,327 @@ function getEnglishContent() {
   };
 }
 
+function getFrenchContent() {
+  const {
+    controller,
+    hosting,
+    supabase,
+    googleFonts,
+  } = LEGAL_CONFIG;
+
+  const supabaseParagraph =
+    supabase.enabled
+      ? `La gestion et la publication des événements reposent sur Supabase. Le projet principal est configuré dans la région ${supabase.region.fr} (${supabase.regionCode}). Les requêtes nécessaires au chargement des événements publics atteignent l'infrastructure Supabase et peuvent impliquer le traitement de données techniques de connexion, telles que l'adresse IP, la date et l'heure de la requête et les informations techniques du navigateur. L'espace d'administration utilise en outre Supabase Auth et peut traiter les adresses e-mail des administrateurs, les identifiants utilisateur, les informations d'authentification et les journaux techniques ou de sécurité.`
+      : "";
+
+  const hostingParagraph =
+    LEGAL_CONFIG.isDraft
+      ? `Le site n'est pas encore publié dans sa configuration définitive. Avant la mise en ligne seront indiqués le fournisseur effectif de l'hébergement frontend ainsi que les éventuels services CDN/DNS utilisés. Configuration à compléter actuellement : ${hosting.frontendProvider} ; ${hosting.cdnDnsProvider}.`
+      : `Le frontend du site est hébergé par ${hosting.frontendProvider}. Les services CDN et/ou DNS sont fournis par ${hosting.cdnDnsProvider}. Ces fournisseurs peuvent traiter les données techniques nécessaires à la diffusion et à la sécurité du site, y compris l'adresse IP, la date et l'heure de la requête, la ressource demandée et les informations techniques du client.`;
+
+  const googleFontsParagraph =
+    googleFonts.enabled
+      ? "Dans la configuration technique actuelle, les polices de caractères du site sont chargées via Google Fonts. Ce chargement implique une connexion aux serveurs du fournisseur et la transmission des données techniques nécessaires à la requête. Avant la publication définitive, la possibilité d'héberger les polices localement sera également évaluée."
+      : "Les polices de caractères utilisées par le site sont hébergées localement et ne nécessitent aucune connexion à des services externes pour leur chargement.";
+
+  return {
+    privacy: {
+      intro:
+        "La présente politique décrit le traitement des données personnelles effectué par l'intermédiaire du site de Regina Caffè.",
+
+      sections: [
+        {
+          title:
+            "1. Responsable du traitement",
+
+          paragraphs: [
+            `Responsable du traitement : ${controller.name}.`,
+            `Siège social : ${controller.registeredOffice}.`,
+            `Numéro de TVA : ${controller.vatNumber}.`,
+            `Contact protection des données : ${controller.privacyEmail}.`,
+          ],
+        },
+
+        {
+          title:
+            "2. Données personnelles traitées",
+
+          paragraphs: [
+            "Dans le cadre de l'utilisation du site, les catégories de données suivantes peuvent être traitées :",
+          ],
+
+          bullets: [
+            "données techniques et de navigation, telles que l'adresse IP, la date et l'heure de la requête, le navigateur, l'appareil, la page ou la ressource demandée et les journaux techniques ou de sécurité ;",
+            "préférence linguistique et préférences relatives aux cookies, au local storage ou aux technologies analogues ;",
+            "données techniques nécessaires au chargement des événements publics via l'infrastructure Supabase ;",
+            "adresse e-mail, identifiant utilisateur et informations techniques relatives aux administrateurs de l'espace réservé ;",
+            "numéro de téléphone, nom, contenu et métadonnées des communications lorsque l'utilisateur contacte volontairement l'établissement par téléphone, WhatsApp ou les autres canaux indiqués sur le site ;",
+            "données éventuellement communiquées aux plateformes externes lorsque l'utilisateur sélectionne volontairement des liens vers les réseaux sociaux, les cartes, les réservations, les affiches ou d'autres liens associés aux événements.",
+          ],
+        },
+
+        {
+          title:
+            "3. Finalités et bases juridiques",
+
+          bullets: [
+            "fournir, maintenir opérationnels et protéger le site et son infrastructure technique, sur la base de l'intérêt légitime du responsable du traitement à la sécurité et au fonctionnement du service ;",
+            "afficher et mettre à jour les événements publiés par l'établissement ;",
+            "mémoriser la préférence linguistique lorsque l'utilisateur autorise la catégorie de préférence correspondante ;",
+            "gérer l'authentification, les autorisations et la sécurité de l'espace d'administration ;",
+            "répondre aux demandes d'informations, de disponibilité ou de réservation effectuées volontairement par l'utilisateur ;",
+            "respecter les obligations légales, comptables ou administratives éventuellement applicables.",
+          ],
+        },
+
+        {
+          title:
+            "4. Hébergement et infrastructure technique",
+
+          paragraphs: [
+            hostingParagraph,
+            supabaseParagraph,
+            googleFontsParagraph,
+          ].filter(Boolean),
+        },
+
+        {
+          title:
+            "5. Liens et plateformes externes",
+
+          paragraphs: [
+            "Le site contient des liens vers des services externes tels qu'Instagram, Facebook, TikTok, WhatsApp et Google Maps, et peut contenir des liens externes associés à chaque événement, par exemple vers des réseaux sociaux, des pages de réservation ou des affiches en ligne.",
+            "Ces contenus ne sont pas intégrés directement dans le site. Lorsque l'utilisateur sélectionne volontairement un lien, il est redirigé vers le service externe correspondant, qui applique sa propre politique de confidentialité et ses propres conditions d'utilisation.",
+          ],
+        },
+
+        {
+          title:
+            "6. Destinataires des données",
+
+          paragraphs: [
+            "Les données peuvent être traitées, dans la limite de ce qui est nécessaire à leurs activités respectives, par des fournisseurs d'infrastructure, d'hébergement, de CDN/DNS, de backend, d'authentification et de maintenance technique, ainsi que par les personnes autorisées par le responsable du traitement.",
+            "Supabase est utilisé en tant que fournisseur de l'infrastructure backend pour la gestion des événements et l'authentification des administrateurs.",
+            googleFonts.enabled
+              ? "Dans la configuration actuelle, Google Fonts est utilisé pour le chargement des polices de caractères."
+              : null,
+            "Lorsque la loi l'exige, les données peuvent également être communiquées aux autorités compétentes.",
+          ].filter(Boolean),
+        },
+
+        {
+          title:
+            "7. Transferts internationaux",
+
+          paragraphs: [
+            `Le projet principal Supabase est configuré dans la région ${supabase.region.fr} (${supabase.regionCode}).`,
+            "Le recours à des fournisseurs internationaux ou à leurs sous-traitants peut néanmoins entraîner des traitements ou des transferts de données en dehors de l'Espace économique européen. Avant la publication définitive, le responsable du traitement devra vérifier les accords applicables, les éventuelles décisions d'adéquation et les autres garanties prévues par la réglementation.",
+          ],
+        },
+
+        {
+          title:
+            "8. Conservation",
+
+          bullets: [
+            "le choix relatif aux préférences de confidentialité est conservé pendant six mois, sauf révocation anticipée ;",
+            "la langue sélectionnée est mémorisée jusqu'à la révocation ou à l'expiration du choix de confidentialité lorsque la catégorie Préférences est autorisée ;",
+            "les sessions des administrateurs sont maintenues selon la durée et les paramètres prévus par le système d'authentification et peuvent être interrompues par déconnexion ou révocation ;",
+            "les comptes des administrateurs sont conservés pendant la période durant laquelle l'accès est autorisé et peuvent être désactivés lorsqu'ils ne sont plus nécessaires ;",
+            "les journaux techniques et de sécurité sont conservés selon les paramètres et les délais applicables aux fournisseurs utilisés ;",
+            "les données des communications sont conservées pendant la durée nécessaire au traitement de la demande concernée et pendant les périodes supplémentaires éventuellement requises par la loi.",
+          ],
+        },
+
+        {
+          title:
+            "9. Droits de la personne concernée",
+
+          paragraphs: [
+            "Dans les cas prévus par la réglementation, la personne concernée peut demander l'accès, la rectification, l'effacement, la limitation, la portabilité et s'opposer au traitement.",
+            "Lorsque le traitement est fondé sur le consentement, celui-ci peut être retiré à tout moment sans porter atteinte à la licéité du traitement effectué avant le retrait.",
+            `Les demandes peuvent être adressées à ${controller.privacyEmail}. Il est également possible d'introduire une réclamation auprès de l'autorité italienne de protection des données personnelles (Garante per la protezione dei dati personali).`,
+          ],
+        },
+
+        {
+          title:
+            "10. Mineurs",
+
+          paragraphs: [
+            "Le site n'est pas conçu pour collecter intentionnellement des données personnelles de mineurs au moyen de formulaires ou de systèmes d'inscription publique.",
+          ],
+        },
+
+        {
+          title:
+            "11. Sécurité",
+
+          paragraphs: [
+            "L'accès à l'espace d'administration est réservé aux comptes autorisés. Le système utilise des contrôles applicatifs et des règles d'autorisation au niveau de la base de données afin de limiter l'accès aux données et leur modification.",
+            "Aucun système informatique ne peut toutefois garantir un niveau de sécurité absolu.",
+          ],
+        },
+
+        {
+          title:
+            "12. Modifications de la présente politique",
+
+          paragraphs: [
+            "La présente politique peut être mise à jour à la suite de modifications réglementaires, techniques ou organisationnelles, ou de l'introduction de nouveaux fournisseurs et services.",
+            "La version et la date de dernière mise à jour sont indiquées dans la fenêtre d'information correspondante.",
+          ],
+        },
+      ],
+    },
+
+    cookies: {
+      intro:
+        "La présente politique en matière de cookies décrit les cookies, le local storage et les technologies analogues utilisés par le site.",
+
+      technologies: [
+        {
+          name:
+            "regina-cookie-consent",
+
+          type:
+            "Local storage technique",
+
+          category:
+            "Nécessaire",
+
+          duration:
+            "6 mois",
+
+          purpose:
+            "Mémorise le choix exprimé dans le panneau de confidentialité et évite qu'il soit demandé à nouveau avant son expiration.",
+        },
+
+        {
+          name:
+            "regina-language",
+
+          type:
+            "Local storage de préférence",
+
+          category:
+            "Préférences",
+
+          duration:
+            "Jusqu'à 6 mois ou jusqu'à la révocation",
+
+          purpose:
+            "Mémorise la langue sélectionnée par l'utilisateur. Il n'est utilisé que lorsque la catégorie Préférences est autorisée.",
+        },
+
+        {
+          name:
+            "Session Supabase Auth · espace d'administration",
+
+          type:
+            "Storage technique d'authentification",
+
+          category:
+            "Nécessaire pour les administrateurs",
+
+          duration:
+            "Jusqu'à la déconnexion, à la révocation ou à l'expiration de la session",
+
+          purpose:
+            "Maintient la session authentifiée des administrateurs autorisés et permet l'accès à l'espace de gestion des événements.",
+        },
+      ],
+
+      sections: [
+        {
+          title:
+            "1. Technologies nécessaires",
+
+          paragraphs: [
+            "Les technologies nécessaires permettent de conserver le choix de confidentialité et, pour les utilisateurs administrateurs, de maintenir une session authentifiée sécurisée dans l'espace réservé.",
+            "Ces technologies ne sont pas utilisées à des fins publicitaires ou de profilage.",
+          ],
+        },
+
+        {
+          title:
+            "2. Technologies de préférence",
+
+          paragraphs: [
+            "La catégorie Préférences permet de mémoriser la langue sélectionnée lors des visites suivantes.",
+            "Si la catégorie n'est pas autorisée, la langue peut néanmoins être modifiée pendant la visite en cours, mais elle n'est pas enregistrée comme préférence persistante.",
+          ],
+        },
+
+        {
+          title:
+            "3. Analyse et marketing",
+
+          paragraphs: [
+            "À ce jour, le site n'utilise aucune technologie d'analyse, de publicité, de profilage ou de remarketing.",
+            "Si de telles technologies venaient à être introduites à l'avenir, leur configuration et la présente politique devront être mises à jour avant leur activation.",
+          ],
+        },
+
+        {
+          title:
+            "4. Ressources et services externes",
+
+          paragraphs: [
+            googleFonts.enabled
+              ? "Dans la configuration actuelle, le site effectue des requêtes vers Google Fonts pour charger les polices de caractères. Ce service n'est pas utilisé par le site à des fins publicitaires ou analytiques, mais il implique néanmoins une connexion technique au fournisseur."
+              : "Les polices de caractères utilisées par le site sont hébergées localement.",
+            "Les simples liens vers les réseaux sociaux, les cartes, WhatsApp, les réservations, les affiches ou d'autres sites externes ne deviennent actifs que lorsque l'utilisateur décide de les sélectionner.",
+          ],
+        },
+
+        {
+          title:
+            "5. Modification ou révocation des choix",
+
+          paragraphs: [
+            "Les préférences peuvent être modifiées à tout moment via le lien « Préférences cookies » présent dans le pied de page.",
+            "Le retrait du consentement ne porte pas atteinte à la licéité du traitement effectué avant la modification.",
+          ],
+        },
+
+        {
+          title:
+            "6. Paramètres du navigateur",
+
+          paragraphs: [
+            "L'utilisateur peut supprimer les cookies et les données locales via les paramètres de son navigateur.",
+            "La suppression du local storage utilisé pour enregistrer le choix de confidentialité entraînera un nouvel affichage du panneau relatif aux préférences.",
+          ],
+        },
+      ],
+    },
+  };
+}
+
+/*
+ * =======================================================
+ * SELEZIONE DELLA LINGUA
+ * =======================================================
+ *
+ * L'italiano resta il testo di riferimento
+ * e viene usato come fallback per qualsiasi
+ * lingua non ancora tradotta.
+ */
+const LEGAL_CONTENT_BY_LANGUAGE = {
+  it: getItalianContent,
+  en: getEnglishContent,
+  fr: getFrenchContent,
+};
+
 export function getLegalContent(
   language
 ) {
-  return language === "en"
-    ? getEnglishContent()
-    : getItalianContent();
+  const getContent =
+    LEGAL_CONTENT_BY_LANGUAGE[
+      language
+    ] ??
+    LEGAL_CONTENT_BY_LANGUAGE.it;
+
+  return getContent();
 }

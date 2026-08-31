@@ -10,23 +10,11 @@ import {
 
 import { menuPageData } from "../data/menuData";
 import { useLanguage } from "../i18n/LanguageContext";
-
-function getLocalizedValue(
-  value,
-  language
-) {
-  if (
-    typeof value === "string"
-  ) {
-    return value;
-  }
-
-  return (
-    value?.[language] ??
-    value?.it ??
-    ""
-  );
-}
+import { getLocalizedValue } from "../i18n/localize";
+import {
+  pagePath,
+  sectionHref,
+} from "../lib/navigation";
 
 function getRevealVariants(
   reduceMotion
@@ -764,7 +752,7 @@ export default function MenuPage() {
           "
         >
           <motion.a
-            href="/"
+            href={pagePath("/")}
             initial={{
               opacity:
                 reduceMotion
@@ -1169,7 +1157,7 @@ export default function MenuPage() {
 
             <MenuSection
               section={
-                desserts
+                baguettes
               }
               language={
                 language
@@ -1184,12 +1172,12 @@ export default function MenuPage() {
           {/* ===============================================
               COLONNA DESTRA
 
-              Desktop:
-              baguette in alto,
-              allergeni compatti in fondo.
+              I dolci chiudono il menu, con gli
+              allergeni subito sotto.
 
-              Mobile/tablet:
-              normale flusso verticale.
+              Le baguette stanno nella colonna
+              sinistra: sono la sezione piu lunga
+              e bilanciano le tre corte di fianco.
               =============================================== */}
 
           <div
@@ -1200,7 +1188,6 @@ export default function MenuPage() {
               sm:gap-[16px]
 
               lg:flex
-              lg:h-full
               lg:flex-col
               lg:gap-[18px]
 
@@ -1209,7 +1196,7 @@ export default function MenuPage() {
           >
             <MenuSection
               section={
-                baguettes
+                desserts
               }
               language={
                 language
@@ -1225,9 +1212,6 @@ export default function MenuPage() {
                 reduceMotion
               }
               t={t}
-              className="
-                lg:mt-auto
-              "
             />
           </div>
         </div>
@@ -1284,7 +1268,7 @@ export default function MenuPage() {
           "
         >
           <a
-            href="/#consigliati"
+            href={sectionHref("consigliati")}
             className="
               group/end
 

@@ -210,18 +210,14 @@ function EventsLoading() {
   );
 }
 
-function EventsEmpty({
-  language,
-}) {
-  const title =
-    language === "en"
-      ? "New dates coming soon"
-      : "Nuove date in arrivo";
+function EventsEmpty({ t }) {
+  const title = t(
+    "events.emptyTitle"
+  );
 
-  const description =
-    language === "en"
-      ? "There are no upcoming events at the moment. Check back soon."
-      : "Al momento non ci sono nuovi eventi in programma. Torna a trovarci presto.";
+  const description = t(
+    "events.emptyDescription"
+  );
 
   return (
     <div
@@ -304,24 +300,21 @@ function EventsEmpty({
 }
 
 function EventsError({
-  language,
+  t,
   loading,
   onRetry,
 }) {
-  const title =
-    language === "en"
-      ? "Events are temporarily unavailable"
-      : "Gli eventi non sono disponibili";
+  const title = t(
+    "events.errorTitle"
+  );
 
-  const description =
-    language === "en"
-      ? "We couldn't load the upcoming dates. Please try again in a moment."
-      : "Non siamo riusciti a caricare le prossime serate. Puoi riprovare tra un momento.";
+  const description = t(
+    "events.errorDescription"
+  );
 
-  const retryLabel =
-    language === "en"
-      ? "Try again"
-      : "Riprova";
+  const retryLabel = t(
+    "events.retry"
+  );
 
   return (
     <div
@@ -477,10 +470,7 @@ function EventsError({
 }
 
 export default function EventsSection() {
-  const {
-    t,
-    language,
-  } = useLanguage();
+  const { t } = useLanguage();
 
   const [
     events,
@@ -748,9 +738,7 @@ export default function EventsSection() {
             </div>
           ) : error ? (
             <EventsError
-              language={
-                language
-              }
+              t={t}
               loading={
                 loading
               }
@@ -761,9 +749,7 @@ export default function EventsSection() {
           ) : events.length ===
             0 ? (
             <EventsEmpty
-              language={
-                language
-              }
+              t={t}
             />
           ) : (
             events.map(

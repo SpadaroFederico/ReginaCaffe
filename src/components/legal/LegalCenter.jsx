@@ -19,6 +19,7 @@ import {
 
 import { useLegal } from "../../legal/LegalContext";
 import { useLanguage } from "../../i18n/LanguageContext";
+import { getLocalizedValue } from "../../i18n/localize";
 
 /*
  * =========================================================
@@ -672,29 +673,30 @@ export default function LegalCenter() {
     );
 
   /*
-   * Alcune etichette appartengono alla
-   * struttura del documento tecnico e non
-   * erano ancora presenti nelle traduzioni.
+   * Etichette della tabella tecnica
+   * della Cookie Policy.
    *
-   * Le manteniamo qui localizzate per
-   * evitare che la Cookie Policy inglese
-   * mostri "Tipo / Categoria / Durata /
-   * Finalità" in italiano.
+   * Vivono nel dizionario come il resto
+   * dell'interfaccia, così ogni lingua
+   * aggiunta le eredita automaticamente.
    */
-  const technologyLabels =
-    language === "en"
-      ? {
-          type: "Type",
-          category: "Category",
-          duration: "Duration",
-          purpose: "Purpose",
-        }
-      : {
-          type: "Tipo",
-          category: "Categoria",
-          duration: "Durata",
-          purpose: "Finalità",
-        };
+  const technologyLabels = {
+    type: t(
+      "legal.technologyType"
+    ),
+
+    category: t(
+      "legal.technologyCategory"
+    ),
+
+    duration: t(
+      "legal.technologyDuration"
+    ),
+
+    purpose: t(
+      "legal.technologyPurpose"
+    ),
+  };
 
   const [
     draftPreferences,
@@ -764,11 +766,10 @@ export default function LegalCenter() {
   };
 
   const currentLastUpdated =
-    LEGAL_CONFIG.lastUpdated[
-      language === "en"
-        ? "en"
-        : "it"
-    ];
+    getLocalizedValue(
+      LEGAL_CONFIG.lastUpdated,
+      language
+    );
 
   const modalMeta = (
     <div

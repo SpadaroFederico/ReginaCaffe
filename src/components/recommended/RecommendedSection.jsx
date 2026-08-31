@@ -3,6 +3,7 @@ import { ArrowUpRight } from "lucide-react";
 import ProductCarousel from "./ProductCarousel";
 import { recommendedProducts } from "../../data/recommended.mock";
 import { useLanguage } from "../../i18n/LanguageContext";
+import { pagePath } from "../../lib/navigation";
 import Reveal from "../ui/Reveal";
 
 function CategoryTitle({
@@ -280,7 +281,7 @@ export default function RecommendedSection() {
             "
           >
             <a
-              href="#menu"
+              href={pagePath("/menu")}
               className="
                 group/menu-cta
                 relative

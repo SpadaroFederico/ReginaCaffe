@@ -1,4 +1,5 @@
 import {
+  Fragment,
   useEffect,
   useRef,
   useState,
@@ -10,11 +11,138 @@ import {
 } from "lucide-react";
 
 import { useLanguage } from "../i18n/LanguageContext";
+import {
+  getAppPathname,
+  pagePath,
+  localizedPath,
+  scrollToSection,
+  sectionHref,
+} from "../lib/navigation";
+
+/*
+ * =======================================================
+ * LINGUE DISPONIBILI
+ * =======================================================
+ *
+ * Unica fonte per entrambi i selettori
+ * dell'header (barra compatta e desktop).
+ *
+ * L'ordine definito qui è anche l'ordine
+ * mostrato a schermo.
+ *
+ * I codici devono restare allineati a
+ * SUPPORTED_LANGUAGES di LanguageContext.
+ */
+const LANGUAGES = [
+  {
+    code: "it",
+    label: "IT",
+  },
+  {
+    code: "en",
+    label: "EN",
+  },
+  {
+    code: "fr",
+    label: "FR",
+  },
+];
+
+/*
+ * Le lingue sono link veri, non pulsanti.
+ *
+ * /en e /fr sono pagine distinte: servendo
+ * un <a href> i motori di ricerca possono
+ * raggiungere e indicizzare le altre due
+ * versioni, cosa impossibile con un pulsante
+ * che cambia stato via JavaScript.
+ *
+ * hrefLang dichiara la lingua di destinazione,
+ * aria-current segnala quella attiva.
+ *
+ * Il separatore "/" resta decorativo e
+ * nascosto agli screen reader.
+ */
+function LanguageSwitch({
+  language,
+  ariaLabel,
+  className,
+}) {
+  const currentPath = getAppPathname();
+
+  const hash =
+    typeof window === "undefined"
+      ? ""
+      : window.location.hash;
+
+  return (
+    <div
+      role="group"
+      aria-label={ariaLabel}
+      className={className}
+    >
+      {LANGUAGES.map(
+        (item, index) => (
+          <Fragment
+            key={item.code}
+          >
+            {index > 0 && (
+              <span
+                aria-hidden="true"
+                className="text-[#9E927D]"
+              >
+                /
+              </span>
+            )}
+
+            <a
+              href={`${localizedPath(
+                currentPath,
+                item.code
+              )}${hash}`}
+              hrefLang={item.code}
+              aria-current={
+                language === item.code
+                  ? "page"
+                  : undefined
+              }
+              className={`
+                no-underline
+
+                cursor-pointer
+                border-0
+                bg-transparent
+                p-0
+
+                transition-[color,opacity,transform]
+                duration-300
+
+                hover:-translate-y-[1px]
+                hover:opacity-100
+
+                focus-visible:outline-none
+                focus-visible:text-[#2F2A21]
+
+                ${
+                  language ===
+                  item.code
+                    ? "text-[#2F2A21]"
+                    : "text-[#8E8371] opacity-55"
+                }
+              `}
+            >
+              {item.label}
+            </a>
+          </Fragment>
+        )
+      )}
+    </div>
+  );
+}
 
 export default function Header() {
   const {
     language,
-    setLanguage,
     t,
   } = useLanguage();
 
@@ -27,19 +155,21 @@ export default function Header() {
   const navLinks = [
     {
       label: t("header.events"),
-      href: "#eventi",
+      href: sectionHref("eventi"),
     },
     {
       label: t("header.recommended"),
-      href: "#consigliati",
+      href: sectionHref(
+        "consigliati"
+      ),
     },
     {
       label: t("header.hours"),
-      href: "#orari",
+      href: sectionHref("orari"),
     },
     {
       label: t("header.social"),
-      href: "#social",
+      href: sectionHref("social"),
     },
   ];
 
@@ -106,9 +236,12 @@ export default function Header() {
     href,
     fromMobileMenu = false
   ) => {
-    const target = document.querySelector(href);
-
-    if (!target) {
+    /*
+     * Fuori dalla home l'href punta a un
+     * altro percorso: lasciamo navigare
+     * il browser, chiudendo prima il menu.
+     */
+    if (!href.startsWith("#")) {
       if (fromMobileMenu) {
         setIsMobileMenuOpen(false);
       }
@@ -116,40 +249,37 @@ export default function Header() {
       return;
     }
 
-    event.preventDefault();
+    if (!document.querySelector(href)) {
+      if (fromMobileMenu) {
+        setIsMobileMenuOpen(false);
+      }
 
-    const prefersReducedMotion =
-      window.matchMedia?.(
-        "(prefers-reduced-motion: reduce)"
-      ).matches;
-
-    const performScroll = () => {
-      target.scrollIntoView({
-        behavior: prefersReducedMotion
-          ? "auto"
-          : "smooth",
-        block: "start",
-      });
-
-      window.history.pushState(
-        null,
-        "",
-        href
-      );
-    };
+      return;
+    }
 
     if (fromMobileMenu) {
       setIsMobileMenuOpen(false);
 
+      const prefersReducedMotion =
+        window.matchMedia?.(
+          "(prefers-reduced-motion: reduce)"
+        ).matches;
+
+      event.preventDefault();
+
       window.setTimeout(
-        performScroll,
+        () =>
+          scrollToSection(
+            event,
+            href
+          ),
         prefersReducedMotion ? 0 : 380
       );
 
       return;
     }
 
-    performScroll();
+    scrollToSection(event, href);
   };
 
   return (
@@ -193,7 +323,7 @@ export default function Header() {
         >
           {/* Logo */}
           <a
-            href="/"
+            href={pagePath("/")}
             aria-label={t("header.homeAria")}
             className="
               group/logo
@@ -424,9 +554,9 @@ export default function Header() {
           </button>
 
           {/* Lingua sempre visibile su mobile */}
-          <div
-            role="group"
-            aria-label={t(
+          <LanguageSwitch
+            language={language}
+            ariaLabel={t(
               "header.languageAria"
             )}
             className="
@@ -445,84 +575,7 @@ export default function Header() {
 
               md:hidden
             "
-          >
-            <button
-              type="button"
-              onClick={() =>
-                setLanguage("it")
-              }
-              aria-pressed={
-                language === "it"
-              }
-              className={`
-                relative
-
-                cursor-pointer
-                border-0
-                bg-transparent
-                p-0
-
-                transition-[color,opacity,transform]
-                duration-300
-
-                hover:-translate-y-[1px]
-                hover:opacity-100
-
-                focus-visible:outline-none
-                focus-visible:text-[#2F2A21]
-
-                ${
-                  language === "it"
-                    ? "text-[#2F2A21]"
-                    : "text-[#8E8371] opacity-55"
-                }
-              `}
-            >
-              IT
-            </button>
-
-            <span
-              aria-hidden="true"
-              className="text-[#9E927D]"
-            >
-              /
-            </span>
-
-            <button
-              type="button"
-              onClick={() =>
-                setLanguage("en")
-              }
-              aria-pressed={
-                language === "en"
-              }
-              className={`
-                relative
-
-                cursor-pointer
-                border-0
-                bg-transparent
-                p-0
-
-                transition-[color,opacity,transform]
-                duration-300
-
-                hover:-translate-y-[1px]
-                hover:opacity-100
-
-                focus-visible:outline-none
-                focus-visible:text-[#2F2A21]
-
-                ${
-                  language === "en"
-                    ? "text-[#2F2A21]"
-                    : "text-[#8E8371] opacity-55"
-                }
-              `}
-            >
-              EN
-            </button>
-          </div>
+          />
 
           {/* Controlli tablet / desktop */}
           <div
@@ -535,13 +588,7 @@ export default function Header() {
             "
           >
             <a
-              href="#menu"
-              onClick={(event) =>
-                navigateToSection(
-                  event,
-                  "#menu"
-                )
-              }
+              href={pagePath("/menu")}
               className="
                 group/header-menu
                 relative
@@ -612,9 +659,9 @@ export default function Header() {
               "
             />
 
-            <div
-              role="group"
-              aria-label={t(
+            <LanguageSwitch
+              language={language}
+              ariaLabel={t(
                 "header.languageAria"
               )}
               className="
@@ -633,80 +680,7 @@ export default function Header() {
 
                 xl:text-[11px]
               "
-            >
-              <button
-                type="button"
-                onClick={() =>
-                  setLanguage("it")
-                }
-                aria-pressed={
-                  language === "it"
-                }
-                className={`
-                  cursor-pointer
-                  border-0
-                  bg-transparent
-                  p-0
-
-                  transition-[opacity,color,transform]
-                  duration-300
-
-                  hover:-translate-y-[1px]
-                  hover:opacity-100
-
-                  focus-visible:outline-none
-                  focus-visible:text-[#2F2A21]
-
-                  ${
-                    language === "it"
-                      ? "text-[#2F2A21]"
-                      : "text-[#8E8371] opacity-55"
-                  }
-                `}
-              >
-                IT
-              </button>
-
-              <span
-                aria-hidden="true"
-                className="text-[#9E927D]"
-              >
-                /
-              </span>
-
-              <button
-                type="button"
-                onClick={() =>
-                  setLanguage("en")
-                }
-                aria-pressed={
-                  language === "en"
-                }
-                className={`
-                  cursor-pointer
-                  border-0
-                  bg-transparent
-                  p-0
-
-                  transition-[opacity,color,transform]
-                  duration-300
-
-                  hover:-translate-y-[1px]
-                  hover:opacity-100
-
-                  focus-visible:outline-none
-                  focus-visible:text-[#2F2A21]
-
-                  ${
-                    language === "en"
-                      ? "text-[#2F2A21]"
-                      : "text-[#8E8371] opacity-55"
-                  }
-                `}
-              >
-                EN
-              </button>
-            </div>
+            />
           </div>
         </div>
       </header>
@@ -951,16 +925,12 @@ export default function Header() {
           />
 
           <a
-            href="#menu"
+            href={pagePath("/menu")}
             tabIndex={
               isMobileMenuOpen ? 0 : -1
             }
-            onClick={(event) =>
-              navigateToSection(
-                event,
-                "#menu",
-                true
-              )
+            onClick={() =>
+              setIsMobileMenuOpen(false)
             }
             className={`
               group/mobile-menu-link

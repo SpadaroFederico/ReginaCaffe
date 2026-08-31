@@ -23,27 +23,75 @@
       content="telephone=no"
     />
 
+    <meta
+      name="robots"
+      content="index, follow, max-image-preview:large"
+    />
+
+    <!--
+      canonical, og:url e i link hreflang per
+      /, /en e /fr sono generati a runtime da
+      src/i18n/useDocumentMeta.js a partire da
+      window.location.origin: si adattano da
+      soli al dominio su cui il sito gira.
+
+      Restano da aggiungere alla scelta del
+      dominio definitivo, perche' richiedono
+      un URL assoluto gia' nell'HTML statico:
+
+      <meta property="og:image" content="https://DOMINIO/heroimg1.webp" />
+      <meta property="og:image:alt" content="Il bancone di Regina Caffe" />
+      <meta name="twitter:image" content="https://DOMINIO/heroimg1.webp" />
+
+      piu' public/sitemap.xml e la riga
+      Sitemap: in public/robots.txt.
+    -->
+
+    <meta
+      name="twitter:card"
+      content="summary_large_image"
+    />
+
+    <meta
+      name="twitter:title"
+      content="Regina Caffè Grottaglie | Caffetteria, aperitivi e cocktail"
+    />
+
+    <meta
+      name="twitter:description"
+      content="Dal primo caffè all’ultimo cocktail, nel cuore di Grottaglie."
+    />
+
     <link
       rel="icon"
       type="image/svg+xml"
       href="/logo.svg"
     />
 
-    <!-- Google Fonts -->
-    <link
-      rel="preconnect"
-      href="https://fonts.googleapis.com"
-    />
+    <!--
+      Font serviti dal nostro dominio.
+      Nessuna connessione a Google Fonts:
+      le regole @font-face stanno in
+      src/fonts.css, i file in public/fonts.
 
+      Precarichiamo solo i due tagli latini
+      usati subito dall'hero, gli altri
+      vengono richiesti su necessita'.
+    -->
     <link
-      rel="preconnect"
-      href="https://fonts.gstatic.com"
+      rel="preload"
+      as="font"
+      type="font/woff2"
+      href="/fonts/instrument-serif-400-normal-latin.woff2"
       crossorigin
     />
 
     <link
-      href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Work+Sans:wght@300;400;500;600&display=swap"
-      rel="stylesheet"
+      rel="preload"
+      as="font"
+      type="font/woff2"
+      href="/fonts/work-sans-400-normal-latin.woff2"
+      crossorigin
     />
 
     <!-- Social preview -->
@@ -58,8 +106,23 @@
     />
 
     <meta
+      property="og:locale:alternate"
+      content="en_GB"
+    />
+
+    <meta
+      property="og:locale:alternate"
+      content="fr_FR"
+    />
+
+    <meta
+      property="og:site_name"
+      content="Regina Caffè"
+    />
+
+    <meta
       property="og:title"
-      content="Regina Caffè | Grottaglie"
+      content="Regina Caffè Grottaglie | Caffetteria, aperitivi e cocktail"
     />
 
     <meta
@@ -68,8 +131,66 @@
     />
 
     <title>
-      Regina Caffè | Grottaglie
+      Regina Caffè Grottaglie | Caffetteria, aperitivi e cocktail
     </title>
+
+    <!--
+      Dati strutturati del locale.
+      Orari, telefono e indirizzo devono
+      restare allineati a src/data/openingHours.js
+      e a src/components/social/SocialSection.jsx.
+    -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "CafeOrCoffeeShop",
+        "name": "Regina Caffè",
+        "description": "Caffetteria, aperitivi, cocktail ed eventi nel cuore di Grottaglie.",
+        "image": "/heroimg1.webp",
+        "logo": "/logo.svg",
+        "telephone": "+39 345 683 6439",
+        "priceRange": "€€",
+        "servesCuisine": ["Caffetteria", "Aperitivi", "Cocktail"],
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "Piazza Regina Margherita, 21",
+          "addressLocality": "Grottaglie",
+          "addressRegion": "TA",
+          "postalCode": "74023",
+          "addressCountry": "IT"
+        },
+        "sameAs": [
+          "https://www.instagram.com/reginacaffe_grottaglie/",
+          "https://www.facebook.com/reginacaffegrottaglie/",
+          "https://www.tiktok.com/@reginacaff_grotta"
+        ],
+        "openingHoursSpecification": [
+          {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": [
+              "Monday",
+              "Tuesday",
+              "Wednesday",
+              "Thursday"
+            ],
+            "opens": "07:00",
+            "closes": "01:00"
+          },
+          {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": ["Friday", "Saturday"],
+            "opens": "07:00",
+            "closes": "02:30"
+          },
+          {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": "Sunday",
+            "opens": "07:00",
+            "closes": "01:00"
+          }
+        ]
+      }
+    </script>
   </head>
 
   <body>

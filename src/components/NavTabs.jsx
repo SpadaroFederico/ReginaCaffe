@@ -62,46 +62,16 @@ function TabGroup({
             lg:gap-[30px]
           "
         >
-          <a
-            href={`#${tab.id}`}
-            tabIndex={hidden ? -1 : undefined}
+          <span
             className="
-              relative
               shrink-0
               whitespace-nowrap
 
               text-[#635B4E]
-              no-underline
-
-              transition-[color,transform]
-              duration-300
-
-              [transition-timing-function:cubic-bezier(0.22,1,0.36,1)]
-
-              after:absolute
-              after:-bottom-[7px]
-              after:left-0
-              after:h-px
-              after:w-full
-              after:origin-center
-              after:scale-x-0
-              after:bg-[#7C644A]/70
-              after:transition-transform
-              after:duration-400
-              after:[transition-timing-function:cubic-bezier(0.22,1,0.36,1)]
-
-              hover:-translate-y-[1px]
-              hover:text-[#2F2A21]
-              hover:after:scale-x-100
-
-              focus-visible:-translate-y-[1px]
-              focus-visible:text-[#2F2A21]
-              focus-visible:outline-none
-              focus-visible:after:scale-x-100
             "
           >
             {t(tab.key)}
-          </a>
+          </span>
 
           <span
             aria-hidden="true"

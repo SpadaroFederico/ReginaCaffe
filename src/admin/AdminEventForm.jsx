@@ -36,8 +36,10 @@ function emptyForm() {
     slug: "",
     titleIt: "",
     titleEn: "",
+    titleFr: "",
     descriptionIt: "",
     descriptionEn: "",
+    descriptionFr: "",
     startsAt: "",
     endsAt: "",
     externalUrl: "",
@@ -59,11 +61,17 @@ function eventToForm(event) {
     titleEn:
       event.title?.en ?? "",
 
+    titleFr:
+      event.title?.fr ?? "",
+
     descriptionIt:
       event.description?.it ?? "",
 
     descriptionEn:
       event.description?.en ?? "",
+
+    descriptionFr:
+      event.description?.fr ?? "",
 
     startsAt:
       isoToRomeLocal(
@@ -244,8 +252,10 @@ export default function AdminEventForm({
           form.slug.trim() &&
             form.titleIt.trim() &&
             form.titleEn.trim() &&
+            form.titleFr.trim() &&
             form.descriptionIt.trim() &&
             form.descriptionEn.trim() &&
+            form.descriptionFr.trim() &&
             form.startsAt &&
             form.endsAt
         ),
@@ -454,6 +464,9 @@ export default function AdminEventForm({
 
             en:
               form.titleEn,
+
+            fr:
+              form.titleFr,
           },
 
           description: {
@@ -462,6 +475,9 @@ export default function AdminEventForm({
 
             en:
               form.descriptionEn,
+
+            fr:
+              form.descriptionFr,
           },
 
           startsAt,
@@ -618,7 +634,7 @@ export default function AdminEventForm({
         )}
       </div>
 
-      <div className="mt-7 grid gap-6 lg:grid-cols-2">
+      <div className="mt-7 grid gap-6 lg:grid-cols-3">
         <section className="rounded-[18px] border border-[#CDBF9F] bg-[#F3EDDE] p-5 sm:p-6">
           <h3 className="font-serif text-[27px]">
             Italiano
@@ -722,6 +738,66 @@ export default function AdminEventForm({
                 ) =>
                   setValue(
                     "descriptionEn",
+                    event
+                      .target
+                      .value
+                  )
+                }
+                maxLength={
+                  500
+                }
+                disabled={
+                  saving
+                }
+              />
+            </Field>
+          </div>
+        </section>
+
+        <section className="rounded-[18px] border border-[#CDBF9F] bg-[#F3EDDE] p-5 sm:p-6">
+          <h3 className="font-serif text-[27px]">
+            Français
+          </h3>
+
+          <div className="mt-5 space-y-5">
+            <Field label="Titre">
+              <input
+                className={
+                  inputClass
+                }
+                value={
+                  form.titleFr
+                }
+                onChange={(
+                  event
+                ) =>
+                  setValue(
+                    "titleFr",
+                    event
+                      .target
+                      .value
+                  )
+                }
+                maxLength={
+                  120
+                }
+                disabled={
+                  saving
+                }
+              />
+            </Field>
+
+            <Field label="Description">
+              <textarea
+                className={`${inputClass} min-h-[120px] resize-y py-3`}
+                value={
+                  form.descriptionFr
+                }
+                onChange={(
+                  event
+                ) =>
+                  setValue(
+                    "descriptionFr",
                     event
                       .target
                       .value

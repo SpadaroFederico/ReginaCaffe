@@ -10,6 +10,7 @@ import {
 
 import { translations } from "./translations";
 import { useLegal } from "../legal/LegalContext";
+import { getPathLanguage } from "../lib/navigation";
 
 const LanguageContext =
   createContext(null);
@@ -18,7 +19,7 @@ const LANGUAGE_STORAGE_KEY =
   "regina-language";
 
 const SUPPORTED_LANGUAGES =
-  new Set(["it", "en"]);
+  new Set(["it", "en", "fr"]);
 
 function isSupportedLanguage(
   language
@@ -98,13 +99,35 @@ export function LanguageProvider({
   const canPersistLanguage =
     preferencesConsent === true;
 
+  /*
+   * =======================================================
+   * LINGUA E URL
+   * =======================================================
+   *
+   * /en e /fr sono versioni distinte del
+   * sito, con un loro indirizzo indicizzabile.
+   *
+   * Quando il percorso porta un prefisso è
+   * quello a comandare: una pagina inglese
+   * deve restare inglese anche se il visitatore
+   * aveva salvato un'altra preferenza, altrimenti
+   * il contenuto non corrisponderebbe all'URL
+   * che i motori di ricerca hanno indicizzato.
+   *
+   * Senza prefisso vale la preferenza salvata,
+   * e in mancanza di quella l'italiano.
+   */
+  const pathLanguage = getPathLanguage();
+
   const [
     language,
     setLanguageState,
-  ] = useState(() =>
-    readStoredLanguage(
-      canPersistLanguage
-    )
+  ] = useState(
+    () =>
+      pathLanguage ??
+      readStoredLanguage(
+        canPersistLanguage
+      )
   );
 
   /*
@@ -177,10 +200,8 @@ export function LanguageProvider({
    * Aggiorna anche:
    *
    * <html lang="it">
-   *
-   * oppure:
-   *
    * <html lang="en">
+   * <html lang="fr">
    *
    * utile per accessibilità, browser
    * e motori di ricerca.
@@ -244,6 +265,7 @@ export function LanguageProvider({
        * scelta manuale.
        */
       if (
+        !pathLanguage &&
         !storageHydratedRef.current &&
         !userChangedLanguageRef.current
       ) {
@@ -299,6 +321,7 @@ export function LanguageProvider({
     language,
     canPersistLanguage,
     hasPreferenceDecision,
+    pathLanguage,
   ]);
 
   const value =

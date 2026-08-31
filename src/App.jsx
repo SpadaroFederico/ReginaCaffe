@@ -3,6 +3,9 @@ import {
   Suspense,
 } from "react";
 
+import { getAppPathname } from "./lib/navigation";
+import { useDocumentMeta } from "./i18n/useDocumentMeta";
+
 import Header from "./components/Header";
 import Hero from "./components/Hero";
 import NavTabs from "./components/NavTabs";
@@ -39,56 +42,9 @@ const MenuPage = lazy(
   () => import("./pages/MenuPage")
 );
 
-function getAppPathname() {
-  const pathname =
-    window.location.pathname || "/";
-
-  const rawBase =
-    import.meta.env.BASE_URL || "/";
-
-  const base =
-    rawBase === "/"
-      ? ""
-      : rawBase.replace(/\/+$/, "");
-
-  let relativePathname =
-    pathname;
-
-  if (base) {
-    if (pathname === base) {
-      relativePathname = "/";
-    } else if (
-      pathname.startsWith(
-        `${base}/`
-      )
-    ) {
-      relativePathname =
-        pathname.slice(
-          base.length
-        ) || "/";
-    }
-  }
-
-  relativePathname =
-    relativePathname.replace(
-      /\/{2,}/g,
-      "/"
-    );
-
-  if (
-    relativePathname.length > 1
-  ) {
-    relativePathname =
-      relativePathname.replace(
-        /\/+$/,
-        ""
-      );
-  }
-
-  return relativePathname || "/";
-}
-
 function PublicSite() {
+  useDocumentMeta("home");
+
   return (
     <>
       <Header />
@@ -115,6 +71,8 @@ function PublicSite() {
 }
 
 function MenuSite() {
+  useDocumentMeta("menu");
+
   return (
     <>
       <Header />

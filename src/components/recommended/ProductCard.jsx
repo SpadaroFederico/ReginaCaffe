@@ -1,4 +1,5 @@
 import { useLanguage } from "../../i18n/LanguageContext";
+import { getLocalizedValue } from "../../i18n/localize";
 
 export default function ProductCard({
   product,
@@ -6,9 +7,10 @@ export default function ProductCard({
   const { language } = useLanguage();
 
   const description =
-    product.description?.[language] ??
-    product.description?.it ??
-    "";
+    getLocalizedValue(
+      product.description,
+      language
+    );
 
   return (
     <article

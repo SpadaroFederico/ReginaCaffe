@@ -11,8 +11,10 @@ const PUBLIC_EVENT_COLUMNS = `
   slug,
   title_it,
   title_en,
+  title_fr,
   description_it,
   description_en,
+  description_fr,
   starts_at,
   ends_at,
   external_url
@@ -23,8 +25,10 @@ const ADMIN_EVENT_COLUMNS = `
   slug,
   title_it,
   title_en,
+  title_fr,
   description_it,
   description_en,
+  description_fr,
   starts_at,
   ends_at,
   external_url,
@@ -170,8 +174,14 @@ function mapEvent(row) {
 
     title: {
       it: row.title_it ?? "",
+
       en:
         row.title_en ??
+        row.title_it ??
+        "",
+
+      fr:
+        row.title_fr ??
         row.title_it ??
         "",
     },
@@ -183,6 +193,11 @@ function mapEvent(row) {
 
       en:
         row.description_en ??
+        row.description_it ??
+        "",
+
+      fr:
+        row.description_fr ??
         row.description_it ??
         "",
     },
@@ -233,6 +248,11 @@ function toDatabasePayload(event) {
       event.title?.en
     );
 
+  const titleFr =
+    cleanText(
+      event.title?.fr
+    );
+
   const descriptionIt =
     cleanText(
       event.description?.it
@@ -241,6 +261,11 @@ function toDatabasePayload(event) {
   const descriptionEn =
     cleanText(
       event.description?.en
+    );
+
+  const descriptionFr =
+    cleanText(
+      event.description?.fr
     );
 
   const externalUrl =
@@ -291,11 +316,17 @@ function toDatabasePayload(event) {
     title_en:
       titleEn,
 
+    title_fr:
+      titleFr,
+
     description_it:
       descriptionIt,
 
     description_en:
       descriptionEn,
+
+    description_fr:
+      descriptionFr,
 
     starts_at:
       event.startsAt,
