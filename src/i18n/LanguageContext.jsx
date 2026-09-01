@@ -4,13 +4,15 @@ import {
   useContext,
   useEffect,
   useMemo,
-  useRef,
   useState,
 } from "react";
 
 import { translations } from "./translations";
 import { useLegal } from "../legal/LegalContext";
-import { getPathLanguage } from "../lib/navigation";
+import {
+  DEFAULT_LANGUAGE,
+  getPathLanguage,
+} from "../lib/navigation";
 
 const LanguageContext =
   createContext(null);
@@ -27,36 +29,6 @@ function isSupportedLanguage(
   return SUPPORTED_LANGUAGES.has(
     language
   );
-}
-
-function readStoredLanguage(
-  canPersistLanguage
-) {
-  if (
-    typeof window === "undefined" ||
-    !canPersistLanguage
-  ) {
-    return "it";
-  }
-
-  try {
-    const savedLanguage =
-      window.localStorage.getItem(
-        LANGUAGE_STORAGE_KEY
-      );
-
-    if (
-      isSupportedLanguage(
-        savedLanguage
-      )
-    ) {
-      return savedLanguage;
-    }
-  } catch {
-    // Usiamo l'italiano come fallback.
-  }
-
-  return "it";
 }
 
 function getTranslation(
@@ -114,8 +86,10 @@ export function LanguageProvider({
    * il contenuto non corrisponderebbe all'URL
    * che i motori di ricerca hanno indicizzato.
    *
-   * Senza prefisso vale la preferenza salvata,
-   * e in mancanza di quella l'italiano.
+   * Senza prefisso la pagina è sempre italiana:
+   * è l'unico modo per cui il link "IT" dello
+   * switcher (che punta a "/") funzioni davvero
+   * anche dopo che è stata salvata un'altra lingua.
    */
   const pathLanguage = getPathLanguage();
 
@@ -125,32 +99,8 @@ export function LanguageProvider({
   ] = useState(
     () =>
       pathLanguage ??
-      readStoredLanguage(
-        canPersistLanguage
-      )
+      DEFAULT_LANGUAGE
   );
-
-  /*
-   * Indica se abbiamo già sincronizzato
-   * lo stato con localStorage.
-   *
-   * Se il consenso era già disponibile
-   * al primo render, useState ha già
-   * letto la lingua salvata.
-   */
-  const storageHydratedRef =
-    useRef(
-      canPersistLanguage
-    );
-
-  /*
-   * Serve a distinguere una scelta
-   * effettuata dall'utente nella sessione
-   * corrente da una lingua recuperata
-   * automaticamente dallo storage.
-   */
-  const userChangedLanguageRef =
-    useRef(false);
 
   /*
    * API esposta ai componenti.
@@ -178,9 +128,6 @@ export function LanguageProvider({
             ) {
               return currentLanguage;
             }
-
-            userChangedLanguageRef.current =
-              true;
 
             return resolvedLanguage;
           }
@@ -248,61 +195,17 @@ export function LanguageProvider({
           LANGUAGE_STORAGE_KEY
         );
 
-        storageHydratedRef.current =
-          true;
-
         return;
       }
 
       /*
-       * Se LegalContext ha terminato
-       * l'inizializzazione solo dopo
-       * il primo render, recuperiamo
-       * adesso l'eventuale lingua salvata.
-       *
-       * Non la recuperiamo se nel frattempo
-       * l'utente ha già effettuato una nuova
-       * scelta manuale.
-       */
-      if (
-        !pathLanguage &&
-        !storageHydratedRef.current &&
-        !userChangedLanguageRef.current
-      ) {
-        const storedLanguage =
-          window.localStorage.getItem(
-            LANGUAGE_STORAGE_KEY
-          );
-
-        storageHydratedRef.current =
-          true;
-
-        if (
-          isSupportedLanguage(
-            storedLanguage
-          ) &&
-          storedLanguage !==
-            language
-        ) {
-          setLanguageState(
-            storedLanguage
-          );
-
-          /*
-           * Evitiamo di sovrascrivere
-           * immediatamente lo storage con
-           * il valore precedente del render.
-           */
-          return;
-        }
-      } else {
-        storageHydratedRef.current =
-          true;
-      }
-
-      /*
-       * Con consenso alle preferenze,
-       * memorizziamo la lingua corrente.
+       * Memorizziamo la lingua corrente
+       * solo a scopo informativo: non viene
+       * più riletta per decidere cosa
+       * mostrare, perché farlo rompeva il
+       * link "IT" dello switcher (l'URL
+       * "/" tornava a mostrare l'ultima
+       * lingua salvata invece dell'italiano).
        */
       window.localStorage.setItem(
         LANGUAGE_STORAGE_KEY,
@@ -321,7 +224,6 @@ export function LanguageProvider({
     language,
     canPersistLanguage,
     hasPreferenceDecision,
-    pathLanguage,
   ]);
 
   const value =
