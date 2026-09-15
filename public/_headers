@@ -1,0 +1,36 @@
+# Intestazioni HTTP applicate da Cloudflare
+# (valido sia per Pages sia per Workers static assets).
+#
+# La CSP ammette solo risorse dal nostro dominio,
+# più le chiamate a Supabase. Se in futuro si
+# aggiungono servizi esterni (mappe incorporate,
+# analytics, font remoti) vanno aggiunti qui,
+# altrimenti il browser li blocca.
+
+/*
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  X-Frame-Options: DENY
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=()
+  Content-Security-Policy: default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self'; connect-src 'self' https://*.supabase.co wss://*.supabase.co; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; object-src 'none'
+
+/admin
+  X-Robots-Tag: noindex, nofollow
+
+/admin/*
+  X-Robots-Tag: noindex, nofollow
+
+# File di Vite con hash nel nome: cambiano
+# nome a ogni modifica, cache di un anno.
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# I font non hanno hash nel nome ma non
+# cambiano: 30 giorni.
+/fonts/*
+  Cache-Control: public, max-age=2592000
+
+# Le foto in public/ non hanno hash: restano
+# con la cache predefinita di Cloudflare, così
+# sostituire un file con lo stesso nome (come
+# limoncelloSpritz.webp) si vede subito.

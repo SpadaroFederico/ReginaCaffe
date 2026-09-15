@@ -50,8 +50,12 @@ export const menuPageData = {
           },
         },
         {
-          name: "Tagliere salumi e formaggi",
-          price: "€ 10",
+          name: {
+            it: "Tagliere salumi e formaggi",
+            en: "Cured meat and cheese board",
+            fr: "Planche charcuteries et fromages",
+          },
+          price: "€ 15",
           description: {
             it: "Salumi e formaggi locali da condividere.",
             en: "A local cured meat and cheese board to share.",
@@ -210,6 +214,168 @@ export const menuPageData = {
     },
 
     {
+      id: "beers",
+      title: {
+        it: "Birre",
+        en: "Beers",
+        fr: "Bières",
+      },
+      intro: {
+        it: "Tutte in bottiglia da 33 cl.",
+        en: "All served in 33 cl bottles.",
+        fr: "Toutes en bouteille de 33 cl.",
+      },
+      columns: true,
+      items: [
+        {
+          name: "Beck's",
+          price: "€ 2,50",
+        },
+        {
+          name: "Peroni Nastro Azzurro",
+          price: "€ 2,50",
+        },
+        {
+          name: "Bud",
+          price: "€ 3",
+        },
+        {
+          name: "Corona",
+          price: "€ 3",
+        },
+        {
+          name: "Menabrea",
+          price: "€ 3",
+        },
+        {
+          name: "Peroni Rossa",
+          price: "€ 3",
+        },
+        {
+          name: "Tennent's",
+          price: "€ 3",
+        },
+        {
+          name: "Bjorne Beer",
+          price: "€ 3,50",
+        },
+        {
+          name: "Ceres",
+          price: "€ 3,50",
+        },
+        {
+          name: "Stella Artois",
+          price: "€ 3,50",
+        },
+        {
+          name: "Leffe Bionda",
+          price: "€ 4",
+        },
+        {
+          name: "Tipa",
+          price: "€ 5",
+        },
+      ],
+    },
+
+    {
+      id: "gin",
+      title: {
+        it: "Gin",
+        en: "Gin",
+        fr: "Gin",
+      },
+      intro: {
+        it: "Scegli il tuo gin: lo serviamo con la tonica giusta.",
+        en: "Choose your gin: we serve it with the right tonic.",
+        fr: "Choisissez votre gin : nous le servons avec le bon tonic.",
+      },
+      columns: true,
+      items: [
+        {
+          name: "Bombay Sapphire",
+          price: "€ 7",
+        },
+        {
+          name: "Corricella",
+          price: "€ 7",
+        },
+        {
+          name: "Tanqueray",
+          price: "€ 7",
+        },
+        {
+          name: "Brockmans",
+          price: "€ 8",
+        },
+        {
+          name: "Hendrick's",
+          price: "€ 8",
+        },
+        {
+          name: "Hendrick's Another",
+          price: "€ 8",
+        },
+        {
+          name: "Malfy Arancia",
+          price: "€ 8",
+        },
+        {
+          name: "Malfy Rosa",
+          price: "€ 8",
+        },
+        {
+          name: "Mare Mediterranean Gin",
+          price: "€ 8",
+        },
+        {
+          name: "Mazzetti",
+          price: "€ 8",
+        },
+        {
+          name: "Nordés",
+          price: "€ 8",
+        },
+        {
+          name: "Wint",
+          price: "€ 8",
+        },
+        {
+          name: "Bobby's",
+          price: "€ 10",
+        },
+        {
+          name: "Engine",
+          price: "€ 10",
+        },
+        {
+          name: "Malammore",
+          price: "€ 10",
+        },
+        {
+          name: "Monkey 47",
+          price: "€ 10",
+        },
+        {
+          name: "Nº 3 London Dry",
+          price: "€ 10",
+        },
+        {
+          name: "Portofino",
+          price: "€ 10",
+        },
+        {
+          name: "Roku",
+          price: "€ 10",
+        },
+        {
+          name: "Tanqueray Nº Ten",
+          price: "€ 10",
+        },
+      ],
+    },
+
+    {
       id: "desserts",
       title: {
         it: "Dolci",
@@ -281,16 +447,16 @@ export const menuPageData = {
       },
     },
     {
-      id: "breakfast",
+      id: "events",
       title: {
-        it: "Menu colazione",
-        en: "Breakfast menu",
-        fr: "Menu petit-déjeuner",
+        it: "Serate ed eventi",
+        en: "Nights and events",
+        fr: "Soirées et événements",
       },
       description: {
-        it: "Caffetteria, cornetti e lievitati dalle 7:00.",
-        en: "Coffee service, croissants and pastries from 7:00 AM.",
-        fr: "Cafétéria, croissants et viennoiseries dès 7h00.",
+        it: "Musica, dj set e appuntamenti in piazza: le prossime date sono in home.",
+        en: "Music, DJ sets and get-togethers in the square: the next dates are on the home page.",
+        fr: "Musique, DJ sets et rendez-vous sur la place : les prochaines dates sont sur la page d’accueil.",
       },
     },
   ],

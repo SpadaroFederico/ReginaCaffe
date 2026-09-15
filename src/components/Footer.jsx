@@ -1,6 +1,7 @@
 import {
   ArrowUpRight,
   Clock3,
+  Mail,
   MapPin,
   MessageCircle,
   Phone,
@@ -28,6 +29,11 @@ const MAPS_URL =
 
 const PHONE_NUMBER = "+393456836439";
 const WHATSAPP_NUMBER = "393456836439";
+
+const EMAIL_ADDRESS =
+  "reginacaffegrottaglie@gmail.com";
+
+const VAT_NUMBER = "03479700738";
 
 const INSTAGRAM_URL =
   "https://www.instagram.com/reginacaffe_grottaglie/";
@@ -761,6 +767,18 @@ export default function Footer() {
               >
                 {t("footer.whatsapp")}
               </ContactLink>
+
+              <ContactLink
+                href={`mailto:${EMAIL_ADDRESS}`}
+                Icon={Mail}
+                ariaLabel={t(
+                  "footer.emailAria"
+                )}
+              >
+                <span className="break-all">
+                  {EMAIL_ADDRESS}
+                </span>
+              </ContactLink>
             </div>
           </div>
 
@@ -890,7 +908,7 @@ export default function Footer() {
 
             <span>
               {t("footer.vatLabel")}{" "}
-              02864180738
+              {VAT_NUMBER}
             </span>
 
             <span

@@ -2,6 +2,8 @@ import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
 
+import seoPlugin from "./vite-seo-plugin.js";
+
 export default defineConfig({
   /*
    * Il sito è progettato per essere
@@ -20,5 +22,6 @@ export default defineConfig({
   plugins: [
     react(),
     tailwindcss(),
+    seoPlugin(),
   ],
 });

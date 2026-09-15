@@ -172,6 +172,24 @@ function Field({
 const inputClass =
   "min-h-[46px] w-full rounded-[10px] border border-[#CDBF9F] bg-[#FAF6ED] px-4 font-sans text-[13px] text-[#2F2A21] outline-none transition-[border-color,box-shadow] focus:border-[#AD9060] focus:shadow-[0_0_0_3px_rgba(173,144,96,0.10)] disabled:cursor-not-allowed disabled:opacity-60";
 
+/*
+ * Inglese e francese sono facoltativi:
+ * senza questo avviso chi pubblica non
+ * saprebbe che lasciarli vuoti è
+ * comunque una scelta valida, e non un
+ * campo dimenticato per errore.
+ */
+function TranslationNotice() {
+  return (
+    <p className="mb-4 rounded-[10px] border border-[#CDBF9F] bg-[#EFE6D0] px-3 py-2 font-sans text-[10.5px] leading-[1.5] text-[#786D5D]">
+      Campo facoltativo. Se resta vuoto,
+      il sito mostra comunque il testo
+      italiano a chi naviga in questa
+      lingua.
+    </p>
+  );
+}
+
 export default function AdminEventForm({
   event,
   onBack,
@@ -251,15 +269,36 @@ export default function AdminEventForm({
         Boolean(
           form.slug.trim() &&
             form.titleIt.trim() &&
-            form.titleEn.trim() &&
-            form.titleFr.trim() &&
             form.descriptionIt.trim() &&
-            form.descriptionEn.trim() &&
-            form.descriptionFr.trim() &&
             form.startsAt &&
             form.endsAt
         ),
       [form]
+    );
+
+  /*
+   * L'inglese è facoltativo: se resta
+   * vuoto, il sito mostra comunque il
+   * testo italiano a chi naviga in
+   * inglese (vedi mapEvent in
+   * services/events.js).
+   *
+   * Il francese non è più modificabile
+   * da qui: gli eventi non vengono
+   * tradotti in francese, quindi il
+   * relativo campo è stato tolto dal
+   * form. Il database mantiene comunque
+   * la colonna e il fallback automatico
+   * all'italiano.
+   */
+  const missingEnglish =
+    Boolean(
+      form.titleIt.trim() ||
+        form.descriptionIt.trim()
+    ) &&
+    !(
+      form.titleEn.trim() &&
+      form.descriptionEn.trim()
     );
 
   /*
@@ -390,7 +429,7 @@ export default function AdminEventForm({
         !canPublish
       ) {
         setErrorMessage(
-          "Per pubblicare servono titolo e descrizione sia in italiano sia in inglese."
+          "Per pubblicare servono titolo e descrizione in italiano."
         );
 
         return;
@@ -634,7 +673,7 @@ export default function AdminEventForm({
         )}
       </div>
 
-      <div className="mt-7 grid gap-6 lg:grid-cols-3">
+      <div className="mt-7 grid gap-6 lg:grid-cols-2">
         <section className="rounded-[18px] border border-[#CDBF9F] bg-[#F3EDDE] p-5 sm:p-6">
           <h3 className="font-serif text-[27px]">
             Italiano
@@ -700,6 +739,10 @@ export default function AdminEventForm({
           </h3>
 
           <div className="mt-5 space-y-5">
+            {missingEnglish && (
+              <TranslationNotice />
+            )}
+
             <Field label="Title">
               <input
                 className={
@@ -754,65 +797,6 @@ export default function AdminEventForm({
           </div>
         </section>
 
-        <section className="rounded-[18px] border border-[#CDBF9F] bg-[#F3EDDE] p-5 sm:p-6">
-          <h3 className="font-serif text-[27px]">
-            Français
-          </h3>
-
-          <div className="mt-5 space-y-5">
-            <Field label="Titre">
-              <input
-                className={
-                  inputClass
-                }
-                value={
-                  form.titleFr
-                }
-                onChange={(
-                  event
-                ) =>
-                  setValue(
-                    "titleFr",
-                    event
-                      .target
-                      .value
-                  )
-                }
-                maxLength={
-                  120
-                }
-                disabled={
-                  saving
-                }
-              />
-            </Field>
-
-            <Field label="Description">
-              <textarea
-                className={`${inputClass} min-h-[120px] resize-y py-3`}
-                value={
-                  form.descriptionFr
-                }
-                onChange={(
-                  event
-                ) =>
-                  setValue(
-                    "descriptionFr",
-                    event
-                      .target
-                      .value
-                  )
-                }
-                maxLength={
-                  500
-                }
-                disabled={
-                  saving
-                }
-              />
-            </Field>
-          </div>
-        </section>
       </div>
 
       <section className="mt-6 rounded-[18px] border border-[#CDBF9F] bg-[#F3EDDE] p-5 sm:p-6">

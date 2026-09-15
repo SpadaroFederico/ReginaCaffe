@@ -1,66 +1,52 @@
 export const LEGAL_CONFIG = {
   /*
-   * Rimane true finché non abbiamo:
+   * Con true la finestra legale mostra
+   * l'avviso «Bozza da completare».
    *
-   * - ragione sociale definitiva
-   * - sede legale
-   * - P. IVA del titolare confermata
-   * - email/PEC privacy
-   * - dominio definitivo
-   * - hosting/CDN definitivo
+   * Titolare, sede, P. IVA, email, PEC e
+   * hosting sono i dati reali del locale:
+   * resta solo la verifica finale dei testi.
    *
    * Prima della pubblicazione questo valore
    * dovrà diventare false.
    */
   isDraft: true,
 
-  policyVersion: "0.2",
+  policyVersion: "0.5",
 
   lastUpdated: {
-    it: "16 agosto 2026",
-    en: "16 August 2026",
-    fr: "16 août 2026",
+    it: "14 settembre 2026",
+    en: "14 September 2026",
+    fr: "14 septembre 2026",
   },
 
   controller: {
     name:
-      "[RAGIONE SOCIALE DEL GESTORE]",
+      "Regina Caffè di Ranieri Antonio",
 
     registeredOffice:
-      "[SEDE LEGALE]",
+      "Piazza Regina Margherita 21, 74023 Grottaglie (TA)",
 
-    /*
-     * Non inseriamo una P. IVA non ancora
-     * confermata come appartenente al
-     * titolare effettivo di Regina Caffè.
-     */
-    vatNumber:
-      "[P. IVA DEL TITOLARE]",
+    vatNumber: "03479700738",
 
     privacyEmail:
-      "[EMAIL O PEC PRIVACY]",
-  },
+      "reginacaffegrottaglie@gmail.com",
 
-  websiteUrl:
-    "[URL DEFINITIVO DEL SITO]",
+    /*
+     * Recapito per le comunicazioni con
+     * valore legale. Lo stesso indirizzo
+     * compare nel footer del sito.
+     */
+    pec: "antonioranieri2026@pec.it",
+  },
 
   hosting: {
     /*
-     * Li compileremo quando avremo deciso
-     * dove risiederanno realmente i file.
-     *
-     * Possibili esempi futuri:
-     *
-     * frontendProvider: "Aruba"
-     * cdnDnsProvider: "Cloudflare"
-     *
-     * oppure Cloudflare anche come hosting.
+     * Il sito è pubblicato su Cloudflare,
+     * che fornisce insieme hosting, CDN e
+     * protezione del traffico.
      */
-    frontendProvider:
-      "[HOSTING FRONTEND DA DEFINIRE]",
-
-    cdnDnsProvider:
-      "[CDN / DNS DA DEFINIRE]",
+    provider: "Cloudflare, Inc.",
   },
 
   /*
@@ -80,12 +66,9 @@ export const LEGAL_CONFIG = {
   },
 
   /*
-   * Attualmente index.html carica
-   * Instrument Serif e Work Sans tramite
-   * Google Fonts.
-   *
-   * Se prima della produzione porteremo
-   * i font in locale, imposteremo false.
+   * I font sono serviti in locale da
+   * public/fonts (vedi src/fonts.css):
+   * nessuna connessione a Google Fonts.
    */
   googleFonts: {
     enabled: false,
@@ -106,9 +89,7 @@ function getItalianContent() {
       : "";
 
   const hostingParagraph =
-    LEGAL_CONFIG.isDraft
-      ? `Il sito non è ancora pubblicato nella configurazione definitiva. Prima della messa online saranno indicati il fornitore effettivo dell'hosting frontend e gli eventuali servizi CDN/DNS utilizzati. Configurazione attualmente da completare: ${hosting.frontendProvider}; ${hosting.cdnDnsProvider}.`
-      : `Il frontend del sito è ospitato tramite ${hosting.frontendProvider}. I servizi CDN e/o DNS sono forniti tramite ${hosting.cdnDnsProvider}. Tali fornitori possono trattare dati tecnici necessari alla consegna e alla sicurezza del sito, inclusi indirizzo IP, data e ora della richiesta, risorsa richiesta e informazioni tecniche del client.`;
+    `Il sito è ospitato e distribuito tramite ${hosting.provider}, che fornisce hosting, rete CDN e protezione del traffico e può trattare dati tecnici necessari alla consegna e alla sicurezza del sito, inclusi indirizzo IP, data e ora della richiesta, risorsa richiesta e informazioni tecniche del client.`;
 
   const googleFontsParagraph =
     googleFonts.enabled
@@ -130,6 +111,7 @@ function getItalianContent() {
             `Sede legale: ${controller.registeredOffice}.`,
             `P. IVA: ${controller.vatNumber}.`,
             `Contatto privacy: ${controller.privacyEmail}.`,
+            `PEC: ${controller.pec}.`,
           ],
         },
 
@@ -404,9 +386,7 @@ function getEnglishContent() {
       : "";
 
   const hostingParagraph =
-    LEGAL_CONFIG.isDraft
-      ? `The website has not yet been published using its final production configuration. Before launch, the actual frontend hosting provider and any CDN/DNS services will be specified. Configuration still to be completed: ${hosting.frontendProvider}; ${hosting.cdnDnsProvider}.`
-      : `The website frontend is hosted through ${hosting.frontendProvider}. CDN and/or DNS services are provided through ${hosting.cdnDnsProvider}. These providers may process technical data required to deliver and secure the website, including IP address, request date and time, requested resource and client information.`;
+    `The website is hosted and delivered through ${hosting.provider}, which provides hosting, CDN and traffic protection and may process technical data required to deliver and secure the website, including IP address, request date and time, requested resource and client information.`;
 
   const googleFontsParagraph =
     googleFonts.enabled
@@ -428,6 +408,7 @@ function getEnglishContent() {
             `Registered office: ${controller.registeredOffice}.`,
             `VAT number: ${controller.vatNumber}.`,
             `Privacy contact: ${controller.privacyEmail}.`,
+            `Certified email (PEC): ${controller.pec}.`,
           ],
         },
 
@@ -702,9 +683,7 @@ function getFrenchContent() {
       : "";
 
   const hostingParagraph =
-    LEGAL_CONFIG.isDraft
-      ? `Le site n'est pas encore publié dans sa configuration définitive. Avant la mise en ligne seront indiqués le fournisseur effectif de l'hébergement frontend ainsi que les éventuels services CDN/DNS utilisés. Configuration à compléter actuellement : ${hosting.frontendProvider} ; ${hosting.cdnDnsProvider}.`
-      : `Le frontend du site est hébergé par ${hosting.frontendProvider}. Les services CDN et/ou DNS sont fournis par ${hosting.cdnDnsProvider}. Ces fournisseurs peuvent traiter les données techniques nécessaires à la diffusion et à la sécurité du site, y compris l'adresse IP, la date et l'heure de la requête, la ressource demandée et les informations techniques du client.`;
+    `Le site est hébergé et diffusé par ${hosting.provider}, qui fournit l'hébergement, le réseau CDN et la protection du trafic et peut traiter les données techniques nécessaires à la diffusion et à la sécurité du site, y compris l'adresse IP, la date et l'heure de la requête, la ressource demandée et les informations techniques du client.`;
 
   const googleFontsParagraph =
     googleFonts.enabled
@@ -726,6 +705,7 @@ function getFrenchContent() {
             `Siège social : ${controller.registeredOffice}.`,
             `Numéro de TVA : ${controller.vatNumber}.`,
             `Contact protection des données : ${controller.privacyEmail}.`,
+            `E-mail certifiée (PEC) : ${controller.pec}.`,
           ],
         },
 

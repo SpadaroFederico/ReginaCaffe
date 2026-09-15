@@ -112,6 +112,7 @@ function MenuItem({
   item,
   language,
   compact = false,
+  dense = false,
   itemVariants,
 }) {
   const name =
@@ -134,12 +135,12 @@ function MenuItem({
       className={`
         group/item
 
-        py-[13px]
-
         ${
-          compact
-            ? "sm:py-[12px]"
-            : "sm:py-[15px]"
+          dense
+            ? "border-b border-[#CDBF9F]/45 py-[10px] sm:py-[11px]"
+            : compact
+              ? "py-[13px] sm:py-[12px]"
+              : "py-[13px] sm:py-[15px]"
         }
       `}
     >
@@ -151,19 +152,19 @@ function MenuItem({
         "
       >
         <h3
-          className="
-            shrink-0
+          className={`
+            min-w-0
 
             font-serif
-            text-[21px]
             font-normal
-            leading-none
             text-[#2F2A21]
 
-            sm:text-[22px]
-
-            lg:text-[23px]
-          "
+            ${
+              dense
+                ? "leading-[1.12] text-[17px] sm:text-[18px] lg:text-[19px]"
+                : "shrink-0 leading-none text-[21px] sm:text-[22px] lg:text-[23px]"
+            }
+          `}
         >
           {name}
         </h3>
@@ -184,19 +185,20 @@ function MenuItem({
         />
 
         <p
-          className="
+          className={`
             shrink-0
 
             font-serif
-            text-[20px]
             font-normal
             leading-none
             text-[#635B4E]
 
-            sm:text-[21px]
-
-            lg:text-[22px]
-          "
+            ${
+              dense
+                ? "text-[17px] sm:text-[18px] lg:text-[19px]"
+                : "text-[20px] sm:text-[21px] lg:text-[22px]"
+            }
+          `}
         >
           {item.price}
         </p>
@@ -250,6 +252,17 @@ function MenuSection({
     tone === "sand"
       ? "bg-[#E8DFC8]"
       : "bg-[#F5F2EA]";
+
+  /*
+   * Birre e gin sono elenchi lunghi di sole
+   * voci nome + prezzo: impilarli uno sotto
+   * l’altro allungherebbe la colonna destra
+   * senza motivo, quindi li disponiamo su
+   * più colonne e con una riga più compatta.
+   */
+  const columns = Boolean(
+    section.columns
+  );
 
   const revealVariants =
     getRevealVariants(
@@ -369,10 +382,22 @@ function MenuSection({
         variants={
           containerVariants
         }
-        className="
-          divide-y
-          divide-[#CDBF9F]/45
-        "
+        className={
+          columns
+            ? `
+              grid
+              grid-cols-1
+              gap-x-[24px]
+
+              sm:grid-cols-2
+
+              xl:gap-x-[32px]
+            `
+            : `
+              divide-y
+              divide-[#CDBF9F]/45
+            `
+        }
       >
         {section.items.map(
           (item, index) => (
@@ -381,6 +406,7 @@ function MenuSection({
               item={item}
               language={language}
               compact={compact}
+              dense={columns}
               itemVariants={
                 itemVariants
               }
@@ -694,6 +720,20 @@ export default function MenuPage() {
       (section) =>
         section.id ===
         "baguettes"
+    );
+
+  const beers =
+    menuPageData.sections.find(
+      (section) =>
+        section.id ===
+        "beers"
+    );
+
+  const gin =
+    menuPageData.sections.find(
+      (section) =>
+        section.id ===
+        "gin"
     );
 
   const desserts =
@@ -1172,11 +1212,17 @@ export default function MenuPage() {
           {/* ===============================================
               COLONNA DESTRA
 
-              I dolci chiudono il menu, con gli
-              allergeni subito sotto.
+              Birre e gin aprono la colonna: sono
+              elenchi fitti su due colonne, quindi
+              riempiono lo spazio che prima restava
+              vuoto sotto i dolci senza allungare
+              troppo la pagina.
+
+              I dolci restano l’ultima sezione del
+              menu, con gli allergeni subito sotto.
 
               Le baguette stanno nella colonna
-              sinistra: sono la sezione piu lunga
+              sinistra: sono la sezione più lunga
               e bilanciano le tre corte di fianco.
               =============================================== */}
 
@@ -1194,6 +1240,31 @@ export default function MenuPage() {
               xl:gap-[22px]
             "
           >
+            <MenuSection
+              section={
+                beers
+              }
+              language={
+                language
+              }
+              tone="sand"
+              reduceMotion={
+                reduceMotion
+              }
+            />
+
+            <MenuSection
+              section={
+                gin
+              }
+              language={
+                language
+              }
+              reduceMotion={
+                reduceMotion
+              }
+            />
+
             <MenuSection
               section={
                 desserts

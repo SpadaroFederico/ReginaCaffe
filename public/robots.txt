@@ -1,8 +1,0 @@
-User-agent: *
-Allow: /
-
-# L'area amministrativa non deve finire nell'indice.
-Disallow: /admin
-
-# Da aggiungere alla scelta del dominio definitivo:
-# Sitemap: https://DOMINIO/sitemap.xml

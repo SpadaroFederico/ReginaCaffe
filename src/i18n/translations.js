@@ -16,7 +16,7 @@ export const translations = {
 
     hero: {
       description:
-        "Dal primo caffè all’ultimo cocktail. Regina accompagna ogni momento della giornata, con il gusto giusto e l’atmosfera che cerchi",
+        "Dal primo aperitivo all’ultimo cocktail. Regina accompagna ogni sera in piazza, con il gusto giusto e l’atmosfera che cerchi",
       menu: "Guarda il menu",
     },
 
@@ -24,8 +24,8 @@ export const translations = {
       cocktails: "Cocktails",
       vibes: "Vibes",
       aperitif: "Aperitif",
-      coffee: "Caffè",
-      breakfast: "Breakfast",
+      gin: "Gin",
+      beer: "Beer",
       wine: "Wine",
     },
 
@@ -62,7 +62,7 @@ export const translations = {
       titleLine2: "condividere",
 
       description:
-        "Una selezione di proposte scelte per te da gustare in piazza, in ogni momento.",
+        "Una selezione di proposte scelte per te da gustare in piazza, sera dopo sera.",
 
       wines: "Vini consigliati",
 
@@ -74,23 +74,29 @@ export const translations = {
 
       viewOnMenu: "Vedi nel menu",
       menuCta: "Guarda il menu",
+
+      bottle: "Bottiglia",
+      glass: "Calice",
+
+      chooseGin: "Gin a scelta",
+
+      previous: "Scorri indietro",
+      next: "Scorri avanti",
     },
 
     hours: {
-      eyebrow: "Dal mattino a tardi",
+      eyebrow: "Ogni sera fino a tardi",
 
       title: "I nostri orari",
 
       description:
-        "Dal primo caffè al drink dopo cena, ti aspettiamo ogni giorno in piazza.",
+        "Ti aspettiamo ogni sera in piazza, in buona compagnia e con la voglia di degustare i nostri piatti e i nostri drink.",
 
-      mondayThursday:
-        "Lunedì — Giovedì",
+      mondayFriday:
+        "Lunedì — Venerdì",
 
-      fridaySaturday:
-        "Venerdì — Sabato",
-
-      sunday: "Domenica",
+      saturdaySunday:
+        "Sabato — Domenica",
 
       today: "Oggi",
 
@@ -134,10 +140,10 @@ export const translations = {
 
     footer: {
       tagline:
-        "Dal primo caffè all’ultimo cocktail, nel cuore di Grottaglie.",
+        "Dal primo aperitivo all’ultimo cocktail, nel cuore di Grottaglie.",
 
       openEveryDay:
-        "Aperti tutti i giorni",
+        "Ogni sera dalle 20",
 
       contactsTitle:
         "Contatti",
@@ -162,6 +168,9 @@ export const translations = {
 
       whatsapp:
         "Scrivici su WhatsApp",
+
+      emailAria:
+        "Scrivi una email a Regina Caffè",
 
       privacy:
         "Privacy Policy",
@@ -341,10 +350,10 @@ export const translations = {
 
     seo: {
       homeTitle:
-        "Regina Caffè Grottaglie | Caffetteria, aperitivi e cocktail",
+        "Regina Caffè Grottaglie | Aperitivi, cocktail e serate",
 
       homeDescription:
-        "Regina Caffè a Grottaglie: caffetteria, aperitivi, cocktail, drink, serate ed eventi nel cuore della piazza.",
+        "Regina Caffè a Grottaglie: aperitivi, cocktail, birre, gin, serate ed eventi nel cuore della piazza. Ogni sera dalle 20.",
 
       menuTitle:
         "Menu | Regina Caffè Grottaglie",
@@ -371,7 +380,7 @@ export const translations = {
 
     hero: {
       description:
-        "From the first coffee to the last cocktail. Regina is there for every moment of the day, with the right taste and the atmosphere you’re looking for.",
+        "From the first aperitivo to the last cocktail. Regina is there every evening in the square, with the right taste and the atmosphere you’re looking for.",
 
       menu: "View the menu",
     },
@@ -380,8 +389,8 @@ export const translations = {
       cocktails: "Cocktails",
       vibes: "Vibes",
       aperitif: "Aperitif",
-      coffee: "Coffee",
-      breakfast: "Breakfast",
+      gin: "Gin",
+      beer: "Beer",
       wine: "Wine",
     },
 
@@ -418,7 +427,7 @@ export const translations = {
       titleLine2: "share",
 
       description:
-        "A selection of our picks to enjoy in the square, at any time of the day.",
+        "A selection of our picks to enjoy in the square, evening after evening.",
 
       wines:
         "Recommended wines",
@@ -437,25 +446,32 @@ export const translations = {
 
       menuCta:
         "View the menu",
+
+      bottle: "Bottle",
+      glass: "Glass",
+
+      chooseGin:
+        "Choose your gin",
+
+      previous: "Scroll back",
+      next: "Scroll forward",
     },
 
     hours: {
       eyebrow:
-        "From morning to late",
+        "Every evening until late",
 
       title:
         "Our opening hours",
 
       description:
-        "From the first coffee to a late-night drink, we welcome you in the square every day.",
+        "We welcome you in the square every evening, in good company and ready to enjoy our dishes and our drinks.",
 
-      mondayThursday:
-        "Monday — Thursday",
+      mondayFriday:
+        "Monday — Friday",
 
-      fridaySaturday:
-        "Friday — Saturday",
-
-      sunday: "Sunday",
+      saturdaySunday:
+        "Saturday — Sunday",
 
       today: "Today",
 
@@ -502,10 +518,10 @@ export const translations = {
 
     footer: {
       tagline:
-        "From the first coffee to the last cocktail, in the heart of Grottaglie.",
+        "From the first aperitivo to the last cocktail, in the heart of Grottaglie.",
 
       openEveryDay:
-        "Open every day",
+        "Every evening from 8 pm",
 
       contactsTitle:
         "Contacts",
@@ -530,6 +546,9 @@ export const translations = {
 
       whatsapp:
         "Message us on WhatsApp",
+
+      emailAria:
+        "Send an email to Regina Caffè",
 
       privacy:
         "Privacy Policy",
@@ -711,10 +730,10 @@ export const translations = {
 
     seo: {
       homeTitle:
-        "Regina Caffè Grottaglie | Coffee, aperitivo and cocktails",
+        "Regina Caffè Grottaglie | Aperitivo, cocktails and nights out",
 
       homeDescription:
-        "Regina Caffè in Grottaglie: coffee bar, aperitivo, cocktails, drinks, nights out and events in the heart of the square.",
+        "Regina Caffè in Grottaglie: aperitivo, cocktails, beers, gin, nights out and events in the heart of the square. Every evening from 8 pm.",
 
       menuTitle:
         "Menu | Regina Caffè Grottaglie",
@@ -753,7 +772,7 @@ export const translations = {
 
     hero: {
       description:
-        "Du premier café au dernier cocktail. Regina vous accompagne tout au long de la journée, avec les saveurs qui vous plaisent et l’ambiance que vous recherchez.",
+        "Du premier apéritif au dernier cocktail. Regina vous accompagne chaque soir sur la place, avec les saveurs qui vous plaisent et l’ambiance que vous recherchez.",
 
       menu:
         "Voir la carte",
@@ -769,11 +788,11 @@ export const translations = {
       aperitif:
         "Apéritif",
 
-      coffee:
-        "Café",
+      gin:
+        "Gin",
 
-      breakfast:
-        "Petit-déjeuner",
+      beer:
+        "Bière",
 
       wine:
         "Vins",
@@ -825,7 +844,7 @@ export const translations = {
         "partager",
 
       description:
-        "Une sélection de nos suggestions à savourer sur la place, à tout moment de la journée.",
+        "Une sélection de nos suggestions à savourer sur la place, soir après soir.",
 
       wines:
         "Vins conseillés",
@@ -847,26 +866,32 @@ export const translations = {
 
       menuCta:
         "Voir la carte",
+
+      bottle: "Bouteille",
+      glass: "Verre",
+
+      chooseGin:
+        "Gin au choix",
+
+      previous: "Faire défiler vers la gauche",
+      next: "Faire défiler vers la droite",
     },
 
     hours: {
       eyebrow:
-        "Du matin jusque tard le soir",
+        "Chaque soir jusque tard",
 
       title:
         "Nos horaires",
 
       description:
-        "Du premier café au dernier verre de la soirée, nous vous accueillons chaque jour sur la place.",
+        "Nous vous accueillons chaque soir sur la place, en bonne compagnie et avec l’envie de déguster nos plats et nos cocktails.",
 
-      mondayThursday:
-        "Lundi — Jeudi",
+      mondayFriday:
+        "Lundi — Vendredi",
 
-      fridaySaturday:
-        "Vendredi — Samedi",
-
-      sunday:
-        "Dimanche",
+      saturdaySunday:
+        "Samedi — Dimanche",
 
       today:
         "Aujourd’hui",
@@ -914,10 +939,10 @@ export const translations = {
 
     footer: {
       tagline:
-        "Du premier café au dernier cocktail, au cœur de Grottaglie.",
+        "Du premier apéritif au dernier cocktail, au cœur de Grottaglie.",
 
       openEveryDay:
-        "Ouvert tous les jours",
+        "Chaque soir dès 20h",
 
       contactsTitle:
         "Contact",
@@ -942,6 +967,9 @@ export const translations = {
 
       whatsapp:
         "Écrivez-nous sur WhatsApp",
+
+      emailAria:
+        "Envoyer un e-mail à Regina Caffè",
 
       privacy:
         "Politique de confidentialité",
@@ -1123,10 +1151,10 @@ export const translations = {
 
     seo: {
       homeTitle:
-        "Regina Caffè Grottaglie | Café, apéritif et cocktails",
+        "Regina Caffè Grottaglie | Apéritif, cocktails et soirées",
 
       homeDescription:
-        "Regina Caffè à Grottaglie : café, apéritif, cocktails, soirées et événements au cœur de la place.",
+        "Regina Caffè à Grottaglie : apéritif, cocktails, bières, gin, soirées et événements au cœur de la place. Chaque soir dès 20h.",
 
       menuTitle:
         "Carte | Regina Caffè Grottaglie",

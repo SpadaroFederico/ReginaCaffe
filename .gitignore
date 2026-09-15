@@ -12,6 +12,13 @@ dist
 dist-ssr
 *.local
 
+# Foto originali ad alta risoluzione: in public/
+# restano solo le versioni ottimizzate.
+foto-originali/
+
+# Cartella locale di Wrangler (Cloudflare)
+.wrangler/
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

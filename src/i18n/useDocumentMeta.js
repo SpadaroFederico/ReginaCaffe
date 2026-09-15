@@ -183,8 +183,20 @@ export function useDocumentMeta(page) {
         tag.remove()
       );
 
+    /*
+     * Con VITE_SITE_URL impostata in build,
+     * canonical e hreflang puntano sempre al
+     * dominio definitivo, anche quando la
+     * stessa build è raggiungibile da
+     * *.pages.dev o *.workers.dev: così i
+     * motori di ricerca non indicizzano
+     * quegli indirizzi come duplicati.
+     */
     const origin =
-      window.location.origin;
+      import.meta.env.VITE_SITE_URL?.trim().replace(
+        /\/+$/,
+        ""
+      ) || window.location.origin;
 
     const path =
       PAGE_PATHS[page] ?? "/";

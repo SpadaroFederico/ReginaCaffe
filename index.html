@@ -10,7 +10,7 @@
 
     <meta
       name="description"
-      content="Regina Caffè a Grottaglie: caffetteria, aperitivi, cocktail, drink, serate ed eventi nel cuore della piazza."
+      content="Regina Caffè a Grottaglie: aperitivi, cocktail, birre, gin, serate ed eventi nel cuore della piazza. Ogni sera dalle 20."
     />
 
     <meta
@@ -31,20 +31,15 @@
     <!--
       canonical, og:url e i link hreflang per
       /, /en e /fr sono generati a runtime da
-      src/i18n/useDocumentMeta.js a partire da
-      window.location.origin: si adattano da
-      soli al dominio su cui il sito gira.
+      src/i18n/useDocumentMeta.js.
 
-      Restano da aggiungere alla scelta del
-      dominio definitivo, perche' richiedono
-      un URL assoluto gia' nell'HTML statico:
-
-      <meta property="og:image" content="https://DOMINIO/heroimg1.webp" />
-      <meta property="og:image:alt" content="Il bancone di Regina Caffe" />
-      <meta name="twitter:image" content="https://DOMINIO/heroimg1.webp" />
-
-      piu' public/sitemap.xml e la riga
-      Sitemap: in public/robots.txt.
+      Gli URL assoluti (og:image, twitter:image,
+      i campi url/image/logo dei dati strutturati,
+      sitemap.xml e la riga Sitemap: di robots.txt)
+      li scrive in build vite-seo-plugin.js,
+      leggendo la variabile VITE_SITE_URL: è lui
+      a sostituire il segnaposto SITE_URL (tra
+      due simboli di percentuale) usato qui sotto.
     -->
 
     <meta
@@ -54,12 +49,12 @@
 
     <meta
       name="twitter:title"
-      content="Regina Caffè Grottaglie | Caffetteria, aperitivi e cocktail"
+      content="Regina Caffè Grottaglie | Aperitivi, cocktail e serate"
     />
 
     <meta
       name="twitter:description"
-      content="Dal primo caffè all’ultimo cocktail, nel cuore di Grottaglie."
+      content="Dal primo aperitivo all’ultimo cocktail, nel cuore di Grottaglie."
     />
 
     <link
@@ -122,16 +117,16 @@
 
     <meta
       property="og:title"
-      content="Regina Caffè Grottaglie | Caffetteria, aperitivi e cocktail"
+      content="Regina Caffè Grottaglie | Aperitivi, cocktail e serate"
     />
 
     <meta
       property="og:description"
-      content="Dal primo caffè all’ultimo cocktail, nel cuore di Grottaglie."
+      content="Dal primo aperitivo all’ultimo cocktail, nel cuore di Grottaglie."
     />
 
     <title>
-      Regina Caffè Grottaglie | Caffetteria, aperitivi e cocktail
+      Regina Caffè Grottaglie | Aperitivi, cocktail e serate
     </title>
 
     <!--
@@ -143,14 +138,17 @@
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
-        "@type": "CafeOrCoffeeShop",
+        "@type": "BarOrPub",
         "name": "Regina Caffè",
-        "description": "Caffetteria, aperitivi, cocktail ed eventi nel cuore di Grottaglie.",
-        "image": "/heroimg1.webp",
-        "logo": "/logo.svg",
+        "description": "Aperitivi, cocktail, birre, gin ed eventi nel cuore di Grottaglie, ogni sera dalle 20.",
+        "url": "%SITE_URL%/",
+        "image": "%SITE_URL%/og-image.jpg",
+        "logo": "%SITE_URL%/logo.svg",
         "telephone": "+39 345 683 6439",
+        "email": "reginacaffegrottaglie@gmail.com",
+        "vatID": "03479700738",
         "priceRange": "€€",
-        "servesCuisine": ["Caffetteria", "Aperitivi", "Cocktail"],
+        "servesCuisine": ["Aperitivi", "Cocktail", "Birre"],
         "address": {
           "@type": "PostalAddress",
           "streetAddress": "Piazza Regina Margherita, 21",
@@ -171,22 +169,13 @@
               "Monday",
               "Tuesday",
               "Wednesday",
-              "Thursday"
+              "Thursday",
+              "Friday",
+              "Saturday",
+              "Sunday"
             ],
-            "opens": "07:00",
-            "closes": "01:00"
-          },
-          {
-            "@type": "OpeningHoursSpecification",
-            "dayOfWeek": ["Friday", "Saturday"],
-            "opens": "07:00",
-            "closes": "02:30"
-          },
-          {
-            "@type": "OpeningHoursSpecification",
-            "dayOfWeek": "Sunday",
-            "opens": "07:00",
-            "closes": "01:00"
+            "opens": "20:00",
+            "closes": "04:00"
           }
         ]
       }

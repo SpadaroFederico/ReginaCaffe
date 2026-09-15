@@ -29,6 +29,9 @@ export default function ProductCarousel({
   const [canGoNext, setCanGoNext] =
     useState(false);
 
+  const hasOverflow =
+    canGoBack || canGoNext;
+
   const cancelAnimation =
     useCallback(() => {
       if (
@@ -502,10 +505,23 @@ export default function ProductCarousel({
           cancelAnimation
         }
         onWheel={cancelAnimation}
-        className="
+        className={`
           flex
           cursor-grab
           items-start
+
+          ${
+            /*
+             * Quando le card ci stanno tutte
+             * non c’è niente da scorrere: le
+             * centriamo, così una fila corta
+             * (i due vini) non lascia metà
+             * riga vuota sulla destra.
+             */
+            hasOverflow
+              ? "justify-start"
+              : "justify-center"
+          }
 
           snap-x
           snap-mandatory
@@ -526,7 +542,7 @@ export default function ProductCarousel({
           sm:gap-[16px]
 
           lg:gap-[20px]
-        "
+        `}
       >
         {products.map((product) => (
           <div

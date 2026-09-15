@@ -14,12 +14,12 @@ const tabs = [
     key: "tabs.aperitif",
   },
   {
-    id: "coffee",
-    key: "tabs.coffee",
+    id: "gin",
+    key: "tabs.gin",
   },
   {
-    id: "breakfast",
-    key: "tabs.breakfast",
+    id: "beer",
+    key: "tabs.beer",
   },
   {
     id: "wine",

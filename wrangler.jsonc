@@ -1,0 +1,26 @@
+/*
+ * Deploy su Cloudflare Workers (static assets).
+ *
+ * Nessuno script Worker: Cloudflare serve
+ * direttamente dist/. Con
+ * "single-page-application" ogni percorso
+ * senza file (/menu, /en, /fr/menu, /admin)
+ * riceve index.html e React sceglie la pagina.
+ *
+ * Build command:  npm run build
+ * Deploy command: npx wrangler deploy
+ *
+ * Se invece il progetto è creato come
+ * Cloudflare Pages, questo file viene
+ * ignorato: Pages fa lo stesso fallback da
+ * solo, perché dist/ non contiene 404.html.
+ * Output directory: dist
+ */
+{
+  "name": "reginacaffe",
+  "compatibility_date": "2026-09-14",
+  "assets": {
+    "directory": "./dist",
+    "not_found_handling": "single-page-application"
+  }
+}

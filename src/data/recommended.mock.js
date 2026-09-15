@@ -1,106 +1,156 @@
 export const recommendedProducts = {
+  /*
+   * =======================================================
+   * VINI
+   * =======================================================
+   *
+   * Due etichette locali, servite sia in
+   * bottiglia sia al calice: per questo il
+   * prezzo non è un valore singolo ma la
+   * lista `prices`, che ProductCard rende
+   * su due righe.
+   */
   wines: [
     {
-      id: "primitivo-rosato",
-      name: "Primitivo Rosato",
-      image: "/menu/primitivo-rosato.svg",
+      id: "torremora-rosato",
+      name: "Torremora Rosato",
+      image: "/torremoraRosato.webp",
       description: {
-        it: "Fresco e minerale",
-        en: "Fresh and mineral",
-        fr: "Frais et minéral",
+        it: "Rosato locale, fresco e fruttato",
+        en: "Local rosé, fresh and fruity",
+        fr: "Rosé local, frais et fruité",
       },
-      price: "24 €",
+      prices: [
+        {
+          labelKey: "recommended.bottle",
+          value: "20 €",
+        },
+        {
+          labelKey: "recommended.glass",
+          value: "5 €",
+        },
+      ],
     },
     {
-      id: "negroamaro-riserva",
-      name: "Negroamaro Riserva",
-      image: "/menu/negroamaro-riserva.svg",
+      id: "torremora-chardonnay",
+      name: "Torremora Chardonnay",
+      image: "/torremoraChardonay.webp",
       description: {
-        it: "Morbido e speziato",
-        en: "Smooth and spicy",
-        fr: "Moelleux et épicé",
+        it: "Bianco locale, morbido e floreale",
+        en: "Local white, smooth and floral",
+        fr: "Blanc local, souple et floral",
       },
-      price: "28 €",
-    },
-    {
-      id: "verdeca",
-      name: "Verdeca",
-      image: "/menu/verdeca.svg",
-      description: {
-        it: "Fresca, elegante e floreale",
-        en: "Fresh, elegant and floral",
-        fr: "Frais, élégant et floral",
-      },
-      price: "25 €",
-    },
-    {
-      id: "susumaniello",
-      name: "Susumaniello",
-      image: "/menu/susumaniello.svg",
-      description: {
-        it: "Intenso e vellutato",
-        en: "Intense and velvety",
-        fr: "Intense et velouté",
-      },
-      price: "30 €",
-    },
-    {
-      id: "fiano",
-      name: "Fiano",
-      image: "/menu/fiano.svg",
-      description: {
-        it: "Aromatico e fresco",
-        en: "Aromatic and fresh",
-        fr: "Aromatique et frais",
-      },
-      price: "26 €",
+      prices: [
+        {
+          labelKey: "recommended.bottle",
+          value: "20 €",
+        },
+        {
+          labelKey: "recommended.glass",
+          value: "5 €",
+        },
+      ],
     },
   ],
 
+  /*
+   * =======================================================
+   * DRINK
+   * =======================================================
+   *
+   * Tutti a 5 €, tranne il Gin Tonic: lì il
+   * prezzo dipende dal gin scelto, quindi la
+   * card porta un tag e un link diretto alla
+   * sezione «Gin» del menu (menuAnchor).
+   *
+   * L'Angelino non ha ancora una foto:
+   * ProductCard mostra il segnaposto col
+   * monogramma finché il file non viene
+   * aggiunto in public/.
+   */
   signature: [
     {
-      id: "regina-spritz",
-      name: "Regina Spritz",
+      id: "spritz",
+      name: "Spritz",
       image: "/spritz.webp",
       description: {
-        it: "Agrumato e rinfrescante",
-        en: "Citrusy and refreshing",
-        fr: "Agrumé et rafraîchissant",
+        it: "Fresco, frizzante e agrumato",
+        en: "Fresh, sparkling and citrusy",
+        fr: "Frais, pétillant et agrumé",
       },
-      price: "8 €",
+      price: "5 €",
     },
     {
       id: "gin-tonic",
       name: "Gin Tonic",
       image: "/ginTonic.webp",
       description: {
-        it: "Gin e tonica",
-        en: "Gin and tonic",
-        fr: "Gin et tonic",
+        it: "Semplice, fresco e dissetante",
+        en: "Simple, fresh and thirst-quenching",
+        fr: "Simple, frais et désaltérant",
       },
-      price: "9 €",
+      price: {
+        it: "da 7 €",
+        en: "from 7 €",
+        fr: "dès 7 €",
+      },
+      menuAnchor: "gin",
+      tagKey: "recommended.chooseGin",
     },
     {
       id: "negroni",
       name: "Negroni",
       image: "/negroni.webp",
       description: {
-        it: "Deciso, amaro e aromatico",
-        en: "Bold, bitter and aromatic",
-        fr: "Corsé, amer et aromatique",
+        it: "Amaro, intenso e iconico",
+        en: "Bitter, intense and iconic",
+        fr: "Amer, intense et iconique",
       },
-      price: "9 €",
+      price: "5 €",
+    },
+    {
+      id: "campari-spritz",
+      name: "Campari Spritz",
+      image: "/campariSpritz.webp",
+      description: {
+        it: "Amaro, frizzante e deciso",
+        en: "Bitter, sparkling and bold",
+        fr: "Amer, pétillant et corsé",
+      },
+      price: "5 €",
+    },
+    {
+      id: "limoncello-spritz",
+      name: "Limoncello Spritz",
+      image: "/limoncelloSpritz.webp",
+      description: {
+        it: "Solare, estivo e agrumato",
+        en: "Sunny, summery and citrusy",
+        fr: "Solaire, estival et agrumé",
+      },
+      price: "5 €",
     },
     {
       id: "mojito",
       name: "Mojito",
       image: "/mojito.webp",
       description: {
-        it: "Rum, lime e menta fresca",
-        en: "Rum, lime and fresh mint",
-        fr: "Rhum, citron vert et menthe fraîche",
+        it: "Intramontabile, mentolato e rinfrescante",
+        en: "Timeless, minty and refreshing",
+        fr: "Intemporel, mentholé et rafraîchissant",
       },
-      price: "9 €",
+      price: "5 €",
+    },
+    {
+      id: "angelino",
+      name: "Angelino",
+      image: null,
+      description: {
+        it: "Esclusivo del Regina Caffè",
+        en: "Exclusive to Regina Caffè",
+        fr: "Exclusivité du Regina Caffè",
+      },
+      price: "5 €",
     },
   ],
 
@@ -114,18 +164,22 @@ export const recommendedProducts = {
         en: "Fried bites and nibbles to share",
         fr: "Fritures et amuse-bouches à partager",
       },
-      price: "18 €",
+      price: "10 €",
     },
     {
-      id: "baguette-regina",
-      name: "Regina",
-      image: "/baguette.webp",
-      description: {
-        it: "Prosciutto crudo, burrata e rucola",
-        en: "Cured ham, burrata and rocket",
-        fr: "Jambon cru, burrata et roquette",
+      id: "tagliere-salumi-formaggi",
+      name: {
+        it: "Tagliere salumi e formaggi",
+        en: "Cured meat and cheese board",
+        fr: "Planche charcuteries et fromages",
       },
-      price: "8 €",
+      image: "/tagliereSeF.webp",
+      description: {
+        it: "Salumi e formaggi locali da condividere",
+        en: "Local cured meats and cheeses to share",
+        fr: "Charcuteries et fromages locaux à partager",
+      },
+      price: "15 €",
     },
     {
       id: "pinsa",
@@ -135,6 +189,17 @@ export const recommendedProducts = {
         it: "Crudo, stracciatella, rucola e pomodori secchi",
         en: "Cured ham, stracciatella, rocket and sun-dried tomatoes",
         fr: "Jambon cru, stracciatella, roquette et tomates séchées",
+      },
+      price: "10 €",
+    },
+    {
+      id: "baguette-regina",
+      name: "Regina",
+      image: "/baguette.webp",
+      description: {
+        it: "Prosciutto crudo, burrata e rucola",
+        en: "Cured ham, burrata and rocket",
+        fr: "Jambon cru, burrata et roquette",
       },
       price: "8 €",
     },
