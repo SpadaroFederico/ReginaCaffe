@@ -511,9 +511,21 @@ function PreferenceRow({
       >
         <span
           aria-hidden="true"
+          /*
+           * left-0 non è ridondante: senza una
+           * posizione di partenza esplicita, il
+           * browser centra questo span dentro il
+           * <button> (i bottoni hanno text-align:
+           * center di default), e il pallino parte
+           * dal centro invece che da sinistra prima
+           * di applicare translate-x. Risultato: da
+           * spento appare spostato verso destra, da
+           * acceso sfora fuori dal bordo del track.
+           */
           className={`
             absolute
             top-[3px]
+            left-0
 
             h-[20px]
             w-[20px]
