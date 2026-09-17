@@ -35,18 +35,18 @@ export const menuPageData = {
           name: "Aperitivo",
           price: "€ 8",
           description: {
-            it: "Patate o snack salati.",
-            en: "Crisps or savoury snacks.",
-            fr: "Chips ou snacks salés.",
+            it: "Un momento leggero, ideale per accompagnare la vostra bevuta. Olive, taralli e arachidi, patatine e snack salati, sfiziosità del giorno",
+            en: "A light moment, perfect to accompany your drink. Olives, taralli and peanuts, crisps and savoury snacks, daily specials",
+            fr: "Un moment léger, idéal pour accompagner votre boisson. Olives, taralli et cacahuètes, chips et snacks salés, suggestions du jour",
           },
         },
         {
           name: "Apericena",
           price: "€ 10",
           description: {
-            it: "Piatto composto, la sera.",
-            en: "Composed plate, served in the evening.",
-            fr: "Assiette composée, en soirée.",
+            it: "Il perfetto incontro tra la leggerezza dell’aperitivo e la completezza di una cena, tutto quello che vuoi in un’unica esperienza! Selezione di sfiziosità locali e piatti caldi e freddi tipici del posto.",
+            en: "The perfect meeting between the lightness of an aperitivo and the fullness of a dinner, everything you want in one experience! A selection of local specialities and hot and cold dishes typical of the area.",
+            fr: "La rencontre parfaite entre la légèreté de l’apéritif et la complétude d’un dîner, tout ce que vous voulez en une seule expérience ! Sélection de spécialités locales et plats chauds et froids typiques de la région.",
           },
         },
         {
@@ -57,9 +57,9 @@ export const menuPageData = {
           },
           price: "€ 15",
           description: {
-            it: "Salumi e formaggi locali da condividere.",
-            en: "A local cured meat and cheese board to share.",
-            fr: "Planche de charcuteries et fromages locaux à partager.",
+            it: "Un’esperienza di sapori: salumi e formaggi selezionati, con accompagnamenti tipici del posto, serviti in tagliere da condividere.",
+            en: "An experience of flavours: selected cured meats and cheeses, with local accompaniments, served on a board to share.",
+            fr: "Une expérience de saveurs : charcuteries et fromages sélectionnés, avec des accompagnements typiques du terroir, servis sur une planche à partager.",
           },
         },
       ],
