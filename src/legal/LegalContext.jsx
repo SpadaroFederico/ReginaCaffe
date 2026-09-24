@@ -5,9 +5,12 @@ import {
   useEffect,
   useMemo,
   useState,
+  useSyncExternalStore,
 } from "react";
 
 const LegalContext = createContext(null);
+
+const subscribeNever = () => () => {};
 
 const CONSENT_STORAGE_KEY =
   "regina-cookie-consent";
@@ -129,6 +132,21 @@ export function LegalProvider({
 
   const [activeModal, setActiveModal] =
     useState(null);
+
+  /*
+   * false nel prerender e durante l'idratazione,
+   * true subito dopo nel browser.
+   *
+   * Il consenso salvato esiste solo nel browser:
+   * senza questo flag il banner sarebbe nell'HTML
+   * statico ma non nel primo render di chi ha già
+   * scelto, e l'idratazione fallirebbe.
+   */
+  const isClient = useSyncExternalStore(
+    subscribeNever,
+    () => true,
+    () => false
+  );
 
   const saveConsent = useCallback(
     (categories) => {
@@ -274,7 +292,8 @@ export function LegalProvider({
     () => ({
       consent,
 
-      showBanner: consent === null,
+      showBanner:
+        isClient && consent === null,
 
       activeModal,
 
@@ -295,6 +314,7 @@ export function LegalProvider({
     }),
     [
       consent,
+      isClient,
       activeModal,
       acceptAll,
       rejectOptional,

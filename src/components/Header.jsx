@@ -3,6 +3,7 @@ import {
   useEffect,
   useRef,
   useState,
+  useSyncExternalStore,
 } from "react";
 
 import {
@@ -63,6 +64,20 @@ const LANGUAGES = [
  * Il separatore "/" resta decorativo e
  * nascosto agli screen reader.
  */
+function subscribeToHash(onChange) {
+  window.addEventListener(
+    "hashchange",
+    onChange
+  );
+
+  return () => {
+    window.removeEventListener(
+      "hashchange",
+      onChange
+    );
+  };
+}
+
 function LanguageSwitch({
   language,
   ariaLabel,
@@ -70,10 +85,18 @@ function LanguageSwitch({
 }) {
   const currentPath = getAppPathname();
 
-  const hash =
-    typeof window === "undefined"
-      ? ""
-      : window.location.hash;
+  /*
+   * Nel prerender e durante l'idratazione
+   * l'hash è sempre vuoto (nell'HTML statico
+   * non esiste), poi passa al valore reale:
+   * i link mantengono così l'ancora corrente
+   * senza far fallire l'idratazione.
+   */
+  const hash = useSyncExternalStore(
+    subscribeToHash,
+    () => window.location.hash,
+    () => ""
+  );
 
   return (
     <div

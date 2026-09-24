@@ -35,18 +35,18 @@
  * src/lib/navigation.js: gli URL della
  * sitemap devono coincidere con i canonical.
  */
-const PAGES = ["/", "/menu"];
+export const PAGES = ["/", "/menu"];
 
-const LANGUAGES = ["it", "en", "fr"];
+export const LANGUAGES = ["it", "en", "fr"];
 
-const DEFAULT_LANGUAGE = "it";
+export const DEFAULT_LANGUAGE = "it";
 
 const REQUIRED_ENV = [
   "VITE_SUPABASE_URL",
   "VITE_SUPABASE_PUBLISHABLE_KEY",
 ];
 
-function localizedPath(path, language) {
+export function localizedPath(path, language) {
   const prefix =
     language === DEFAULT_LANGUAGE
       ? ""

@@ -62,6 +62,21 @@ function getBasePath() {
 }
 
 /*
+ * Durante il prerender in build non esiste
+ * window: il percorso da renderizzare viene
+ * impostato da src/entry-server.jsx prima di
+ * ogni pagina. Nel browser resta null e si
+ * legge sempre window.location.
+ */
+let serverPathname = null;
+
+export function setServerPathname(
+  pathname
+) {
+  serverPathname = pathname;
+}
+
+/*
  * Percorso corrente normalizzato rispetto
  * a BASE_URL, senza slash finale.
  *
@@ -70,7 +85,11 @@ function getBasePath() {
  */
 function getRawPathname() {
   const pathname =
-    window.location.pathname || "/";
+    (serverPathname ??
+      (typeof window === "undefined"
+        ? "/"
+        : window.location.pathname)) ||
+    "/";
 
   const base = getBasePath();
 
