@@ -63,7 +63,7 @@ export const recommendedProducts = {
       prices: [
         {
           labelKey: "recommended.bottle",
-          value: "20 €",
+          value: "22 €",
         },
         {
           labelKey: "recommended.glass",
