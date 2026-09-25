@@ -4,7 +4,7 @@ export const recommendedProducts = {
    * VINI
    * =======================================================
    *
-   * Due etichette locali, servite sia in
+   * Etichette locali, servite sia in
    * bottiglia sia al calice: per questo il
    * prezzo non è un valore singolo ma la
    * lista `prices`, che ProductCard rende
@@ -39,6 +39,46 @@ export const recommendedProducts = {
         it: "Bianco locale, morbido e floreale",
         en: "Local white, smooth and floral",
         fr: "Blanc local, souple et floral",
+      },
+      prices: [
+        {
+          labelKey: "recommended.bottle",
+          value: "20 €",
+        },
+        {
+          labelKey: "recommended.glass",
+          value: "5 €",
+        },
+      ],
+    },
+    {
+      id: "chicca-primitivo",
+      name: "Chicca Primitivo",
+      image: "/ChiccaPrimitivo.webp",
+      description: {
+        it: "Rosso locale, dolce e speziato",
+        en: "Local red, sweet and spicy",
+        fr: "Rouge local, doux et épicé",
+      },
+      prices: [
+        {
+          labelKey: "recommended.bottle",
+          value: "20 €",
+        },
+        {
+          labelKey: "recommended.glass",
+          value: "5 €",
+        },
+      ],
+    },
+    {
+      id: "torremora-primitivo",
+      name: "Torremora Primitivo",
+      image: "/TorremoraPrimitivo.webp",
+      description: {
+        it: "Rosso locale, intenso e fruttato",
+        en: "Local red, intense and fruity",
+        fr: "Rouge local, intense et fruité",
       },
       prices: [
         {
