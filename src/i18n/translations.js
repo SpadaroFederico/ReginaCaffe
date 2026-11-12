@@ -95,8 +95,11 @@ export const translations = {
       mondayFriday:
         "Lunedì — Venerdì",
 
-      saturdaySunday:
-        "Sabato — Domenica",
+      saturday:
+        "Sabato",
+
+      sunday:
+        "Domenica",
 
       today: "Oggi",
 
@@ -346,6 +349,24 @@ export const translations = {
 
       allergensNote:
         "Ti invitiamo a segnalare sempre eventuali esigenze alimentari specifiche al momento dell’ordine.",
+
+      indexEyebrow:
+        "Scegli la carta",
+
+      backToIndex:
+        "Tutto il menu",
+
+      sectionsLabel:
+        "Sezioni di questa carta",
+
+      menusLabel:
+        "Le carte del menu",
+
+      otherMenus:
+        "Scegli un’altra carta",
+
+      inThisMenu:
+        "In questa carta",
     },
 
     seo: {
@@ -470,8 +491,11 @@ export const translations = {
       mondayFriday:
         "Monday — Friday",
 
-      saturdaySunday:
-        "Saturday — Sunday",
+      saturday:
+        "Saturday",
+
+      sunday:
+        "Sunday",
 
       today: "Today",
 
@@ -726,6 +750,24 @@ export const translations = {
 
       allergensNote:
         "Please always report any specific dietary requirements when ordering.",
+
+      indexEyebrow:
+        "Choose a menu",
+
+      backToIndex:
+        "Full menu",
+
+      sectionsLabel:
+        "Sections of this menu",
+
+      menusLabel:
+        "Menu sections",
+
+      otherMenus:
+        "Choose another menu",
+
+      inThisMenu:
+        "In this menu",
     },
 
     seo: {
@@ -890,8 +932,11 @@ export const translations = {
       mondayFriday:
         "Lundi — Vendredi",
 
-      saturdaySunday:
-        "Samedi — Dimanche",
+      saturday:
+        "Samedi",
+
+      sunday:
+        "Dimanche",
 
       today:
         "Aujourd’hui",
@@ -1147,6 +1192,24 @@ export const translations = {
 
       allergensNote:
         "Merci de signaler tout besoin alimentaire particulier au moment de la commande.",
+
+      indexEyebrow:
+        "Choisissez une carte",
+
+      backToIndex:
+        "Toute la carte",
+
+      sectionsLabel:
+        "Sections de cette carte",
+
+      menusLabel:
+        "Les cartes du menu",
+
+      otherMenus:
+        "Choisissez une autre carte",
+
+      inThisMenu:
+        "Dans cette carte",
     },
 
     seo: {

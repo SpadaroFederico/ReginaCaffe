@@ -70,9 +70,12 @@ function PublicSite() {
   );
 }
 
+/*
+ * I metadati del menu sono impostati da
+ * MenuPage: ogni carta (/menu/drink, ...)
+ * ha il proprio titolo e canonical.
+ */
 function MenuSite() {
-  useDocumentMeta("menu");
-
   return (
     <>
       <Header />

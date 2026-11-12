@@ -13,9 +13,10 @@
  *
  * Con VITE_SITE_URL:
  *
- * - dist/sitemap.xml con le 6 pagine
- *   (/, /menu nelle tre lingue) e i
- *   relativi hreflang;
+ * - dist/sitemap.xml con /, /menu e le
+ *   singole carte (/menu/<slug>, da
+ *   src/data/menuData.js) nelle tre lingue,
+ *   con i relativi hreflang;
  * - dist/robots.txt con la riga Sitemap:;
  * - og:image e twitter:image in index.html;
  * - %SITE_URL% sostituito nei dati strutturati.
@@ -29,13 +30,21 @@
  * sezione eventi e l'area admin rotte.
  */
 
+import { MENU_SLUGS } from "./src/data/menuData.js";
+
 /*
  * Devono restare allineati a PAGE_PATHS di
  * src/i18n/useDocumentMeta.js e a
  * src/lib/navigation.js: gli URL della
  * sitemap devono coincidere con i canonical.
  */
-const PAGES = ["/", "/menu"];
+const PAGES = [
+  "/",
+  "/menu",
+  ...MENU_SLUGS.map(
+    (slug) => `/menu/${slug}`
+  ),
+];
 
 const LANGUAGES = ["it", "en", "fr"];
 

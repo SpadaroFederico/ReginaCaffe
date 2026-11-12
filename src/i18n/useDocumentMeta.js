@@ -114,19 +114,35 @@ function setLinkTag(
   document.head.appendChild(link);
 }
 
-export function useDocumentMeta(page) {
+/*
+ * override (opzionale) permette a una
+ * sottopagina, come /menu/drink, di avere
+ * il proprio percorso canonico, titolo e
+ * descrizione: { path, title, description }.
+ * Senza override il comportamento è quello
+ * di sempre.
+ */
+export function useDocumentMeta(
+  page,
+  override
+) {
   const { language, t } =
     useLanguage();
 
   const title =
-    page === "menu"
+    override?.title ??
+    (page === "menu"
       ? t("seo.menuTitle")
-      : t("seo.homeTitle");
+      : t("seo.homeTitle"));
 
   const description =
-    page === "menu"
+    override?.description ??
+    (page === "menu"
       ? t("seo.menuDescription")
-      : t("seo.homeDescription");
+      : t("seo.homeDescription"));
+
+  const overridePath =
+    override?.path;
 
   useEffect(() => {
     document.title = title;
@@ -199,7 +215,9 @@ export function useDocumentMeta(page) {
       ) || window.location.origin;
 
     const path =
-      PAGE_PATHS[page] ?? "/";
+      overridePath ??
+      PAGE_PATHS[page] ??
+      "/";
 
     const urlFor = (code) =>
       `${origin}${localizedPath(
@@ -240,5 +258,6 @@ export function useDocumentMeta(page) {
     description,
     language,
     page,
+    overridePath,
   ]);
 }
