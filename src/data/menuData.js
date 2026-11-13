@@ -121,92 +121,92 @@ const baguette = {
       items: [
         {
           name: "Barone",
-          price: "€ 6",
+          price: "€ 5",
           description: l(
-            "Capocollo, stracciatella, pomodori secchi.",
-            "Capocollo, stracciatella and sun-dried tomatoes.",
-            "Capocollo, stracciatella et tomates séchées."
+            "Fesa di tacchino, mozzarella fior di latte, melanzane sott'olio e foglie di basilico.",
+            "Turkey breast, mozzarella fior di latte, marinated aubergines and basil leaves.",
+            "Blanc de dinde, mozzarella fior di latte, aubergines marinées et feuilles de basilic."
           ),
         },
         {
           name: "Veg",
           price: "€ 5",
           description: l(
-            "Grigliata di verdure, hummus, rucola.",
-            "Grilled vegetables, hummus and rocket.",
-            "Légumes grillés, houmous et roquette."
+            "Stracciatella, melanzane grigliate, zucchine grigliate, pomodorini freschi, olio EVO pugliese e foglie di basilico.",
+            "Stracciatella, grilled aubergines, grilled courgettes, fresh cherry tomatoes, Apulian extra virgin olive oil and basil leaves.",
+            "Stracciatella, aubergines grillées, courgettes grillées, tomates cerises fraîches, huile d'olive extra vierge des Pouilles et feuilles de basilic."
           ),
         },
         {
           name: "La Leggera",
-          price: "€ 5",
+          price: "€ 6",
           description: l(
-            "Petto di pollo, insalata, yogurt e limone.",
-            "Chicken breast, salad, yogurt and lemon.",
-            "Blanc de poulet, salade, yaourt et citron."
+            "Bresaola, pomodorini freschi, cetriolo, menta fresca e scorza di limone.",
+            "Bresaola, fresh cherry tomatoes, cucumber, fresh mint and lemon zest.",
+            "Bresaola, tomates cerises fraîches, concombre, menthe fraîche et zeste de citron."
           ),
         },
         {
           name: "La Mortazza",
           price: "€ 6",
           description: l(
-            "Mortadella, pistacchio, mozzarella fiordilatte.",
-            "Mortadella, pistachio and fiordilatte mozzarella.",
-            "Mortadelle, pistache et mozzarella fiordilatte."
+            "Mortadella artigianale selezionata, stracciatella e crema di pistacchio.",
+            "Selected artisan mortadella, stracciatella and pistachio cream.",
+            "Mortadelle artisanale sélectionnée, stracciatella et crème de pistache."
           ),
         },
         {
           name: "Fiamma",
           price: "€ 6",
           description: l(
-            "Salame piccante, provola, crema di peperoni.",
-            "Spicy salami, provola and pepper cream.",
-            "Salami piquant, provola et crème de poivrons."
+            "Speck affumicato, stracchino, zucchine grigliate, rucola e olio EVO pugliese.",
+            "Smoked speck, stracchino, grilled courgettes, rocket and Apulian extra virgin olive oil.",
+            "Speck fumé, stracchino, courgettes grillées, roquette et huile d'olive extra vierge des Pouilles."
           ),
         },
         {
-          name: "La Junia",
-          price: "€ 6",
+          name: "La Jonica",
+          price: "€ 7",
           description: l(
-            "Tonno, cipolla rossa, olive nere.",
-            "Tuna, red onion and black olives.",
-            "Thon, oignon rouge et olives noires."
+            "Tonno, pomodoro, cipolla rossa dolce, olive nere, capperi, origano e foglie di menta.",
+            "Tuna, tomato, sweet red onion, black olives, capers, oregano and mint leaves.",
+            "Thon, tomate, oignon rouge doux, olives noires, câpres, origan et feuilles de menthe."
           ),
         },
         {
-          name: "Peperini",
-          price: "€ 5",
+          name: "Peperina",
+          price: "€ 7",
           description: l(
-            "Peperoni arrostiti, acciughe, caciocavallo.",
-            "Roasted peppers, anchovies and caciocavallo cheese.",
-            "Poivrons grillés, anchois et caciocavallo."
+            "Salame piccante, prosciutto cotto, scamorza affumicata, crema piccante, funghi sott'olio e lattuga.",
+            "Spicy salami, cooked ham, smoked scamorza, spicy cream, marinated mushrooms and lettuce.",
+            "Salami piquant, jambon cuit, scamorza fumée, crème piquante, champignons marinés et laitue."
           ),
         },
         {
           name: "Capitolo",
-          price: "€ 6",
+          price: "€ 7",
           description: l(
-            "Prosciutto crudo, burrata, basilico.",
-            "Cured ham, burrata and basil.",
-            "Jambon cru, burrata et basilic."
+            "Salame artigianale pugliese, caciocavallo stagionato, pomodoro fresco, rucola e olio EVO pugliese.",
+            "Artisan Apulian salami, aged caciocavallo, fresh tomato, rocket and Apulian extra virgin olive oil.",
+            "Salami artisanal des Pouilles, caciocavallo affiné, tomate fraîche, roquette et huile d'olive extra vierge des Pouilles."
           ),
         },
         {
           name: "Tonino",
-          price: "€ 5",
+          price: "€ 7",
           description: l(
-            "Frittata di cipolla, pecorino, pepe.",
-            "Onion omelette, pecorino and pepper.",
-            "Omelette à l’oignon, pecorino et poivre."
+            "Capocollo di Martina Franca, stracciatella, scaglie di caciocavallo semi stagionato, rucola fresca, crema piccante e olio EVO pugliese.",
+            "Capocollo di Martina Franca, stracciatella, semi-aged caciocavallo flakes, fresh rocket, spicy cream and Apulian extra virgin olive oil.",
+            "Capocollo de Martina Franca, stracciatella, copeaux de caciocavallo semi-affiné, roquette fraîche, crème piquante et huile d'olive extra vierge des Pouilles."
           ),
         },
         {
           name: "Regina",
-          price: "€ 6",
+          price: "€ 8",
           description: l(
-            "Roast beef, rucola, scaglie e senape al miele.",
-            "Roast beef, rocket, cheese flakes and honey mustard.",
-            "Rosbif, roquette, copeaux de fromage et moutarde au miel."
+            "Prosciutto crudo, burrata, marmellata di fichi, pomodorini secchi, rucola e olio EVO pugliese.",
+            "Cured ham, burrata, fig jam, sun-dried cherry tomatoes, rocket and Apulian extra virgin olive oil.",
+            "Jambon cru, burrata, confiture de figues, tomates cerises séchées, roquette et huile d'olive extra vierge des Pouilles."
           ),
         },
       ],
@@ -269,18 +269,18 @@ const aperitivo = {
           name: "Aperitivo",
           price: "€ 8",
           description: l(
-            "Drink + patate o snack salati.",
-            "Drink + crisps or savoury snacks.",
-            "Boisson + chips ou snacks salés."
+            "Un momento leggero, ideale per accompagnare la vostra bevuta. Olive, taralli e arachidi, patatine e snack salati, sfiziosità del giorno",
+            "A light moment, perfect to accompany your drink. Olives, taralli and peanuts, crisps and savoury snacks, daily specials",
+            "Un moment léger, idéal pour accompagner votre boisson. Olives, taralli et cacahuètes, chips et snacks salés, suggestions du jour"
           ),
         },
         {
           name: "Apericena",
           price: "€ 10",
           description: l(
-            "Drink + piatto composto, la sera.",
-            "Drink + composed plate, served in the evening.",
-            "Boisson + assiette composée, en soirée."
+            "Il perfetto incontro tra la leggerezza dell’aperitivo e la completezza di una cena, tutto quello che vuoi in un’unica esperienza! Selezione di sfiziosità locali e piatti caldi e freddi tipici del posto.",
+            "The perfect meeting between the lightness of an aperitivo and the fullness of a dinner, everything you want in one experience! A selection of local specialities and hot and cold dishes typical of the area.",
+            "La rencontre parfaite entre la légèreté de l’apéritif et la complétude d’un dîner, tout ce que vous voulez en une seule expérience ! Sélection de spécialités locales et plats chauds et froids typiques de la région."
           ),
         },
         {
@@ -291,9 +291,9 @@ const aperitivo = {
           ),
           price: "€ 15",
           description: l(
-            "Salumi e formaggi locali da condividere.",
-            "A local cured meat and cheese board to share.",
-            "Planche de charcuteries et fromages locaux à partager."
+            "Un’esperienza di sapori: salumi e formaggi selezionati, con accompagnamenti tipici del posto, serviti in tagliere da condividere.",
+            "An experience of flavours: selected cured meats and cheeses, with local accompaniments, served on a board to share.",
+            "Une expérience de saveurs : charcuteries et fromages sélectionnés, avec des accompagnements typiques du terroir, servis sur une planche à partager."
           ),
         },
       ],
