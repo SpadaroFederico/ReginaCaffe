@@ -895,7 +895,7 @@ export default function Footer() {
               gap-y-[6px]
             "
           >
-            <span>
+            <span suppressHydrationWarning>
               © {currentYear} Regina Caffè
             </span>
 

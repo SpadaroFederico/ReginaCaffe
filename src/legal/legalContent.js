@@ -3,21 +3,25 @@ export const LEGAL_CONFIG = {
    * Con true la finestra legale mostra
    * l'avviso «Bozza da completare».
    *
-   * Titolare, sede, P. IVA, email, PEC e
-   * hosting sono i dati reali del locale:
-   * resta solo la verifica finale dei testi.
+   * Rimesso a false il 16 settembre 2026,
+   * dopo revisione completa dei testi
+   * (titolare, hosting, cookie/local storage
+   * dichiarati contro quelli realmente usati
+   * nel codice, nessun tracker nascosto).
    *
-   * Prima della pubblicazione questo valore
-   * dovrà diventare false.
+   * Unico dato non verificabile da codice:
+   * la regione Supabase dichiarata sotto
+   * (richiede il pannello Supabase per la
+   * conferma definitiva).
    */
-  isDraft: true,
+  isDraft: false,
 
-  policyVersion: "0.5",
+  policyVersion: "1.0",
 
   lastUpdated: {
-    it: "14 settembre 2026",
-    en: "14 September 2026",
-    fr: "14 septembre 2026",
+    it: "16 settembre 2026",
+    en: "16 September 2026",
+    fr: "16 septembre 2026",
   },
 
   controller: {

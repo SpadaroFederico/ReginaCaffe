@@ -3,6 +3,7 @@ import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
 
 import seoPlugin from "./vite-seo-plugin.js";
+import prerenderPlugin from "./vite-prerender-plugin.js";
 
 export default defineConfig({
   /*
@@ -23,5 +24,6 @@ export default defineConfig({
     react(),
     tailwindcss(),
     seoPlugin(),
+    prerenderPlugin(),
   ],
 });
