@@ -116,6 +116,7 @@ const baguette = {
     "Choose your base: classic baguette, multigrain baguette or piadina.",
     "Base au choix : baguette classique, aux céréales ou piadina."
   ),
+  introHighlight: true,
   groups: [
     {
       items: [
@@ -245,6 +246,7 @@ const fritti = {
         "Potato croquettes, fries, cheddar and bacon fries, homemade meatballs and panzerotti.",
         "Croquettes de pommes de terre, frites, frites cheddar et bacon, boulettes maison et panzerotti."
       ),
+      introHighlight: true,
       items: [
         { name: l("Porzione piccola", "Small portion", "Petite portion"), price: "€ 4" },
         { name: l("Porzione media", "Medium portion", "Portion moyenne"), price: "€ 6" },
@@ -327,7 +329,7 @@ const bibiteClassiche = {
         { name: "Chinotto", price: "€ 3" },
         { name: l("Estathé limone/pesca", "Estathé lemon/peach", "Estathé citron/pêche"), price: "€ 2,50" },
         { name: l("Succo di frutta", "Fruit juice", "Jus de fruits"), price: "€ 2,50" },
-        { name: "Red Bull", price: "€ 3,50" },
+        { name: "Red Bull", price: "€ 3" },
       ],
     },
   ],
@@ -587,7 +589,7 @@ const whisky = {
       title: "Scotch Whisky",
       items: [
         { name: "Talisker Skye", price: "€ 7" },
-        { name: "Oban", price: "€ 9" },
+        { name: "Oban", price: "€ 8" },
       ],
     },
     {
@@ -709,18 +711,32 @@ const amari = {
 
 export const menuMacros = [
   {
-    slug: "caffetteria-dolci",
+    slug: "caffetteria",
     title: {
-      it: { lead: "Caffetteria &", italic: "Dolci" },
-      en: { lead: "Coffee &", italic: "Desserts" },
-      fr: { lead: "Café &", italic: "Desserts" },
+      it: { lead: "", italic: "Caffetteria" },
+      en: { lead: "", italic: "Coffee" },
+      fr: { lead: "", italic: "Café" },
     },
     summary: l(
-      "Caffè, cappuccino, espressino, dolci e crêpes.",
-      "Espresso, cappuccino, espressino, desserts and crêpes.",
-      "Expresso, cappuccino, espressino, desserts et crêpes."
+      "Caffè, macchiato, espressino e cappuccino, anche decaffeinati.",
+      "Espresso, macchiato, espressino and cappuccino, also decaf.",
+      "Expresso, macchiato, espressino et cappuccino, aussi en décaféiné."
     ),
-    sections: [caffetteria, dolci],
+    sections: [caffetteria],
+  },
+  {
+    slug: "dolci",
+    title: {
+      it: { lead: "", italic: "Dolci" },
+      en: { lead: "", italic: "Desserts" },
+      fr: { lead: "", italic: "Desserts" },
+    },
+    summary: l(
+      "Tiramisù, cheesecake, salame al cioccolato, dolce del giorno e crêpes.",
+      "Tiramisù, cheesecake, chocolate salami, dessert of the day and crêpes.",
+      "Tiramisù, cheesecake, salami au chocolat, dessert du jour et crêpes."
+    ),
+    sections: [dolci],
   },
   {
     slug: "cucina",
@@ -765,6 +781,20 @@ export const menuMacros = [
     sections: [cocktails, birre, vini],
   },
   {
+    slug: "gin",
+    title: {
+      it: { lead: "", italic: "Gin" },
+      en: { lead: "", italic: "Gin" },
+      fr: { lead: "", italic: "Gin" },
+    },
+    summary: l(
+      "Venti gin, serviti con la tonica giusta.",
+      "Twenty gins, served with the right tonic.",
+      "Vingt gins, servis avec le bon tonic."
+    ),
+    sections: [gin],
+  },
+  {
     slug: "distillati",
     title: {
       it: { lead: "", italic: "Distillati" },
@@ -772,11 +802,11 @@ export const menuMacros = [
       fr: { lead: "", italic: "Spiritueux" },
     },
     summary: l(
-      "Gin, whisky, rum, vodka, tequila e mezcal.",
-      "Gin, whisky, rum, vodka, tequila and mezcal.",
-      "Gin, whisky, rhum, vodka, tequila et mezcal."
+      "Whisky, rum, vodka, tequila e mezcal.",
+      "Whisky, rum, vodka, tequila and mezcal.",
+      "Whisky, rhum, vodka, tequila et mezcal."
     ),
-    sections: [gin, whisky, rum, vodkaTequilaMezcal],
+    sections: [whisky, rum, vodkaTequilaMezcal],
   },
   {
     slug: "amari-digestivi",

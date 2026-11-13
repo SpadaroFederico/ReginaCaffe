@@ -28,6 +28,34 @@ import {
  */
 
 /*
+ * Frase introduttiva da non perdere
+ * (introHighlight: true nei dati), ad es.
+ * la base delle baguette o cosa contengono
+ * le sfiziosità fritte: più grande, scura
+ * come i nomi delle voci e con un filetto
+ * a sinistra.
+ */
+const HIGHLIGHT_INTRO = `
+  max-w-[660px]
+
+  border-l-2
+  border-[#8A7558]
+  pl-[12px]
+
+  font-sans
+  text-[13px]
+  font-medium
+  leading-[20px]
+  text-[#2F2A21]
+
+  sm:text-[14px]
+  sm:leading-[22px]
+
+  lg:text-[15px]
+  lg:leading-[23px]
+`;
+
+/*
  * Altezza del nastro sticky delle carte:
  * le ancore devono fermarsi sotto header
  * e nastro, non dietro.
@@ -293,7 +321,13 @@ function MenuGroup({
 
           {intro && (
             <p
-              className={`
+              className={
+                group.introHighlight
+                  ? `
+                    ${title ? "mt-[9px]" : ""}
+                    ${HIGHLIGHT_INTRO}
+                  `
+                  : `
                 ${title ? "mt-[7px]" : ""}
 
                 max-w-[660px]
@@ -305,7 +339,8 @@ function MenuGroup({
 
                 sm:text-[12px]
                 sm:leading-[19px]
-              `}
+              `
+              }
             >
               {intro}
             </p>
@@ -435,7 +470,10 @@ export default function MenuSectionCard({
 
         {intro && (
           <p
-            className="
+            className={
+              section.introHighlight
+                ? `mt-[14px] ${HIGHLIGHT_INTRO}`
+                : `
               mt-[11px]
               max-w-[660px]
 
@@ -449,7 +487,8 @@ export default function MenuSectionCard({
 
               lg:text-[13px]
               lg:leading-[20px]
-            "
+            `
+            }
           >
             {intro}
           </p>

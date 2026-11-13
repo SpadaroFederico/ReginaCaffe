@@ -1,0 +1,7 @@
+# Indirizzi del menu non più in uso.
+# "Caffetteria & Dolci" è stata divisa in
+# due carte: il vecchio link porta alla
+# Caffetteria.
+/menu/caffetteria-dolci /menu/caffetteria 301
+/en/menu/caffetteria-dolci /en/menu/caffetteria 301
+/fr/menu/caffetteria-dolci /fr/menu/caffetteria 301
